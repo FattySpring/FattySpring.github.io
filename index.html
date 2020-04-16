@@ -232,154 +232,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://codeaword.github.io/2017/10/10/UILocalizedIndexedCollation通讯录分组排序/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Li Cong">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Code a word">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/10/UILocalizedIndexedCollation通讯录分组排序/" itemprop="url">UILocalizedIndexedCollation通讯录分组排序</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-10T11:26:10+08:00">
-                2017-10-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/10/10/UILocalizedIndexedCollation通讯录分组排序/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2017/10/10/UILocalizedIndexedCollation通讯录分组排序/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2017/10/10/UILocalizedIndexedCollation通讯录分组排序/" class="leancloud_visitors" data-flag-title="UILocalizedIndexedCollation通讯录分组排序">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>UILocalizedIndexedCollation 可以对数组重建索引，按照首字母顺序进行排序。</p>
-<p>IndexTool.h</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#define kToolsIndexAryKey @&quot;LCIndexAryKey&quot;     //索引</span><br><span class="line">#define kToolsGroupAryKey @&quot;LCGroupAryKey&quot;  //排序后的分组</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> 对数组排序</span><br><span class="line"></span><br><span class="line"> @param mArray      需要排序的数组</span><br><span class="line"> @param proretyName 数组中对象需要排序的属性</span><br><span class="line"></span><br><span class="line"> @return 排序后的索引及gourpAry 字典形式 kToolsIndexAryKey kToolsGroupAryKey</span><br><span class="line"> */</span><br><span class="line">+ (NSDictionary *)sortedArrayWithChineseObject:(NSMutableArray *)mArray  withPropertyNameSEL:(SEL)nameSEL ;</span><br></pre></td></tr></table></figure>
-<p>proretyName为属性名称例如：<br>Person 类  属性 ：name age phoneNumber<br>我们需要根据name的首字母来排序分组 则传递@selector(name)</p>
-<p>IndexTool.m</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">//数组排序</span><br><span class="line">+ (NSDictionary *)sortedArrayWithChineseObject:(NSMutableArray *)mArray  withPropertyNameSEL:(SEL)nameSEL &#123;</span><br><span class="line">    </span><br><span class="line">    UILocalizedIndexedCollation *indexCollation = [UILocalizedIndexedCollation currentCollation];</span><br><span class="line">    NSInteger index, sectionTitlesCount = [[indexCollation sectionTitles] count];</span><br><span class="line">    NSMutableArray *suoYinArr = [[NSMutableArray alloc] initWithArray:[indexCollation sectionTitles]];</span><br><span class="line">    </span><br><span class="line">    //临时数据，存放section对应的userObjs数组数据</span><br><span class="line">    NSMutableArray *newSectionsArray = [[NSMutableArray alloc] initWithCapacity:sectionTitlesCount];</span><br><span class="line">    </span><br><span class="line">    //设置sections数组初始化：元素包含userObjs数据的空数据</span><br><span class="line">    for (index = 0; index &lt; sectionTitlesCount; index++) &#123;</span><br><span class="line">        NSMutableArray *array = [[NSMutableArray alloc] init];</span><br><span class="line">        [newSectionsArray addObject:array];</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    //分组</span><br><span class="line">    for (id object in mArray) &#123;</span><br><span class="line">        //根据timezone的localename，获得对应的的section number</span><br><span class="line">        NSInteger sectionNumber = [indexCollation sectionForObject:object collationStringSelector:nameSEL];</span><br><span class="line">        //根据sectionNumber获取数组</span><br><span class="line">        NSMutableArray *sectionUserObjs = [newSectionsArray objectAtIndex:sectionNumber];</span><br><span class="line">        //添加对象到对应的数组中</span><br><span class="line">        [sectionUserObjs addObject:object];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //获取空的数组的index</span><br><span class="line">    NSMutableArray *willDeleteAry = [NSMutableArray new];</span><br><span class="line">    for (int i = 0; i &lt; newSectionsArray.count; i ++) &#123;</span><br><span class="line">        NSArray *tempAry = newSectionsArray[i];</span><br><span class="line">        if (tempAry.count == 0) &#123;</span><br><span class="line">            [willDeleteAry addObject:[NSString stringWithFormat:@&quot;%d&quot;,i]];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    //删除空的数组</span><br><span class="line">    for (NSInteger i = willDeleteAry.count; i &gt; 0; i -- ) &#123;</span><br><span class="line">        NSInteger index = [willDeleteAry[i - 1] integerValue];</span><br><span class="line">        [newSectionsArray removeObjectAtIndex:index];</span><br><span class="line">        [suoYinArr removeObjectAtIndex:index];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //该字典中存放分组排序呢后的索引及数据</span><br><span class="line">    NSDictionary *dict = @&#123;kToolsGroupAryKey:newSectionsArray,kToolsIndexAryKey:suoYinArr&#125;;</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    return dict;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>本文出自codeaword的博客 <a href="https://codeaword.github.io/2017/10/10/UILocalizedIndexedCollation通讯录分组排序/">https://codeaword.github.io/2017/10/10/UILocalizedIndexedCollation通讯录分组排序/</a> 欢迎转载，转载请注明出处！</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://codeaword.github.io/2017/10/10/OpenCV+TesseractOCRiOS实现身份证号识别/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -572,7 +424,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://codeaword.github.io/2017/10/10/iOS-端简单的图片识别（比对像素点）/">
+    <link itemprop="mainEntityOfPage" href="https://codeaword.github.io/2017/10/10/UILocalizedIndexedCollation通讯录分组排序/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Li Cong">
@@ -591,7 +443,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/10/10/iOS-端简单的图片识别（比对像素点）/" itemprop="url">iOS-端简单的图片识别（比对像素点）</a></h1>
+                <a class="post-title-link" href="/2017/10/10/UILocalizedIndexedCollation通讯录分组排序/" itemprop="url">UILocalizedIndexedCollation通讯录分组排序</a></h1>
         
 
         <div class="post-meta">
@@ -622,8 +474,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/10/10/iOS-端简单的图片识别（比对像素点）/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2017/10/10/iOS-端简单的图片识别（比对像素点）/" itemprop="commentCount"></span>
+                <a href="/2017/10/10/UILocalizedIndexedCollation通讯录分组排序/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2017/10/10/UILocalizedIndexedCollation通讯录分组排序/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -631,7 +483,7 @@
 
           
           
-             <span id="/2017/10/10/iOS-端简单的图片识别（比对像素点）/" class="leancloud_visitors" data-flag-title="iOS-端简单的图片识别（比对像素点）">
+             <span id="/2017/10/10/UILocalizedIndexedCollation通讯录分组排序/" class="leancloud_visitors" data-flag-title="UILocalizedIndexedCollation通讯录分组排序">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -664,16 +516,14 @@
       
         
           
-            <p>大致原理和步骤为：</p>
-<ul>
-<li><strong>裁剪出需要识别图片的模板；</strong></li>
-<li><strong>如果需要识别图片中的某一/几个区域，需要进行相对的尺寸修改、图片分割等操作步骤；</strong></li>
-<li><strong>遍历待识别的图片的像素点，和模板图片的像素点进行比对作差，差值为0（或最小）则为相对的图片；</strong></li>
-<li><strong>本代码只适用于简单的图片识别，或数字识别（需要加上灰度化、二值化，代码也很简单，只是测量出合适的阈值比较麻烦），不适合文字识别。</strong></li>
-</ul>
-<hr>
-<h3 id="核心代码（只有像素比对作差，修改图片尺寸、分割图片等方法比较简单就不写了）"><a href="#核心代码（只有像素比对作差，修改图片尺寸、分割图片等方法比较简单就不写了）" class="headerlink" title="核心代码（只有像素比对作差，修改图片尺寸、分割图片等方法比较简单就不写了）"></a>核心代码（只有像素比对作差，修改图片尺寸、分割图片等方法比较简单就不写了）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> *  待识别的卡牌</span><br><span class="line"> *</span><br><span class="line"> *  @param image 待识别卡牌</span><br><span class="line"> */</span><br><span class="line">- (void)checkCardsWithCardImage:(UIImage *)image</span><br><span class="line">&#123;</span><br><span class="line">    CGImageRef imageRef =image.CGImage;</span><br><span class="line">    CGDataProviderRef imageDataRef = CGImageGetDataProvider(imageRef);</span><br><span class="line">    NSData *imageData = (id)CFBridgingRelease(CGDataProviderCopyData(imageDataRef));</span><br><span class="line">    const uint8_t *imageUintData = [imageData bytes];//数组：存放待识别卡牌像素点</span><br><span class="line">    //最小像素差之和</span><br><span class="line">    uint32_t minSum = 9999999;</span><br><span class="line">    //记录最下卡牌</span><br><span class="line">    int card = 0;</span><br><span class="line">    //遍历标准牌（我的模板图片有68张）</span><br><span class="line">    for (int i = 1; i &lt; 68; i ++) &#123;</span><br><span class="line">        UIImage *standardImage = [UIImage imageNamed:[NSString stringWithFormat:@&quot;%d&quot;,i]];</span><br><span class="line">        CGImageRef standardRef =standardImage.CGImage;</span><br><span class="line">        CGDataProviderRef standardDataRef = CGImageGetDataProvider(standardRef);</span><br><span class="line">        NSData *standardData = (id)CFBridgingRelease(CGDataProviderCopyData(standardDataRef));</span><br><span class="line">        const uint8_t *standardUintData = [standardData bytes];</span><br><span class="line">        uint32_t sum = 0;</span><br><span class="line">        //获取偏移数值 图片大小为58*70的</span><br><span class="line">        for (int i = 0; i &lt; 58 * 70; i++）</span><br><span class="line">        &#123;</span><br><span class="line">            if ((standardUintData[i] - imageUintData[i])&lt;0)</span><br><span class="line">            &#123;</span><br><span class="line">                sum -= standardUintData[i] - imageUintData[i];</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                sum += standardUintData[i] - imageUintData[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        //获取最小的偏移数值，更新最小偏移值和卡牌编号</span><br><span class="line">        if (minSum&gt;sum) &#123;</span><br><span class="line">            minSum = sum;</span><br><span class="line">            card = i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    // method — getNameWithCardNumber：根据识别结果返回图片名称</span><br><span class="line">    NSString *cardName = [self getNameWithCardNumber:card];</span><br><span class="line">    NSLog(@&quot;识别结果：%d + %@&quot;,card,cardName);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>本文出自codeaword的博客 <a href="https://codeaword.github.io/2017/10/10/iOS-端简单的图片识别（比对像素点）/">https://codeaword.github.io/2017/10/10/iOS-端简单的图片识别（比对像素点）/</a> 欢迎转载，转载请注明出处！</p>
+            <p>UILocalizedIndexedCollation 可以对数组重建索引，按照首字母顺序进行排序。</p>
+<p>IndexTool.h</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#define kToolsIndexAryKey @&quot;LCIndexAryKey&quot;     //索引</span><br><span class="line">#define kToolsGroupAryKey @&quot;LCGroupAryKey&quot;  //排序后的分组</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> 对数组排序</span><br><span class="line"></span><br><span class="line"> @param mArray      需要排序的数组</span><br><span class="line"> @param proretyName 数组中对象需要排序的属性</span><br><span class="line"></span><br><span class="line"> @return 排序后的索引及gourpAry 字典形式 kToolsIndexAryKey kToolsGroupAryKey</span><br><span class="line"> */</span><br><span class="line">+ (NSDictionary *)sortedArrayWithChineseObject:(NSMutableArray *)mArray  withPropertyNameSEL:(SEL)nameSEL ;</span><br></pre></td></tr></table></figure>
+<p>proretyName为属性名称例如：<br>Person 类  属性 ：name age phoneNumber<br>我们需要根据name的首字母来排序分组 则传递@selector(name)</p>
+<p>IndexTool.m</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">//数组排序</span><br><span class="line">+ (NSDictionary *)sortedArrayWithChineseObject:(NSMutableArray *)mArray  withPropertyNameSEL:(SEL)nameSEL &#123;</span><br><span class="line">    </span><br><span class="line">    UILocalizedIndexedCollation *indexCollation = [UILocalizedIndexedCollation currentCollation];</span><br><span class="line">    NSInteger index, sectionTitlesCount = [[indexCollation sectionTitles] count];</span><br><span class="line">    NSMutableArray *suoYinArr = [[NSMutableArray alloc] initWithArray:[indexCollation sectionTitles]];</span><br><span class="line">    </span><br><span class="line">    //临时数据，存放section对应的userObjs数组数据</span><br><span class="line">    NSMutableArray *newSectionsArray = [[NSMutableArray alloc] initWithCapacity:sectionTitlesCount];</span><br><span class="line">    </span><br><span class="line">    //设置sections数组初始化：元素包含userObjs数据的空数据</span><br><span class="line">    for (index = 0; index &lt; sectionTitlesCount; index++) &#123;</span><br><span class="line">        NSMutableArray *array = [[NSMutableArray alloc] init];</span><br><span class="line">        [newSectionsArray addObject:array];</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    //分组</span><br><span class="line">    for (id object in mArray) &#123;</span><br><span class="line">        //根据timezone的localename，获得对应的的section number</span><br><span class="line">        NSInteger sectionNumber = [indexCollation sectionForObject:object collationStringSelector:nameSEL];</span><br><span class="line">        //根据sectionNumber获取数组</span><br><span class="line">        NSMutableArray *sectionUserObjs = [newSectionsArray objectAtIndex:sectionNumber];</span><br><span class="line">        //添加对象到对应的数组中</span><br><span class="line">        [sectionUserObjs addObject:object];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //获取空的数组的index</span><br><span class="line">    NSMutableArray *willDeleteAry = [NSMutableArray new];</span><br><span class="line">    for (int i = 0; i &lt; newSectionsArray.count; i ++) &#123;</span><br><span class="line">        NSArray *tempAry = newSectionsArray[i];</span><br><span class="line">        if (tempAry.count == 0) &#123;</span><br><span class="line">            [willDeleteAry addObject:[NSString stringWithFormat:@&quot;%d&quot;,i]];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    //删除空的数组</span><br><span class="line">    for (NSInteger i = willDeleteAry.count; i &gt; 0; i -- ) &#123;</span><br><span class="line">        NSInteger index = [willDeleteAry[i - 1] integerValue];</span><br><span class="line">        [newSectionsArray removeObjectAtIndex:index];</span><br><span class="line">        [suoYinArr removeObjectAtIndex:index];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //该字典中存放分组排序呢后的索引及数据</span><br><span class="line">    NSDictionary *dict = @&#123;kToolsGroupAryKey:newSectionsArray,kToolsIndexAryKey:suoYinArr&#125;;</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    return dict;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>本文出自codeaword的博客 <a href="https://codeaword.github.io/2017/10/10/UILocalizedIndexedCollation通讯录分组排序/">https://codeaword.github.io/2017/10/10/UILocalizedIndexedCollation通讯录分组排序/</a> 欢迎转载，转载请注明出处！</p>
 
           
         
@@ -722,7 +572,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://codeaword.github.io/2017/10/10/iOS-根据视频url获取某一帧图片并实现三级缓存/">
+    <link itemprop="mainEntityOfPage" href="https://codeaword.github.io/2017/10/10/iOS-LaunchScreen-国际化/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Li Cong">
@@ -741,7 +591,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/10/10/iOS-根据视频url获取某一帧图片并实现三级缓存/" itemprop="url">iOS-根据视频url获取某一帧图片并实现三级缓存</a></h1>
+                <a class="post-title-link" href="/2017/10/10/iOS-LaunchScreen-国际化/" itemprop="url">iOS LaunchScreen 国际化</a></h1>
         
 
         <div class="post-meta">
@@ -772,8 +622,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/10/10/iOS-根据视频url获取某一帧图片并实现三级缓存/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2017/10/10/iOS-根据视频url获取某一帧图片并实现三级缓存/" itemprop="commentCount"></span>
+                <a href="/2017/10/10/iOS-LaunchScreen-国际化/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2017/10/10/iOS-LaunchScreen-国际化/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -781,7 +631,7 @@
 
           
           
-             <span id="/2017/10/10/iOS-根据视频url获取某一帧图片并实现三级缓存/" class="leancloud_visitors" data-flag-title="iOS-根据视频url获取某一帧图片并实现三级缓存">
+             <span id="/2017/10/10/iOS-LaunchScreen-国际化/" class="leancloud_visitors" data-flag-title="iOS LaunchScreen 国际化">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -814,10 +664,164 @@
       
         
           
-            <p>该代码实现借助SDImageCache缓存机制实现三级缓存</p>
-<p>创建一个UIImageView 的Category 导入 SDImageCache<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;SDWebImage/SDImageCache.h&gt;</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">- (void)videoImageWithvideoURL:(NSURL *)videoURL atTime:(NSTimeInterval)time &#123;</span><br><span class="line">    </span><br><span class="line">    //先从缓存中找是否有图片</span><br><span class="line">    SDImageCache *cache =  [SDImageCache sharedImageCache];</span><br><span class="line">    UIImage *memoryImage =  [cache imageFromMemoryCacheForKey:videoURL.absoluteString];</span><br><span class="line">    if (memoryImage) &#123;</span><br><span class="line">        self.image = memoryImage;</span><br><span class="line">        return;</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        UIImage *diskImage =  [cache imageFromDiskCacheForKey:videoURL.absoluteString];</span><br><span class="line">        if (diskImage) &#123;</span><br><span class="line">            self.image = diskImage;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    if (!time) &#123;</span><br><span class="line">        time = 1;</span><br><span class="line">    &#125;    </span><br><span class="line">    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^&#123;</span><br><span class="line">        AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:videoURL options:nil];</span><br><span class="line">        NSParameterAssert(asset);</span><br><span class="line">        AVAssetImageGenerator *assetImageGenerator =[[AVAssetImageGenerator alloc] initWithAsset:asset];</span><br><span class="line">        assetImageGenerator.appliesPreferredTrackTransform = YES;</span><br><span class="line">        assetImageGenerator.apertureMode = AVAssetImageGeneratorApertureModeEncodedPixels;</span><br><span class="line">        CGImageRef thumbnailImageRef = NULL;</span><br><span class="line">        CFTimeInterval thumbnailImageTime = time;</span><br><span class="line">        NSError *thumbnailImageGenerationError = nil;</span><br><span class="line">        thumbnailImageRef = [assetImageGenerator copyCGImageAtTime:CMTimeMake(thumbnailImageTime, 60)actualTime:NULL error:&amp;thumbnailImageGenerationError];</span><br><span class="line">        if(!thumbnailImageRef)</span><br><span class="line">            NSLog(@&quot;thumbnailImageGenerationError %@&quot;,thumbnailImageGenerationError);</span><br><span class="line">        UIImage*thumbnailImage = thumbnailImageRef ? [[UIImage alloc]initWithCGImage: thumbnailImageRef] : nil;</span><br><span class="line">        </span><br><span class="line">        dispatch_async(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">            SDImageCache *cache =  [SDImageCache sharedImageCache];</span><br><span class="line">            [cache storeImage:thumbnailImage forKey:videoURL.absoluteString toDisk:YES];</span><br><span class="line">            self.image = thumbnailImage;</span><br><span class="line">        &#125;);</span><br><span class="line">        </span><br><span class="line">    &#125;);</span><br><span class="line">   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>本文出自codeaword的博客 <a href="https://codeaword.github.io/2017/10/10/iOS-根据视频url获取某一帧图片并实现三级缓存/">https://codeaword.github.io/2017/10/10/iOS-根据视频url获取某一帧图片并实现三级缓存/</a> 欢迎转载，转载请注明出处！</p>
+            <p>###添加中文国际化设置<br><img src="http://upload-images.jianshu.io/upload_images/2901013-c83bccc40019302b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="添加中文国际化设置.png"><br>在这里可以根据项目的需求配置不同语言的文件</p>
+<p>###勾选LaunchScreen中英文件<br><img src="http://upload-images.jianshu.io/upload_images/2901013-e0c3d641603112ef.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
+<h3 id="给label编辑不同语言下显示的文字"><a href="#给label编辑不同语言下显示的文字" class="headerlink" title="给label编辑不同语言下显示的文字"></a>给label编辑不同语言下显示的文字</h3><ul>
+<li>找到Label的ObjectID<br><img src="http://upload-images.jianshu.io/upload_images/2901013-76ff81376d3b6204.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></li>
+<li>设置label的文字<br><img src="http://upload-images.jianshu.io/upload_images/2901013-1665ddb18fcb6170.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></li>
+</ul>
+<h3 id="未解决的问题："><a href="#未解决的问题：" class="headerlink" title="未解决的问题："></a>未解决的问题：</h3><p>无论怎么切换语言，LaunchScreen 只使用英文的文字，看了很多文章有写以其他其他方式进行国际化，不过暂时还没有去试验。<br>本次设置国际化主要是用来通过xcodebuild来打包的时候动态修改LaunchScreen的文字才使用的，目的达到了，偏离了主题，很抱歉</p>
+<p>本文出自codeaword的博客 <a href="https://codeaword.github.io/2017/10/10/iOS-LaunchScreen-国际化/">https://codeaword.github.io/2017/10/10/iOS-LaunchScreen-国际化/</a> 欢迎转载，转载请注明出处！</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://codeaword.github.io/2017/10/10/iOS-WebService-SOAP-请求的实现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Li Cong">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Code a word">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/10/iOS-WebService-SOAP-请求的实现/" itemprop="url">iOS WebService SOAP 请求的实现</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-10T11:26:10+08:00">
+                2017-10-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/10/10/iOS-WebService-SOAP-请求的实现/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2017/10/10/iOS-WebService-SOAP-请求的实现/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/10/10/iOS-WebService-SOAP-请求的实现/" class="leancloud_visitors" data-flag-title="iOS WebService SOAP 请求的实现">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>SOAP是简单对象访问协议是交换数据的一种协议规范，是一种轻量的、简单的、基于XML（标准通用标记语言下的一个子集）的协议，它被设计成在WEB上交换结构化的和固化的信息。</p>
+<p>由于SOAP是基于XML的我们在传输过程中请求参数和返回内容都是XML格式，在这里我使用了XMLDictionary 转换工具 </p>
+<p>导入XMLDictionary</p>
+<ul>
+<li>使用cocoapods导入 pod ‘XMLDictionary’ </li>
+<li>github连接：<a href="https://github.com/nicklockwood/XMLDictionary" target="_blank" rel="noopener">https://github.com/nicklockwood/XMLDictionary</a></li>
+</ul>
+<p>AFN实现SOAP</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">//我使用的该类是继承于AFHTTPSessionManager的</span><br><span class="line">//ps 在soapStr中自己要设置命名空间</span><br><span class="line">/**</span><br><span class="line"> Post方式请求</span><br><span class="line"> </span><br><span class="line"> @param methodString 方法名</span><br><span class="line"> @param parameter 参数</span><br><span class="line"> @param successBlock 成功回调</span><br><span class="line"> @param isShowHud 是否显示ProgressHUD</span><br><span class="line"> */</span><br><span class="line">- (void)httpPostRequestWithMethodString:(NSString *)methodString withParameters:(NSDictionary *)parameter success:(SuccessBlock)successBlock failure:(FailureBlock)failureBlock isShowHUD:(BOOL)isShowHud</span><br><span class="line">&#123;</span><br><span class="line"> </span><br><span class="line">    if (isShowHud) &#123;</span><br><span class="line">        [MBProgressHUD showMessage:@&quot;正在加载&quot;];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    NSString *soapStr = [NSString stringWithFormat:@&quot;&lt;v:Envelope xmlns:i=\&quot;http://www.w3.org/2001/XMLSchema-instance\&quot; </span><br><span class="line">xmlns:d=\&quot;http://www.w3.org/2001/XMLSchema\&quot; xmlns:c=\&quot;http://schemas.xmlsoap.org/soap/encoding/\&quot; </span><br><span class="line">xmlns:v=\&quot;http://schemas.xmlsoap.org/soap/envelope/\&quot;&gt; &lt;v:Header /&gt; &lt;v:Body </span><br><span class="line">xmlns=\&quot;命名空间这个自己问后台要\&quot; id=\&quot;o0\&quot; c:root=\&quot;1\&quot;&gt; %@ &lt;/v:Body&gt; &lt;/v:Envelope&gt;&quot;,[@&#123;methodString:parameter&#125; XMLString]];</span><br><span class="line"></span><br><span class="line">//请求头根据后台需要设置</span><br><span class="line">    [self.requestSerializer setValue:@&quot;text/xml; charset=utf-8&quot; forHTTPHeaderField:@&quot;Content-Type&quot;];</span><br><span class="line"></span><br><span class="line">//在该处设置请求的SOAP请求内容</span><br><span class="line">    [self.requestSerializer setQueryStringSerializationWithBlock:^NSString * _Nonnull(NSURLRequest * _Nonnull request, id  _Nonnull parameters, NSError * _Nullable __autoreleasing * _Nullable error) &#123;</span><br><span class="line">        return soapStr;</span><br><span class="line">    &#125;];</span><br><span class="line">    </span><br><span class="line">    [self POST:@&quot;调用地址问后台要&quot; parameters:soapStr progress:^(NSProgress * _Nonnull uploadProgress) &#123;</span><br><span class="line">        </span><br><span class="line">    &#125; success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) &#123;</span><br><span class="line">        </span><br><span class="line">        [MBProgressHUD hideHUD];</span><br><span class="line">        </span><br><span class="line">        NSString *result = [[NSString alloc] initWithData:responseObject  encoding:NSUTF8StringEncoding];</span><br><span class="line">//        NSLog(@&quot;result:%@&quot;,result);</span><br><span class="line">        successBlock([NSDictionary dictionaryWithXMLString:result]);</span><br><span class="line">    &#125; failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) &#123;</span><br><span class="line"></span><br><span class="line">        [MBProgressHUD showError:error.localizedDescription];</span><br><span class="line">        failureBlock(error);</span><br><span class="line">    &#125;];</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>本文出自codeaword的博客 <a href="https://codeaword.github.io/2017/10/10/iOS-WebService-SOAP-请求的实现/">https://codeaword.github.io/2017/10/10/iOS-WebService-SOAP-请求的实现/</a> 欢迎转载，转载请注明出处！</p>
 
           
         
@@ -1020,7 +1024,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://codeaword.github.io/2017/10/10/iOS-计算文本的高度/">
+    <link itemprop="mainEntityOfPage" href="https://codeaword.github.io/2017/10/10/iOS-根据视频url获取某一帧图片并实现三级缓存/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Li Cong">
@@ -1039,7 +1043,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/10/10/iOS-计算文本的高度/" itemprop="url">iOS-计算文本的高度</a></h1>
+                <a class="post-title-link" href="/2017/10/10/iOS-根据视频url获取某一帧图片并实现三级缓存/" itemprop="url">iOS-根据视频url获取某一帧图片并实现三级缓存</a></h1>
         
 
         <div class="post-meta">
@@ -1070,8 +1074,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/10/10/iOS-计算文本的高度/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2017/10/10/iOS-计算文本的高度/" itemprop="commentCount"></span>
+                <a href="/2017/10/10/iOS-根据视频url获取某一帧图片并实现三级缓存/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2017/10/10/iOS-根据视频url获取某一帧图片并实现三级缓存/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1079,7 +1083,7 @@
 
           
           
-             <span id="/2017/10/10/iOS-计算文本的高度/" class="leancloud_visitors" data-flag-title="iOS-计算文本的高度">
+             <span id="/2017/10/10/iOS-根据视频url获取某一帧图片并实现三级缓存/" class="leancloud_visitors" data-flag-title="iOS-根据视频url获取某一帧图片并实现三级缓存">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1112,8 +1116,10 @@
       
         
           
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NSDictionary * dict=[NSDictionary dictionaryWithObject: [UIFont systemFontOfSize:fontsize] forKey:NSFontAttributeName];</span><br><span class="line">   CGRect rect=[string boundingRectWithSize:CGSizeMake(width, MAXFLOAT) options:NSStringDrawingTruncatesLastVisibleLine|NSStringDrawingUsesFontLeading|NSStringDrawingUsesLineFragmentOrigin attributes:dict context:nil];</span><br></pre></td></tr></table></figure>
-<p>本文出自codeaword的博客 <a href="https://codeaword.github.io/2017/10/10/iOS-计算文本的高度/">https://codeaword.github.io/2017/10/10/iOS-计算文本的高度/</a> 欢迎转载，转载请注明出处！</p>
+            <p>该代码实现借助SDImageCache缓存机制实现三级缓存</p>
+<p>创建一个UIImageView 的Category 导入 SDImageCache<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;SDWebImage/SDImageCache.h&gt;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">- (void)videoImageWithvideoURL:(NSURL *)videoURL atTime:(NSTimeInterval)time &#123;</span><br><span class="line">    </span><br><span class="line">    //先从缓存中找是否有图片</span><br><span class="line">    SDImageCache *cache =  [SDImageCache sharedImageCache];</span><br><span class="line">    UIImage *memoryImage =  [cache imageFromMemoryCacheForKey:videoURL.absoluteString];</span><br><span class="line">    if (memoryImage) &#123;</span><br><span class="line">        self.image = memoryImage;</span><br><span class="line">        return;</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        UIImage *diskImage =  [cache imageFromDiskCacheForKey:videoURL.absoluteString];</span><br><span class="line">        if (diskImage) &#123;</span><br><span class="line">            self.image = diskImage;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    if (!time) &#123;</span><br><span class="line">        time = 1;</span><br><span class="line">    &#125;    </span><br><span class="line">    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^&#123;</span><br><span class="line">        AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:videoURL options:nil];</span><br><span class="line">        NSParameterAssert(asset);</span><br><span class="line">        AVAssetImageGenerator *assetImageGenerator =[[AVAssetImageGenerator alloc] initWithAsset:asset];</span><br><span class="line">        assetImageGenerator.appliesPreferredTrackTransform = YES;</span><br><span class="line">        assetImageGenerator.apertureMode = AVAssetImageGeneratorApertureModeEncodedPixels;</span><br><span class="line">        CGImageRef thumbnailImageRef = NULL;</span><br><span class="line">        CFTimeInterval thumbnailImageTime = time;</span><br><span class="line">        NSError *thumbnailImageGenerationError = nil;</span><br><span class="line">        thumbnailImageRef = [assetImageGenerator copyCGImageAtTime:CMTimeMake(thumbnailImageTime, 60)actualTime:NULL error:&amp;thumbnailImageGenerationError];</span><br><span class="line">        if(!thumbnailImageRef)</span><br><span class="line">            NSLog(@&quot;thumbnailImageGenerationError %@&quot;,thumbnailImageGenerationError);</span><br><span class="line">        UIImage*thumbnailImage = thumbnailImageRef ? [[UIImage alloc]initWithCGImage: thumbnailImageRef] : nil;</span><br><span class="line">        </span><br><span class="line">        dispatch_async(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">            SDImageCache *cache =  [SDImageCache sharedImageCache];</span><br><span class="line">            [cache storeImage:thumbnailImage forKey:videoURL.absoluteString toDisk:YES];</span><br><span class="line">            self.image = thumbnailImage;</span><br><span class="line">        &#125;);</span><br><span class="line">        </span><br><span class="line">    &#125;);</span><br><span class="line">   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>本文出自codeaword的博客 <a href="https://codeaword.github.io/2017/10/10/iOS-根据视频url获取某一帧图片并实现三级缓存/">https://codeaword.github.io/2017/10/10/iOS-根据视频url获取某一帧图片并实现三级缓存/</a> 欢迎转载，转载请注明出处！</p>
 
           
         
@@ -1162,7 +1168,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://codeaword.github.io/2017/10/10/iOS-WebService-SOAP-请求的实现/">
+    <link itemprop="mainEntityOfPage" href="https://codeaword.github.io/2017/10/10/iOS-端简单的图片识别（比对像素点）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Li Cong">
@@ -1181,7 +1187,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/10/10/iOS-WebService-SOAP-请求的实现/" itemprop="url">iOS WebService SOAP 请求的实现</a></h1>
+                <a class="post-title-link" href="/2017/10/10/iOS-端简单的图片识别（比对像素点）/" itemprop="url">iOS-端简单的图片识别（比对像素点）</a></h1>
         
 
         <div class="post-meta">
@@ -1212,8 +1218,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/10/10/iOS-WebService-SOAP-请求的实现/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2017/10/10/iOS-WebService-SOAP-请求的实现/" itemprop="commentCount"></span>
+                <a href="/2017/10/10/iOS-端简单的图片识别（比对像素点）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2017/10/10/iOS-端简单的图片识别（比对像素点）/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1221,7 +1227,7 @@
 
           
           
-             <span id="/2017/10/10/iOS-WebService-SOAP-请求的实现/" class="leancloud_visitors" data-flag-title="iOS WebService SOAP 请求的实现">
+             <span id="/2017/10/10/iOS-端简单的图片识别（比对像素点）/" class="leancloud_visitors" data-flag-title="iOS-端简单的图片识别（比对像素点）">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1254,16 +1260,16 @@
       
         
           
-            <p>SOAP是简单对象访问协议是交换数据的一种协议规范，是一种轻量的、简单的、基于XML（标准通用标记语言下的一个子集）的协议，它被设计成在WEB上交换结构化的和固化的信息。</p>
-<p>由于SOAP是基于XML的我们在传输过程中请求参数和返回内容都是XML格式，在这里我使用了XMLDictionary 转换工具 </p>
-<p>导入XMLDictionary</p>
+            <p>大致原理和步骤为：</p>
 <ul>
-<li>使用cocoapods导入 pod ‘XMLDictionary’ </li>
-<li>github连接：<a href="https://github.com/nicklockwood/XMLDictionary" target="_blank" rel="noopener">https://github.com/nicklockwood/XMLDictionary</a></li>
+<li><strong>裁剪出需要识别图片的模板；</strong></li>
+<li><strong>如果需要识别图片中的某一/几个区域，需要进行相对的尺寸修改、图片分割等操作步骤；</strong></li>
+<li><strong>遍历待识别的图片的像素点，和模板图片的像素点进行比对作差，差值为0（或最小）则为相对的图片；</strong></li>
+<li><strong>本代码只适用于简单的图片识别，或数字识别（需要加上灰度化、二值化，代码也很简单，只是测量出合适的阈值比较麻烦），不适合文字识别。</strong></li>
 </ul>
-<p>AFN实现SOAP</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">//我使用的该类是继承于AFHTTPSessionManager的</span><br><span class="line">//ps 在soapStr中自己要设置命名空间</span><br><span class="line">/**</span><br><span class="line"> Post方式请求</span><br><span class="line"> </span><br><span class="line"> @param methodString 方法名</span><br><span class="line"> @param parameter 参数</span><br><span class="line"> @param successBlock 成功回调</span><br><span class="line"> @param isShowHud 是否显示ProgressHUD</span><br><span class="line"> */</span><br><span class="line">- (void)httpPostRequestWithMethodString:(NSString *)methodString withParameters:(NSDictionary *)parameter success:(SuccessBlock)successBlock failure:(FailureBlock)failureBlock isShowHUD:(BOOL)isShowHud</span><br><span class="line">&#123;</span><br><span class="line"> </span><br><span class="line">    if (isShowHud) &#123;</span><br><span class="line">        [MBProgressHUD showMessage:@&quot;正在加载&quot;];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    NSString *soapStr = [NSString stringWithFormat:@&quot;&lt;v:Envelope xmlns:i=\&quot;http://www.w3.org/2001/XMLSchema-instance\&quot; </span><br><span class="line">xmlns:d=\&quot;http://www.w3.org/2001/XMLSchema\&quot; xmlns:c=\&quot;http://schemas.xmlsoap.org/soap/encoding/\&quot; </span><br><span class="line">xmlns:v=\&quot;http://schemas.xmlsoap.org/soap/envelope/\&quot;&gt; &lt;v:Header /&gt; &lt;v:Body </span><br><span class="line">xmlns=\&quot;命名空间这个自己问后台要\&quot; id=\&quot;o0\&quot; c:root=\&quot;1\&quot;&gt; %@ &lt;/v:Body&gt; &lt;/v:Envelope&gt;&quot;,[@&#123;methodString:parameter&#125; XMLString]];</span><br><span class="line"></span><br><span class="line">//请求头根据后台需要设置</span><br><span class="line">    [self.requestSerializer setValue:@&quot;text/xml; charset=utf-8&quot; forHTTPHeaderField:@&quot;Content-Type&quot;];</span><br><span class="line"></span><br><span class="line">//在该处设置请求的SOAP请求内容</span><br><span class="line">    [self.requestSerializer setQueryStringSerializationWithBlock:^NSString * _Nonnull(NSURLRequest * _Nonnull request, id  _Nonnull parameters, NSError * _Nullable __autoreleasing * _Nullable error) &#123;</span><br><span class="line">        return soapStr;</span><br><span class="line">    &#125;];</span><br><span class="line">    </span><br><span class="line">    [self POST:@&quot;调用地址问后台要&quot; parameters:soapStr progress:^(NSProgress * _Nonnull uploadProgress) &#123;</span><br><span class="line">        </span><br><span class="line">    &#125; success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) &#123;</span><br><span class="line">        </span><br><span class="line">        [MBProgressHUD hideHUD];</span><br><span class="line">        </span><br><span class="line">        NSString *result = [[NSString alloc] initWithData:responseObject  encoding:NSUTF8StringEncoding];</span><br><span class="line">//        NSLog(@&quot;result:%@&quot;,result);</span><br><span class="line">        successBlock([NSDictionary dictionaryWithXMLString:result]);</span><br><span class="line">    &#125; failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) &#123;</span><br><span class="line"></span><br><span class="line">        [MBProgressHUD showError:error.localizedDescription];</span><br><span class="line">        failureBlock(error);</span><br><span class="line">    &#125;];</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>本文出自codeaword的博客 <a href="https://codeaword.github.io/2017/10/10/iOS-WebService-SOAP-请求的实现/">https://codeaword.github.io/2017/10/10/iOS-WebService-SOAP-请求的实现/</a> 欢迎转载，转载请注明出处！</p>
+<hr>
+<h3 id="核心代码（只有像素比对作差，修改图片尺寸、分割图片等方法比较简单就不写了）"><a href="#核心代码（只有像素比对作差，修改图片尺寸、分割图片等方法比较简单就不写了）" class="headerlink" title="核心代码（只有像素比对作差，修改图片尺寸、分割图片等方法比较简单就不写了）"></a>核心代码（只有像素比对作差，修改图片尺寸、分割图片等方法比较简单就不写了）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> *  待识别的卡牌</span><br><span class="line"> *</span><br><span class="line"> *  @param image 待识别卡牌</span><br><span class="line"> */</span><br><span class="line">- (void)checkCardsWithCardImage:(UIImage *)image</span><br><span class="line">&#123;</span><br><span class="line">    CGImageRef imageRef =image.CGImage;</span><br><span class="line">    CGDataProviderRef imageDataRef = CGImageGetDataProvider(imageRef);</span><br><span class="line">    NSData *imageData = (id)CFBridgingRelease(CGDataProviderCopyData(imageDataRef));</span><br><span class="line">    const uint8_t *imageUintData = [imageData bytes];//数组：存放待识别卡牌像素点</span><br><span class="line">    //最小像素差之和</span><br><span class="line">    uint32_t minSum = 9999999;</span><br><span class="line">    //记录最下卡牌</span><br><span class="line">    int card = 0;</span><br><span class="line">    //遍历标准牌（我的模板图片有68张）</span><br><span class="line">    for (int i = 1; i &lt; 68; i ++) &#123;</span><br><span class="line">        UIImage *standardImage = [UIImage imageNamed:[NSString stringWithFormat:@&quot;%d&quot;,i]];</span><br><span class="line">        CGImageRef standardRef =standardImage.CGImage;</span><br><span class="line">        CGDataProviderRef standardDataRef = CGImageGetDataProvider(standardRef);</span><br><span class="line">        NSData *standardData = (id)CFBridgingRelease(CGDataProviderCopyData(standardDataRef));</span><br><span class="line">        const uint8_t *standardUintData = [standardData bytes];</span><br><span class="line">        uint32_t sum = 0;</span><br><span class="line">        //获取偏移数值 图片大小为58*70的</span><br><span class="line">        for (int i = 0; i &lt; 58 * 70; i++）</span><br><span class="line">        &#123;</span><br><span class="line">            if ((standardUintData[i] - imageUintData[i])&lt;0)</span><br><span class="line">            &#123;</span><br><span class="line">                sum -= standardUintData[i] - imageUintData[i];</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                sum += standardUintData[i] - imageUintData[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        //获取最小的偏移数值，更新最小偏移值和卡牌编号</span><br><span class="line">        if (minSum&gt;sum) &#123;</span><br><span class="line">            minSum = sum;</span><br><span class="line">            card = i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    // method — getNameWithCardNumber：根据识别结果返回图片名称</span><br><span class="line">    NSString *cardName = [self getNameWithCardNumber:card];</span><br><span class="line">    NSLog(@&quot;识别结果：%d + %@&quot;,card,cardName);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>本文出自codeaword的博客 <a href="https://codeaword.github.io/2017/10/10/iOS-端简单的图片识别（比对像素点）/">https://codeaword.github.io/2017/10/10/iOS-端简单的图片识别（比对像素点）/</a> 欢迎转载，转载请注明出处！</p>
 
           
         
@@ -1486,7 +1492,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://codeaword.github.io/2017/10/10/iOS-LaunchScreen-国际化/">
+    <link itemprop="mainEntityOfPage" href="https://codeaword.github.io/2017/10/10/iOS-计算文本的高度/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Li Cong">
@@ -1505,7 +1511,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/10/10/iOS-LaunchScreen-国际化/" itemprop="url">iOS LaunchScreen 国际化</a></h1>
+                <a class="post-title-link" href="/2017/10/10/iOS-计算文本的高度/" itemprop="url">iOS-计算文本的高度</a></h1>
         
 
         <div class="post-meta">
@@ -1536,8 +1542,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/10/10/iOS-LaunchScreen-国际化/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2017/10/10/iOS-LaunchScreen-国际化/" itemprop="commentCount"></span>
+                <a href="/2017/10/10/iOS-计算文本的高度/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2017/10/10/iOS-计算文本的高度/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1545,7 +1551,7 @@
 
           
           
-             <span id="/2017/10/10/iOS-LaunchScreen-国际化/" class="leancloud_visitors" data-flag-title="iOS LaunchScreen 国际化">
+             <span id="/2017/10/10/iOS-计算文本的高度/" class="leancloud_visitors" data-flag-title="iOS-计算文本的高度">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1578,14 +1584,8 @@
       
         
           
-            <p>###添加中文国际化设置<br><img src="http://upload-images.jianshu.io/upload_images/2901013-c83bccc40019302b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="添加中文国际化设置.png"><br>在这里可以根据项目的需求配置不同语言的文件</p>
-<p>###勾选LaunchScreen中英文件<br><img src="http://upload-images.jianshu.io/upload_images/2901013-e0c3d641603112ef.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
-<h3 id="给label编辑不同语言下显示的文字"><a href="#给label编辑不同语言下显示的文字" class="headerlink" title="给label编辑不同语言下显示的文字"></a>给label编辑不同语言下显示的文字</h3><ul>
-<li>找到Label的ObjectID<br><img src="http://upload-images.jianshu.io/upload_images/2901013-76ff81376d3b6204.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></li>
-<li>设置label的文字<br><img src="http://upload-images.jianshu.io/upload_images/2901013-1665ddb18fcb6170.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></li>
-</ul>
-<h3 id="未解决的问题："><a href="#未解决的问题：" class="headerlink" title="未解决的问题："></a>未解决的问题：</h3><p>无论怎么切换语言，LaunchScreen 只使用英文的文字，看了很多文章有写以其他其他方式进行国际化，不过暂时还没有去试验。<br>本次设置国际化主要是用来通过xcodebuild来打包的时候动态修改LaunchScreen的文字才使用的，目的达到了，偏离了主题，很抱歉</p>
-<p>本文出自codeaword的博客 <a href="https://codeaword.github.io/2017/10/10/iOS-LaunchScreen-国际化/">https://codeaword.github.io/2017/10/10/iOS-LaunchScreen-国际化/</a> 欢迎转载，转载请注明出处！</p>
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NSDictionary * dict=[NSDictionary dictionaryWithObject: [UIFont systemFontOfSize:fontsize] forKey:NSFontAttributeName];</span><br><span class="line">   CGRect rect=[string boundingRectWithSize:CGSizeMake(width, MAXFLOAT) options:NSStringDrawingTruncatesLastVisibleLine|NSStringDrawingUsesFontLeading|NSStringDrawingUsesLineFragmentOrigin attributes:dict context:nil];</span><br></pre></td></tr></table></figure>
+<p>本文出自codeaword的博客 <a href="https://codeaword.github.io/2017/10/10/iOS-计算文本的高度/">https://codeaword.github.io/2017/10/10/iOS-计算文本的高度/</a> 欢迎转载，转载请注明出处！</p>
 
           
         
