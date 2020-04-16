@@ -1,0 +1,638 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="iOS,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="UILocalizedIndexedCollation 可以对数组重建索引，按照首字母顺序进行排序。 IndexTool.h 12#define kToolsIndexAryKey @&amp;quot;LCIndexAryKey&amp;quot;     //索引#define kToolsGroupAryKey @&amp;quot;LCGroupAryKey&amp;quot;  //排序后的分组 123456789/*">
+<meta name="keywords" content="iOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UILocalizedIndexedCollation通讯录分组排序">
+<meta property="og:url" content="http://blog.codeaword.com/2017/10/10/UILocalizedIndexedCollation通讯录分组排序/index.html">
+<meta property="og:site_name" content="Code a word">
+<meta property="og:description" content="UILocalizedIndexedCollation 可以对数组重建索引，按照首字母顺序进行排序。 IndexTool.h 12#define kToolsIndexAryKey @&amp;quot;LCIndexAryKey&amp;quot;     //索引#define kToolsGroupAryKey @&amp;quot;LCGroupAryKey&amp;quot;  //排序后的分组 123456789/*">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-04-16T11:10:02.796Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="UILocalizedIndexedCollation通讯录分组排序">
+<meta name="twitter:description" content="UILocalizedIndexedCollation 可以对数组重建索引，按照首字母顺序进行排序。 IndexTool.h 12#define kToolsIndexAryKey @&amp;quot;LCIndexAryKey&amp;quot;     //索引#define kToolsGroupAryKey @&amp;quot;LCGroupAryKey&amp;quot;  //排序后的分组 123456789/*">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: false,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.codeaword.com/2017/10/10/UILocalizedIndexedCollation通讯录分组排序/">
+
+
+
+
+
+  <title> UILocalizedIndexedCollation通讯录分组排序 | Code a word </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Code a word</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.codeaword.com/2017/10/10/UILocalizedIndexedCollation通讯录分组排序/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Li Cong">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Code a word">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                UILocalizedIndexedCollation通讯录分组排序
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-10T11:26:10+08:00">
+                2017-10-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>UILocalizedIndexedCollation 可以对数组重建索引，按照首字母顺序进行排序。</p>
+<p>IndexTool.h</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#define kToolsIndexAryKey @&quot;LCIndexAryKey&quot;     //索引</span><br><span class="line">#define kToolsGroupAryKey @&quot;LCGroupAryKey&quot;  //排序后的分组</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> 对数组排序</span><br><span class="line"></span><br><span class="line"> @param mArray      需要排序的数组</span><br><span class="line"> @param proretyName 数组中对象需要排序的属性</span><br><span class="line"></span><br><span class="line"> @return 排序后的索引及gourpAry 字典形式 kToolsIndexAryKey kToolsGroupAryKey</span><br><span class="line"> */</span><br><span class="line">+ (NSDictionary *)sortedArrayWithChineseObject:(NSMutableArray *)mArray  withPropertyNameSEL:(SEL)nameSEL ;</span><br></pre></td></tr></table></figure>
+<p>proretyName为属性名称例如：<br>Person 类  属性 ：name age phoneNumber<br>我们需要根据name的首字母来排序分组 则传递@selector(name)</p>
+<p>IndexTool.m</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">//数组排序</span><br><span class="line">+ (NSDictionary *)sortedArrayWithChineseObject:(NSMutableArray *)mArray  withPropertyNameSEL:(SEL)nameSEL &#123;</span><br><span class="line">    </span><br><span class="line">    UILocalizedIndexedCollation *indexCollation = [UILocalizedIndexedCollation currentCollation];</span><br><span class="line">    NSInteger index, sectionTitlesCount = [[indexCollation sectionTitles] count];</span><br><span class="line">    NSMutableArray *suoYinArr = [[NSMutableArray alloc] initWithArray:[indexCollation sectionTitles]];</span><br><span class="line">    </span><br><span class="line">    //临时数据，存放section对应的userObjs数组数据</span><br><span class="line">    NSMutableArray *newSectionsArray = [[NSMutableArray alloc] initWithCapacity:sectionTitlesCount];</span><br><span class="line">    </span><br><span class="line">    //设置sections数组初始化：元素包含userObjs数据的空数据</span><br><span class="line">    for (index = 0; index &lt; sectionTitlesCount; index++) &#123;</span><br><span class="line">        NSMutableArray *array = [[NSMutableArray alloc] init];</span><br><span class="line">        [newSectionsArray addObject:array];</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    //分组</span><br><span class="line">    for (id object in mArray) &#123;</span><br><span class="line">        //根据timezone的localename，获得对应的的section number</span><br><span class="line">        NSInteger sectionNumber = [indexCollation sectionForObject:object collationStringSelector:nameSEL];</span><br><span class="line">        //根据sectionNumber获取数组</span><br><span class="line">        NSMutableArray *sectionUserObjs = [newSectionsArray objectAtIndex:sectionNumber];</span><br><span class="line">        //添加对象到对应的数组中</span><br><span class="line">        [sectionUserObjs addObject:object];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //获取空的数组的index</span><br><span class="line">    NSMutableArray *willDeleteAry = [NSMutableArray new];</span><br><span class="line">    for (int i = 0; i &lt; newSectionsArray.count; i ++) &#123;</span><br><span class="line">        NSArray *tempAry = newSectionsArray[i];</span><br><span class="line">        if (tempAry.count == 0) &#123;</span><br><span class="line">            [willDeleteAry addObject:[NSString stringWithFormat:@&quot;%d&quot;,i]];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    //删除空的数组</span><br><span class="line">    for (NSInteger i = willDeleteAry.count; i &gt; 0; i -- ) &#123;</span><br><span class="line">        NSInteger index = [willDeleteAry[i - 1] integerValue];</span><br><span class="line">        [newSectionsArray removeObjectAtIndex:index];</span><br><span class="line">        [suoYinArr removeObjectAtIndex:index];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //该字典中存放分组排序呢后的索引及数据</span><br><span class="line">    NSDictionary *dict = @&#123;kToolsGroupAryKey:newSectionsArray,kToolsIndexAryKey:suoYinArr&#125;;</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    return dict;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>本文出自codeaword的博客 <a href="http://blog.codeaword.com/2017/10/10/UILocalizedIndexedCollation通讯录分组排序/">http://blog.codeaword.com/2017/10/10/UILocalizedIndexedCollation通讯录分组排序/</a> 欢迎转载，转载请注明出处！</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag"># iOS</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/10/iOS-LaunchScreen-国际化/" rel="next" title="iOS LaunchScreen 国际化">
+                <i class="fa fa-chevron-left"></i> iOS LaunchScreen 国际化
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Li Cong">
+          <p class="site-author-name" itemprop="name">Li Cong</p>
+           
+              <p class="site-description motion-element" itemprop="description">没有人因为学习而变得贫困，活到老学到老！</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Li Cong</span>
+</div>
+
+
+<div class="powered-by">
+  codeaword
+</div>
+
+<div class="theme-info">
+  个人博客
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
