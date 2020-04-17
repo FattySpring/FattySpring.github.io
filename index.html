@@ -242,198 +242,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://codeaword.github.io/2017/10/10/OpenCV+TesseractOCRiOS实现身份证号识别/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Li Cong">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Code a word">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/10/OpenCV+TesseractOCRiOS实现身份证号识别/" itemprop="url">OpenCV+TesseractOCRiOS实现身份证号识别</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-10T11:26:10+08:00">
-                2017-10-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/10/10/OpenCV+TesseractOCRiOS实现身份证号识别/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2017/10/10/OpenCV+TesseractOCRiOS实现身份证号识别/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2017/10/10/OpenCV+TesseractOCRiOS实现身份证号识别/" class="leancloud_visitors" data-flag-title="OpenCV+TesseractOCRiOS实现身份证号识别">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li>iOS 文字识别准备</li>
-<li>图片灰度化</li>
-<li>图片二值化</li>
-<li>根据特征点提取某一区域</li>
-</ul>
-<p>声明：思路来源于 <a href="http://www.jianshu.com/p/ac4c4536ca3e" target="_blank" rel="noopener">iOS身份证号码识别</a> ,在此我对作者表示感谢，一下内容，是我结合<a href="#http://www.opencv.org.cn/opencvdoc/2.3.2/html/doc/tutorials/tutorials.html">http://www.opencv.org.cn</a>写的一个简单教程，对该工程所用到的方法进行解读，在本文的最后，会附上完整的代码.</p>
-<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><h3 id="iOS-文字识别准备"><a href="#iOS-文字识别准备" class="headerlink" title="iOS 文字识别准备"></a>iOS 文字识别准备</h3><p>文字识别重要点在对图片的预处理，预处理做的比较好，识别率就会比较高，本次所介绍的身份证号识别是基于OpenCV、TesseractOCRiOS来实现的<br>首先使用CocoaPods导入三方库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pod &apos;OpenCV&apos;, &apos;~&gt; 3.0.0&apos;</span><br><span class="line">pod &apos;TesseractOCRiOS&apos;, &apos;~&gt; 4.0.0&apos;</span><br></pre></td></tr></table></figure></p>
-<h3 id="灰度化"><a href="#灰度化" class="headerlink" title="灰度化"></a>灰度化</h3><p>灰度化，在RGB模型中，如果R=G=B时，则彩色表示一种灰度颜色，其中R=G=B的值叫灰度值，因此，灰度图像每个像素只需一个字节存放灰度值（又称强度值、亮度值），灰度范围为0-255。<br>下面说一下如何使用OpenCV进行灰度化处理，使用的OpenCV是一个C++ 的代码，在使用的类中要将.m文件改为.mm<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//将UIImage转换成矩阵</span><br><span class="line">cv::Mat resultImage;//定义矩阵</span><br><span class="line">UIImageToMat(image, resultImage);</span><br><span class="line">//转为灰度图</span><br><span class="line">cvtColor(resultImage, resultImage, cv::COLOR_BGR2GRAY);</span><br></pre></td></tr></table></figure></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2901013-424632f532885b61.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="原图.png"></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2901013-ea2ccca4c85c5a2b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="灰度化.png"></p>
-<h3 id="二值化"><a href="#二值化" class="headerlink" title="二值化"></a>二值化</h3><p>图像的二值化，就是将图像上的像素点的灰度值设置为0或255，也就是将整个图像呈现出明显的只有黑和白的视觉效果。</p>
-<h5 id="固定阈值门限分割"><a href="#固定阈值门限分割" class="headerlink" title="固定阈值门限分割"></a>固定阈值门限分割</h5><ul>
-<li><p>方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">double threshold( InputArray src, OutputArray dst,</span><br><span class="line">                               double thresh, double maxval, int type );</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>参数说明</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">src 输入矩阵</span><br><span class="line">dst 输出矩阵</span><br><span class="line">thresh 阀值</span><br><span class="line">maxval 最大值（这里通常设置为255）</span><br><span class="line">thresholdType 分割类型</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>分割类型说明</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//value 矩阵中一个单位的颜色的值</span><br><span class="line">//threshold 阀值</span><br><span class="line">CV_THRESH_BINARY      =0,  /**value &gt; threshold ? max_value : 0       */</span><br><span class="line">    CV_THRESH_BINARY_INV  =1,  /**value &gt; threshold ? 0 : max_value       */</span><br><span class="line">    CV_THRESH_TRUNC       =2,  /** value &gt; threshold ? threshold : value   */</span><br><span class="line">    CV_THRESH_TOZERO      =3,  /**value &gt; threshold ? value : 0           */</span><br><span class="line">    CV_THRESH_TOZERO_INV  =4,  /** value &gt; threshold ? 0 : value */</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv::threshold(resultImage, resultImage, 100, 255, CV_THRESH_BINARY);</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p><img src="http://upload-images.jianshu.io/upload_images/2901013-d3a1d9852e19eb75.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="阀值为100二值化.png"></p>
-<p>这里又有一个很重要的点，阀值的确定，我是在网上找了个计算阀值的算法，不过不是很理想，现在也贴出来，但是不知道作者是谁了，很抱歉…<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">int cvThresholdOtsu(IplImage* src)</span><br><span class="line">&#123;</span><br><span class="line">    int height=src-&gt;height;</span><br><span class="line">    int width=src-&gt;width;</span><br><span class="line">    </span><br><span class="line">    //histogram</span><br><span class="line">    float histogram[256]=&#123;0&#125;;</span><br><span class="line">    for(int i=0;i&lt;height;i++) &#123;</span><br><span class="line">        unsigned char* p=(unsigned char*)src-&gt;imageData+src-&gt;widthStep*i;</span><br><span class="line">        for(int j=0;j&lt;width;j++) &#123;</span><br><span class="line">            histogram[*p++]++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    //normalize histogram</span><br><span class="line">    int size=height*width;</span><br><span class="line">    for(int i=0;i&lt;256;i++) &#123;</span><br><span class="line">        histogram[i]=histogram[i]/size;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //average pixel value</span><br><span class="line">    float avgValue=0;</span><br><span class="line">    for(int i=0;i&lt;256;i++) &#123;</span><br><span class="line">        avgValue+=i*histogram[i];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    int threshold = 0;</span><br><span class="line">    float maxVariance=0;</span><br><span class="line">    float w=0,u=0;</span><br><span class="line">    for(int i=0;i&lt;256;i++) &#123;</span><br><span class="line">        w+=histogram[i];</span><br><span class="line">        u+=i*histogram[i];</span><br><span class="line">        </span><br><span class="line">        float t=avgValue*w-u;</span><br><span class="line">        float variance=t*t/(w*(1-w));</span><br><span class="line">        if(variance&gt;maxVariance) &#123;</span><br><span class="line">            maxVariance=variance;</span><br><span class="line">            threshold=i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    return threshold;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>截取卡号区域<br>思路，现将黑色的点放大，这样点会连接到一起，变成一块儿黑色，然后我们通过图片的轮廓，宽高比例来寻找复合的一个区域，将其截取下来</li>
-</ul>
-<p>###<a href="http://www.opencv.org.cn/opencvdoc/2.3.2/html/doc/tutorials/imgproc/erosion_dilatation/erosion_dilatation.html" target="_blank" rel="noopener">腐蚀&amp;膨胀</a></p>
-<ul>
-<li>官方解释：<br>腐蚀：进行腐蚀操作时，将内核B划过图像,将内核B覆盖区域的最小相素值提取，并代替锚点位置的相素。<br>膨胀：进行膨胀操作时，将内核B划过图像,将内核B覆盖区域的最大相素值提取，并代替锚点位置的相素。显然，这一最大化操作将会导致图像中的亮区开始”扩展” (因此有了术语膨胀 <em>dilation</em> )。对上图采用膨胀操作我们得到:</li>
-<li>个人理解：<br>腐蚀：定义一个size，用这个size替换图片每个点（加粗）<br>膨胀：与腐蚀相反（变细）<br>个人的认识比较low，在这里呢使用腐蚀目的是将相近的黑色点连接到一块，已便后面获取所有数字连接到一块儿的轮廓，对比每个轮廓的宽高比，截取到卡号区域。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cv::Mat erodeElement = getStructuringElement(cv::MORPH_RECT, cv::Size(25,1));</span><br><span class="line">cv::erode(resultImage, resultImage, erodeElement);</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p><img src="http://upload-images.jianshu.io/upload_images/2901013-34bfb42366251428.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="腐蚀之后的照片"></p>
-<p>###<a href="http://www.opencv.org.cn/opencvdoc/2.3.2/html/doc/tutorials/imgproc/shapedescriptors/find_contours/find_contours.html#find-contours" target="_blank" rel="noopener">在图像中寻找轮廓</a></p>
-<ul>
-<li><p>方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//获取图片轮廓</span><br><span class="line">findContours( InputOutputArray image, OutputArrayOfArrays contours,</span><br><span class="line">                              int mode, int method, Point offset = Point());</span><br><span class="line">//将存放Point的数组转为Rect</span><br><span class="line">Rect boundingRect( InputArray points );</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>findContours参数说明</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">InputOutputArray:输入输出的图片</span><br><span class="line">OutputArrayOfArrays:输出的轮廓点，这是一个三维数</span><br><span class="line">std::vector&lt;std::vector&lt;cv::Point&gt;&gt; contours;</span><br><span class="line"></span><br><span class="line">mode:轮廓检索模式,具体参考cv::RetrievalModes</span><br><span class="line">CV_RETR_EXTERNAL：只检索最外面的轮廓；</span><br><span class="line">CV_RETR_LIST：检索所有的轮廓，并将其放入list中；</span><br><span class="line">CV_RETR_CCOMP：检索所有的轮廓，并将他们组织为两层：顶层是各部分的外部边界，第二层是空洞的边界；</span><br><span class="line">CV_RETR_TREE：检索所有的轮廓，并重构嵌套轮廓的整个层次。</span><br><span class="line"></span><br><span class="line">method:轮廓近似法,具体参考cv::ContourApproximationModes</span><br><span class="line">CV_CHAIN_CODE：以Freeman链码的方式输出轮廓，所有其他方法输出多边形（顶点的序列）。</span><br><span class="line">CV_CHAIN_APPROX_NONE：将所有的连码点，转换成点。</span><br><span class="line">CV_CHAIN_APPROX_SIMPLE：压缩水平的、垂直的和斜的部分，也就是，函数只保留他们的终点部分。</span><br><span class="line">CV_CHAIN_APPROX_TC89_L1，CV_CHAIN_APPROX_TC89_KCOS：使用the flavors of Teh-Chin chain近似算法</span><br><span class="line">的一种。</span><br><span class="line">CV_LINK_RUNS：通过连接水平段的1，使用完全不同的边缘提取算法。使用CV_RETR_LIST检索模式能使用此方法。</span><br><span class="line">offset：偏移量，用于移动所有轮廓点。</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv::findContours(resultImage, contours, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, cvPoint(0, 0));</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>###根据轮廓选取目标区域</p>
-<p>本文出自codeaword的博客 <a href="https://codeaword.github.io/2017/10/10/OpenCV+TesseractOCRiOS实现身份证号识别/">https://codeaword.github.io/2017/10/10/OpenCV+TesseractOCRiOS实现身份证号识别/</a> 欢迎转载，转载请注明出处！</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://codeaword.github.io/2017/10/10/UILocalizedIndexedCollation通讯录分组排序/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -682,6 +490,198 @@
 </ul>
 <h3 id="未解决的问题："><a href="#未解决的问题：" class="headerlink" title="未解决的问题："></a>未解决的问题：</h3><p>无论怎么切换语言，LaunchScreen 只使用英文的文字，看了很多文章有写以其他其他方式进行国际化，不过暂时还没有去试验。<br>本次设置国际化主要是用来通过xcodebuild来打包的时候动态修改LaunchScreen的文字才使用的，目的达到了，偏离了主题，很抱歉</p>
 <p>本文出自codeaword的博客 <a href="https://codeaword.github.io/2017/10/10/iOS-LaunchScreen-国际化/">https://codeaword.github.io/2017/10/10/iOS-LaunchScreen-国际化/</a> 欢迎转载，转载请注明出处！</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://codeaword.github.io/2017/10/10/OpenCV+TesseractOCRiOS实现身份证号识别/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Li Cong">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Code a word">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/10/OpenCV+TesseractOCRiOS实现身份证号识别/" itemprop="url">OpenCV+TesseractOCRiOS实现身份证号识别</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-10T11:26:10+08:00">
+                2017-10-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/10/10/OpenCV+TesseractOCRiOS实现身份证号识别/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2017/10/10/OpenCV+TesseractOCRiOS实现身份证号识别/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/10/10/OpenCV+TesseractOCRiOS实现身份证号识别/" class="leancloud_visitors" data-flag-title="OpenCV+TesseractOCRiOS实现身份证号识别">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li>iOS 文字识别准备</li>
+<li>图片灰度化</li>
+<li>图片二值化</li>
+<li>根据特征点提取某一区域</li>
+</ul>
+<p>声明：思路来源于 <a href="http://www.jianshu.com/p/ac4c4536ca3e" target="_blank" rel="noopener">iOS身份证号码识别</a> ,在此我对作者表示感谢，一下内容，是我结合<a href="#http://www.opencv.org.cn/opencvdoc/2.3.2/html/doc/tutorials/tutorials.html">http://www.opencv.org.cn</a>写的一个简单教程，对该工程所用到的方法进行解读，在本文的最后，会附上完整的代码.</p>
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><h3 id="iOS-文字识别准备"><a href="#iOS-文字识别准备" class="headerlink" title="iOS 文字识别准备"></a>iOS 文字识别准备</h3><p>文字识别重要点在对图片的预处理，预处理做的比较好，识别率就会比较高，本次所介绍的身份证号识别是基于OpenCV、TesseractOCRiOS来实现的<br>首先使用CocoaPods导入三方库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pod &apos;OpenCV&apos;, &apos;~&gt; 3.0.0&apos;</span><br><span class="line">pod &apos;TesseractOCRiOS&apos;, &apos;~&gt; 4.0.0&apos;</span><br></pre></td></tr></table></figure></p>
+<h3 id="灰度化"><a href="#灰度化" class="headerlink" title="灰度化"></a>灰度化</h3><p>灰度化，在RGB模型中，如果R=G=B时，则彩色表示一种灰度颜色，其中R=G=B的值叫灰度值，因此，灰度图像每个像素只需一个字节存放灰度值（又称强度值、亮度值），灰度范围为0-255。<br>下面说一下如何使用OpenCV进行灰度化处理，使用的OpenCV是一个C++ 的代码，在使用的类中要将.m文件改为.mm<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//将UIImage转换成矩阵</span><br><span class="line">cv::Mat resultImage;//定义矩阵</span><br><span class="line">UIImageToMat(image, resultImage);</span><br><span class="line">//转为灰度图</span><br><span class="line">cvtColor(resultImage, resultImage, cv::COLOR_BGR2GRAY);</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2901013-424632f532885b61.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="原图.png"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2901013-ea2ccca4c85c5a2b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="灰度化.png"></p>
+<h3 id="二值化"><a href="#二值化" class="headerlink" title="二值化"></a>二值化</h3><p>图像的二值化，就是将图像上的像素点的灰度值设置为0或255，也就是将整个图像呈现出明显的只有黑和白的视觉效果。</p>
+<h5 id="固定阈值门限分割"><a href="#固定阈值门限分割" class="headerlink" title="固定阈值门限分割"></a>固定阈值门限分割</h5><ul>
+<li><p>方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">double threshold( InputArray src, OutputArray dst,</span><br><span class="line">                               double thresh, double maxval, int type );</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>参数说明</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">src 输入矩阵</span><br><span class="line">dst 输出矩阵</span><br><span class="line">thresh 阀值</span><br><span class="line">maxval 最大值（这里通常设置为255）</span><br><span class="line">thresholdType 分割类型</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>分割类型说明</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//value 矩阵中一个单位的颜色的值</span><br><span class="line">//threshold 阀值</span><br><span class="line">CV_THRESH_BINARY      =0,  /**value &gt; threshold ? max_value : 0       */</span><br><span class="line">    CV_THRESH_BINARY_INV  =1,  /**value &gt; threshold ? 0 : max_value       */</span><br><span class="line">    CV_THRESH_TRUNC       =2,  /** value &gt; threshold ? threshold : value   */</span><br><span class="line">    CV_THRESH_TOZERO      =3,  /**value &gt; threshold ? value : 0           */</span><br><span class="line">    CV_THRESH_TOZERO_INV  =4,  /** value &gt; threshold ? 0 : value */</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv::threshold(resultImage, resultImage, 100, 255, CV_THRESH_BINARY);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/2901013-d3a1d9852e19eb75.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="阀值为100二值化.png"></p>
+<p>这里又有一个很重要的点，阀值的确定，我是在网上找了个计算阀值的算法，不过不是很理想，现在也贴出来，但是不知道作者是谁了，很抱歉…<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">int cvThresholdOtsu(IplImage* src)</span><br><span class="line">&#123;</span><br><span class="line">    int height=src-&gt;height;</span><br><span class="line">    int width=src-&gt;width;</span><br><span class="line">    </span><br><span class="line">    //histogram</span><br><span class="line">    float histogram[256]=&#123;0&#125;;</span><br><span class="line">    for(int i=0;i&lt;height;i++) &#123;</span><br><span class="line">        unsigned char* p=(unsigned char*)src-&gt;imageData+src-&gt;widthStep*i;</span><br><span class="line">        for(int j=0;j&lt;width;j++) &#123;</span><br><span class="line">            histogram[*p++]++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    //normalize histogram</span><br><span class="line">    int size=height*width;</span><br><span class="line">    for(int i=0;i&lt;256;i++) &#123;</span><br><span class="line">        histogram[i]=histogram[i]/size;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //average pixel value</span><br><span class="line">    float avgValue=0;</span><br><span class="line">    for(int i=0;i&lt;256;i++) &#123;</span><br><span class="line">        avgValue+=i*histogram[i];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    int threshold = 0;</span><br><span class="line">    float maxVariance=0;</span><br><span class="line">    float w=0,u=0;</span><br><span class="line">    for(int i=0;i&lt;256;i++) &#123;</span><br><span class="line">        w+=histogram[i];</span><br><span class="line">        u+=i*histogram[i];</span><br><span class="line">        </span><br><span class="line">        float t=avgValue*w-u;</span><br><span class="line">        float variance=t*t/(w*(1-w));</span><br><span class="line">        if(variance&gt;maxVariance) &#123;</span><br><span class="line">            maxVariance=variance;</span><br><span class="line">            threshold=i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    return threshold;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>截取卡号区域<br>思路，现将黑色的点放大，这样点会连接到一起，变成一块儿黑色，然后我们通过图片的轮廓，宽高比例来寻找复合的一个区域，将其截取下来</li>
+</ul>
+<p>###<a href="http://www.opencv.org.cn/opencvdoc/2.3.2/html/doc/tutorials/imgproc/erosion_dilatation/erosion_dilatation.html" target="_blank" rel="noopener">腐蚀&amp;膨胀</a></p>
+<ul>
+<li>官方解释：<br>腐蚀：进行腐蚀操作时，将内核B划过图像,将内核B覆盖区域的最小相素值提取，并代替锚点位置的相素。<br>膨胀：进行膨胀操作时，将内核B划过图像,将内核B覆盖区域的最大相素值提取，并代替锚点位置的相素。显然，这一最大化操作将会导致图像中的亮区开始”扩展” (因此有了术语膨胀 <em>dilation</em> )。对上图采用膨胀操作我们得到:</li>
+<li>个人理解：<br>腐蚀：定义一个size，用这个size替换图片每个点（加粗）<br>膨胀：与腐蚀相反（变细）<br>个人的认识比较low，在这里呢使用腐蚀目的是将相近的黑色点连接到一块，已便后面获取所有数字连接到一块儿的轮廓，对比每个轮廓的宽高比，截取到卡号区域。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cv::Mat erodeElement = getStructuringElement(cv::MORPH_RECT, cv::Size(25,1));</span><br><span class="line">cv::erode(resultImage, resultImage, erodeElement);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/2901013-34bfb42366251428.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="腐蚀之后的照片"></p>
+<p>###<a href="http://www.opencv.org.cn/opencvdoc/2.3.2/html/doc/tutorials/imgproc/shapedescriptors/find_contours/find_contours.html#find-contours" target="_blank" rel="noopener">在图像中寻找轮廓</a></p>
+<ul>
+<li><p>方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//获取图片轮廓</span><br><span class="line">findContours( InputOutputArray image, OutputArrayOfArrays contours,</span><br><span class="line">                              int mode, int method, Point offset = Point());</span><br><span class="line">//将存放Point的数组转为Rect</span><br><span class="line">Rect boundingRect( InputArray points );</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>findContours参数说明</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">InputOutputArray:输入输出的图片</span><br><span class="line">OutputArrayOfArrays:输出的轮廓点，这是一个三维数</span><br><span class="line">std::vector&lt;std::vector&lt;cv::Point&gt;&gt; contours;</span><br><span class="line"></span><br><span class="line">mode:轮廓检索模式,具体参考cv::RetrievalModes</span><br><span class="line">CV_RETR_EXTERNAL：只检索最外面的轮廓；</span><br><span class="line">CV_RETR_LIST：检索所有的轮廓，并将其放入list中；</span><br><span class="line">CV_RETR_CCOMP：检索所有的轮廓，并将他们组织为两层：顶层是各部分的外部边界，第二层是空洞的边界；</span><br><span class="line">CV_RETR_TREE：检索所有的轮廓，并重构嵌套轮廓的整个层次。</span><br><span class="line"></span><br><span class="line">method:轮廓近似法,具体参考cv::ContourApproximationModes</span><br><span class="line">CV_CHAIN_CODE：以Freeman链码的方式输出轮廓，所有其他方法输出多边形（顶点的序列）。</span><br><span class="line">CV_CHAIN_APPROX_NONE：将所有的连码点，转换成点。</span><br><span class="line">CV_CHAIN_APPROX_SIMPLE：压缩水平的、垂直的和斜的部分，也就是，函数只保留他们的终点部分。</span><br><span class="line">CV_CHAIN_APPROX_TC89_L1，CV_CHAIN_APPROX_TC89_KCOS：使用the flavors of Teh-Chin chain近似算法</span><br><span class="line">的一种。</span><br><span class="line">CV_LINK_RUNS：通过连接水平段的1，使用完全不同的边缘提取算法。使用CV_RETR_LIST检索模式能使用此方法。</span><br><span class="line">offset：偏移量，用于移动所有轮廓点。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv::findContours(resultImage, contours, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, cvPoint(0, 0));</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>###根据轮廓选取目标区域</p>
+<p>本文出自codeaword的博客 <a href="https://codeaword.github.io/2017/10/10/OpenCV+TesseractOCRiOS实现身份证号识别/">https://codeaword.github.io/2017/10/10/OpenCV+TesseractOCRiOS实现身份证号识别/</a> 欢迎转载，转载请注明出处！</p>
 
           
         
@@ -1328,6 +1328,148 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://codeaword.github.io/2017/10/10/iOS-计算文本的高度/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Li Cong">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Code a word">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/10/iOS-计算文本的高度/" itemprop="url">iOS-计算文本的高度</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-10T11:26:10+08:00">
+                2017-10-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/10/10/iOS-计算文本的高度/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2017/10/10/iOS-计算文本的高度/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/10/10/iOS-计算文本的高度/" class="leancloud_visitors" data-flag-title="iOS-计算文本的高度">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NSDictionary * dict=[NSDictionary dictionaryWithObject: [UIFont systemFontOfSize:fontsize] forKey:NSFontAttributeName];</span><br><span class="line">   CGRect rect=[string boundingRectWithSize:CGSizeMake(width, MAXFLOAT) options:NSStringDrawingTruncatesLastVisibleLine|NSStringDrawingUsesFontLeading|NSStringDrawingUsesLineFragmentOrigin attributes:dict context:nil];</span><br></pre></td></tr></table></figure>
+<p>本文出自codeaword的博客 <a href="https://codeaword.github.io/2017/10/10/iOS-计算文本的高度/">https://codeaword.github.io/2017/10/10/iOS-计算文本的高度/</a> 欢迎转载，转载请注明出处！</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://codeaword.github.io/2017/10/10/iOS11-&-iPhone-X-适配之路/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1454,148 +1596,6 @@
 <p>未完，持续更新~</p>
 <p>#参考文章链接<br><a href="https://devstreaming-cdn.apple.com/videos/wwdc/2017/204kty9amomlmk222/204/204_updating_your_app_for_ios_11.pdf" target="_blank" rel="noopener">Updating Your App for iOS 11</a><br><a href="https://developer.apple.com/design/" target="_blank" rel="noopener">Designing for iPhone X</a><br><a href="http://www.jianshu.com/p/370d82ba3939" target="_blank" rel="noopener">你可能需要为你的APP适配iOS11</a><br><a href="https://mp.weixin.qq.com/s?__biz=MzUxODI3MjY2Ng==&amp;mid=2247483816&amp;idx=1&amp;sn=c3fe3a5c5761fb55a69a008a08fef9aa&amp;chksm=f98a225dcefdab4b42d9778b09c4d5b587094a4209c48171901e04e570477c8bed5bf61106ce&amp;mpshare=1&amp;scene=23&amp;srcid=0920XPZzBwLPNHV94w7XwW9s#rd" target="_blank" rel="noopener">刘海 |关于iPhone X 的适配</a></p>
 <p>本文出自codeaword的博客 <a href="https://codeaword.github.io/2017/10/10/iOS11-&amp;-iPhone-X-适配之路/">https://codeaword.github.io/2017/10/10/iOS11-&amp;-iPhone-X-适配之路/</a> 欢迎转载，转载请注明出处！</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://codeaword.github.io/2017/10/10/iOS-计算文本的高度/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Li Cong">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Code a word">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/10/iOS-计算文本的高度/" itemprop="url">iOS-计算文本的高度</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-10T11:26:10+08:00">
-                2017-10-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/10/10/iOS-计算文本的高度/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2017/10/10/iOS-计算文本的高度/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2017/10/10/iOS-计算文本的高度/" class="leancloud_visitors" data-flag-title="iOS-计算文本的高度">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NSDictionary * dict=[NSDictionary dictionaryWithObject: [UIFont systemFontOfSize:fontsize] forKey:NSFontAttributeName];</span><br><span class="line">   CGRect rect=[string boundingRectWithSize:CGSizeMake(width, MAXFLOAT) options:NSStringDrawingTruncatesLastVisibleLine|NSStringDrawingUsesFontLeading|NSStringDrawingUsesLineFragmentOrigin attributes:dict context:nil];</span><br></pre></td></tr></table></figure>
-<p>本文出自codeaword的博客 <a href="https://codeaword.github.io/2017/10/10/iOS-计算文本的高度/">https://codeaword.github.io/2017/10/10/iOS-计算文本的高度/</a> 欢迎转载，转载请注明出处！</p>
 
           
         
