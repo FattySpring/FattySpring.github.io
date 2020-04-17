@@ -1470,180 +1470,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://codeaword.github.io/2017/10/10/iOS11-&-iPhone-X-适配之路/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Li Cong">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Code a word">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/10/iOS11-&-iPhone-X-适配之路/" itemprop="url">iOS11 & iPhone X 适配之路</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-10T11:26:10+08:00">
-                2017-10-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/10/10/iOS11-&-iPhone-X-适配之路/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2017/10/10/iOS11-&-iPhone-X-适配之路/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2017/10/10/iOS11-&-iPhone-X-适配之路/" class="leancloud_visitors" data-flag-title="iOS11 & iPhone X 适配之路">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>适配iOS 11有几天了，这中间遇到无数种坑，由于我们项目支持iPad支持横竖屏，改起来简直想哭，好了废话不多说，总结下iOS 11&amp;iPhone X的适配过程中遇到的问题。</p>
-<p>##iOS 11适配</p>
-<p>###UISearchController with Navigation<br>UISearchController在iOS 11中有较大的改动，如果你项目中有用到，在Xcode 8.3上打包在iOS 11上还是可以正常使用，如果你使用Xcode9….</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2901013-d8d488fde520b493.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="横屏"></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2901013-cf551cc1e5287008.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="竖屏"><br>这样玩意已经不能看了<br>下面回顾下iOS 11之前是怎么添加使用的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">self.tableView.tableHeaderView = _searchController.searchBar;</span><br></pre></td></tr></table></figure></p>
-<p>iOS 11 UISearchController使用在navigationItem添加了两个属性</p>
-<ul>
-<li>navigationItem.searchController</li>
-<li>navigationItem.hidesSearchBarWhenScrolling  默认为YES<br>iOS 11的使用<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if (@available(iOS 11.0, *)) &#123;</span><br><span class="line">    self.navigationItem.searchController = _searchController;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    self.tableView.tableHeaderView = _searchController.searchBar;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>效果</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2901013-7053e109302dfaa9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="navigationItem.searchController"></p>
-<p>现在能也可以根据滑动来隐藏SearchBar了，但是我遇到的问题不仅仅是这样的，如果你使用UISearchController下一级的页面也使用且hidesSearchBarWhenScrolling为YES，那么在执行push的时候画面会这样….<br><img src="http://upload-images.jianshu.io/upload_images/2901013-c90e012714c75b2c.gif?imageMogr2/auto-orient/strip" alt="注意push和pop过程中导航条下面会有一条留白"></p>
-<h2 id="这个问题很尴尬，我到现在还没有解决"><a href="#这个问题很尴尬，我到现在还没有解决" class="headerlink" title="这个问题很尴尬，我到现在还没有解决"></a>这个问题很尴尬，我到现在还没有解决</h2><p>###下拉刷新<br>很多人都遇到下拉刷新错位的问题，我们项目中也遇到了，直接不能用，很伤心，这是与iOS 11使用新的机制有关，automaticallyAdjustsScrollViewInsets在iOS 11中被被废弃，然后在scrollerView中添加contentInsetAdjustmentBehavior一个这样的属性，为什么这个会影响到下拉刷新这个控件呢，下面我来简单的说一下。<br>通常iOS 实现下拉刷新是通过KVO观察者模式，监听UIScrollerView的contentOffset属性，在该属性发生变化时，获取contentoffset的y值,比对初始contentoffset<br>详情看下面的代码，简单说明下拉刷新实现部分原理<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line">originalInset:,原始偏移值，如果设置automaticallyAdjustsScrollViewInsets .top 偏移为navgationbar.height + statusBar.height</span><br><span class="line">contentOffset:scrollerView现在的偏移值</span><br><span class="line">headerHeight :刷新头部View的高度</span><br><span class="line"></span><br><span class="line">ps.</span><br><span class="line">originalInset = scrollView.contentInset，可以这样获取，只获取一次</span><br><span class="line">*/</span><br><span class="line">        CGPoint contentOffset = [[change valueForKey:NSKeyValueChangeNewKey] CGPointValue];</span><br><span class="line"></span><br><span class="line">if (originalInset.top - contentOffset.y &gt; headerHeight) &#123;</span><br><span class="line">        //让tableView悬停，显示正在刷新View</span><br><span class="line">         UIEdgeInsets inset = _scrollView.contentInset;</span><br><span class="line">         insetTop.top =  originalInset.top +  headerHeight;</span><br><span class="line">          _scrollView.contentInset = inset;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>通过上面所说的automaticallyAdjustsScrollViewInsets的设置会影响到计算,iOS 11中不在使用，iOS 11 中scrollView.contentInset（初始偏移量为0），但是他又引入了一个新的属性adjustedContentInset，所有我们项目中计算出错，下拉刷新无法，往上滑触发，并进行下移，所有我对代码进行了如下修改<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cgfloat originalTop = originalInset.top;</span><br><span class="line">if  (iOS 11)&#123;</span><br><span class="line">          originalTop = self.adjustedContentInset.top;</span><br><span class="line">&#125;</span><br><span class="line">if (originalTop - contentOffset.y &gt; headerHeight) &#123;</span><br><span class="line">         UIEdgeInsets inset = _scrollView.contentInset;</span><br><span class="line">         insetTop.top =  originalInset.top +  headerHeight;</span><br><span class="line">          _scrollView.contentInset = inset;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>上面代码是我修改的思路，上拉刷新也是同样的道理</p>
-<p>##iPhone X适配<br>如果你的app不需要竖屏，那么恭喜你，减少了很多麻烦，如果需要横屏就要多费些时间了</p>
-<p>###Safe area<br><img src="http://upload-images.jianshu.io/upload_images/2901013-f33a643327ad46cf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Safe area"><br>iPhone X的适配主要是要把可以操作的控件放到安全区域内</p>
-<hr>
-<p>####获取 SafeArea </p>
-<p>#####属性</p>
-<ul>
-<li>safeAreaInsets<br>改属性可以获取安全区域 UIEdgeInsets<br>切记：<br>UIViewController中，safeAreaInsets在viewDidLoad之后才有值，如果你在viewDidLoad 中要使用会发现没有值<br>可以通过系统方法监听SafeArea改变</li>
-</ul>
-<p>#####SafeArea 改变方法</p>
-<ul>
-<li>viewSafeAreaInsetsDidChange<br>UIViewController中使用</li>
-<li>safeAreaInsetsDidChange<br>UIView中使用,在重新设置View的Frame或横竖屏变化会调用</li>
-</ul>
-<hr>
-<p>未完，持续更新~</p>
-<p>#参考文章链接<br><a href="https://devstreaming-cdn.apple.com/videos/wwdc/2017/204kty9amomlmk222/204/204_updating_your_app_for_ios_11.pdf" target="_blank" rel="noopener">Updating Your App for iOS 11</a><br><a href="https://developer.apple.com/design/" target="_blank" rel="noopener">Designing for iPhone X</a><br><a href="http://www.jianshu.com/p/370d82ba3939" target="_blank" rel="noopener">你可能需要为你的APP适配iOS11</a><br><a href="https://mp.weixin.qq.com/s?__biz=MzUxODI3MjY2Ng==&amp;mid=2247483816&amp;idx=1&amp;sn=c3fe3a5c5761fb55a69a008a08fef9aa&amp;chksm=f98a225dcefdab4b42d9778b09c4d5b587094a4209c48171901e04e570477c8bed5bf61106ce&amp;mpshare=1&amp;scene=23&amp;srcid=0920XPZzBwLPNHV94w7XwW9s#rd" target="_blank" rel="noopener">刘海 |关于iPhone X 的适配</a></p>
-<p>本文出自codeaword的博客 <a href="https://codeaword.github.io/2017/10/10/iOS11-&amp;-iPhone-X-适配之路/">https://codeaword.github.io/2017/10/10/iOS11-&amp;-iPhone-X-适配之路/</a> 欢迎转载，转载请注明出处！</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://codeaword.github.io/2017/10/10/环信SDK-自定义扩展消息/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1765,6 +1591,180 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> 设置聊天高度</span><br><span class="line"> */</span><br><span class="line">- (CGFloat)messageViewController:(EaseMessageViewController *)viewController</span><br><span class="line">        heightForMessageModel:(id&lt;IMessageModel&gt;)messageModel</span><br><span class="line">                   withCellWidth:(CGFloat)cellWidth</span><br><span class="line">&#123;</span><br><span class="line">    LCChatExtModel *extModel = [LCChatExtModel mj_objectWithKeyValues:messageModel.message.ext];</span><br><span class="line">    if ([extModel.type == 0]) &#123;</span><br><span class="line">        return [LCChatXiaoYingCardCell cellHeightWithModel:messageModel] ;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;//如果不是自定义类型返回0</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>到这里呢，整个自定义就结束了</p>
 <p>本文出自codeaword的博客 <a href="https://codeaword.github.io/2017/10/10/环信SDK-自定义扩展消息/">https://codeaword.github.io/2017/10/10/环信SDK-自定义扩展消息/</a> 欢迎转载，转载请注明出处！</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://codeaword.github.io/2017/10/10/iOS11-iPhone-X-适配之路/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Li Cong">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Code a word">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/10/iOS11-iPhone-X-适配之路/" itemprop="url">iOS11-iPhone-X-适配之路</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-10T11:26:10+08:00">
+                2017-10-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/10/10/iOS11-iPhone-X-适配之路/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2017/10/10/iOS11-iPhone-X-适配之路/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/10/10/iOS11-iPhone-X-适配之路/" class="leancloud_visitors" data-flag-title="iOS11-iPhone-X-适配之路">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>适配iOS 11有几天了，这中间遇到无数种坑，由于我们项目支持iPad支持横竖屏，改起来简直想哭，好了废话不多说，总结下iOS 11&amp;iPhone X的适配过程中遇到的问题。</p>
+<p>##iOS 11适配</p>
+<p>###UISearchController with Navigation<br>UISearchController在iOS 11中有较大的改动，如果你项目中有用到，在Xcode 8.3上打包在iOS 11上还是可以正常使用，如果你使用Xcode9….</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2901013-d8d488fde520b493.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="横屏"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2901013-cf551cc1e5287008.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="竖屏"><br>这样玩意已经不能看了<br>下面回顾下iOS 11之前是怎么添加使用的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">self.tableView.tableHeaderView = _searchController.searchBar;</span><br></pre></td></tr></table></figure></p>
+<p>iOS 11 UISearchController使用在navigationItem添加了两个属性</p>
+<ul>
+<li>navigationItem.searchController</li>
+<li>navigationItem.hidesSearchBarWhenScrolling  默认为YES<br>iOS 11的使用<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if (@available(iOS 11.0, *)) &#123;</span><br><span class="line">    self.navigationItem.searchController = _searchController;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    self.tableView.tableHeaderView = _searchController.searchBar;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>效果</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2901013-7053e109302dfaa9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="navigationItem.searchController"></p>
+<p>现在能也可以根据滑动来隐藏SearchBar了，但是我遇到的问题不仅仅是这样的，如果你使用UISearchController下一级的页面也使用且hidesSearchBarWhenScrolling为YES，那么在执行push的时候画面会这样….<br><img src="http://upload-images.jianshu.io/upload_images/2901013-c90e012714c75b2c.gif?imageMogr2/auto-orient/strip" alt="注意push和pop过程中导航条下面会有一条留白"></p>
+<h2 id="这个问题很尴尬，我到现在还没有解决"><a href="#这个问题很尴尬，我到现在还没有解决" class="headerlink" title="这个问题很尴尬，我到现在还没有解决"></a>这个问题很尴尬，我到现在还没有解决</h2><p>###下拉刷新<br>很多人都遇到下拉刷新错位的问题，我们项目中也遇到了，直接不能用，很伤心，这是与iOS 11使用新的机制有关，automaticallyAdjustsScrollViewInsets在iOS 11中被被废弃，然后在scrollerView中添加contentInsetAdjustmentBehavior一个这样的属性，为什么这个会影响到下拉刷新这个控件呢，下面我来简单的说一下。<br>通常iOS 实现下拉刷新是通过KVO观察者模式，监听UIScrollerView的contentOffset属性，在该属性发生变化时，获取contentoffset的y值,比对初始contentoffset<br>详情看下面的代码，简单说明下拉刷新实现部分原理<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line">originalInset:,原始偏移值，如果设置automaticallyAdjustsScrollViewInsets .top 偏移为navgationbar.height + statusBar.height</span><br><span class="line">contentOffset:scrollerView现在的偏移值</span><br><span class="line">headerHeight :刷新头部View的高度</span><br><span class="line"></span><br><span class="line">ps.</span><br><span class="line">originalInset = scrollView.contentInset，可以这样获取，只获取一次</span><br><span class="line">*/</span><br><span class="line">        CGPoint contentOffset = [[change valueForKey:NSKeyValueChangeNewKey] CGPointValue];</span><br><span class="line"></span><br><span class="line">if (originalInset.top - contentOffset.y &gt; headerHeight) &#123;</span><br><span class="line">        //让tableView悬停，显示正在刷新View</span><br><span class="line">         UIEdgeInsets inset = _scrollView.contentInset;</span><br><span class="line">         insetTop.top =  originalInset.top +  headerHeight;</span><br><span class="line">          _scrollView.contentInset = inset;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>通过上面所说的automaticallyAdjustsScrollViewInsets的设置会影响到计算,iOS 11中不在使用，iOS 11 中scrollView.contentInset（初始偏移量为0），但是他又引入了一个新的属性adjustedContentInset，所有我们项目中计算出错，下拉刷新无法，往上滑触发，并进行下移，所有我对代码进行了如下修改<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cgfloat originalTop = originalInset.top;</span><br><span class="line">if  (iOS 11)&#123;</span><br><span class="line">          originalTop = self.adjustedContentInset.top;</span><br><span class="line">&#125;</span><br><span class="line">if (originalTop - contentOffset.y &gt; headerHeight) &#123;</span><br><span class="line">         UIEdgeInsets inset = _scrollView.contentInset;</span><br><span class="line">         insetTop.top =  originalInset.top +  headerHeight;</span><br><span class="line">          _scrollView.contentInset = inset;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面代码是我修改的思路，上拉刷新也是同样的道理</p>
+<p>##iPhone X适配<br>如果你的app不需要竖屏，那么恭喜你，减少了很多麻烦，如果需要横屏就要多费些时间了</p>
+<p>###Safe area<br><img src="http://upload-images.jianshu.io/upload_images/2901013-f33a643327ad46cf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Safe area"><br>iPhone X的适配主要是要把可以操作的控件放到安全区域内</p>
+<hr>
+<p>####获取 SafeArea </p>
+<p>#####属性</p>
+<ul>
+<li>safeAreaInsets<br>改属性可以获取安全区域 UIEdgeInsets<br>切记：<br>UIViewController中，safeAreaInsets在viewDidLoad之后才有值，如果你在viewDidLoad 中要使用会发现没有值<br>可以通过系统方法监听SafeArea改变</li>
+</ul>
+<p>#####SafeArea 改变方法</p>
+<ul>
+<li>viewSafeAreaInsetsDidChange<br>UIViewController中使用</li>
+<li>safeAreaInsetsDidChange<br>UIView中使用,在重新设置View的Frame或横竖屏变化会调用</li>
+</ul>
+<hr>
+<p>未完，持续更新~</p>
+<p>#参考文章链接<br><a href="https://devstreaming-cdn.apple.com/videos/wwdc/2017/204kty9amomlmk222/204/204_updating_your_app_for_ios_11.pdf" target="_blank" rel="noopener">Updating Your App for iOS 11</a><br><a href="https://developer.apple.com/design/" target="_blank" rel="noopener">Designing for iPhone X</a><br><a href="http://www.jianshu.com/p/370d82ba3939" target="_blank" rel="noopener">你可能需要为你的APP适配iOS11</a><br><a href="https://mp.weixin.qq.com/s?__biz=MzUxODI3MjY2Ng==&amp;mid=2247483816&amp;idx=1&amp;sn=c3fe3a5c5761fb55a69a008a08fef9aa&amp;chksm=f98a225dcefdab4b42d9778b09c4d5b587094a4209c48171901e04e570477c8bed5bf61106ce&amp;mpshare=1&amp;scene=23&amp;srcid=0920XPZzBwLPNHV94w7XwW9s#rd" target="_blank" rel="noopener">刘海 |关于iPhone X 的适配</a></p>
+<p>本文出自codeaword的博客 <a href="https://codeaword.github.io/2017/10/10/iOS11-iPhone-X-适配之路/">https://codeaword.github.io/2017/10/10/iOS11-iPhone-X-适配之路/</a> 欢迎转载，转载请注明出处！</p>
 
           
         
