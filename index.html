@@ -242,6 +242,198 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://codeaword.github.io/2017/10/10/OpenCV+TesseractOCRiOS实现身份证号识别/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Li Cong">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Code a word">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/10/OpenCV+TesseractOCRiOS实现身份证号识别/" itemprop="url">OpenCV+TesseractOCRiOS实现身份证号识别</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-10T11:26:10+08:00">
+                2017-10-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/10/10/OpenCV+TesseractOCRiOS实现身份证号识别/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2017/10/10/OpenCV+TesseractOCRiOS实现身份证号识别/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/10/10/OpenCV+TesseractOCRiOS实现身份证号识别/" class="leancloud_visitors" data-flag-title="OpenCV+TesseractOCRiOS实现身份证号识别">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li>iOS 文字识别准备</li>
+<li>图片灰度化</li>
+<li>图片二值化</li>
+<li>根据特征点提取某一区域</li>
+</ul>
+<p>声明：思路来源于 <a href="http://www.jianshu.com/p/ac4c4536ca3e" target="_blank" rel="noopener">iOS身份证号码识别</a> ,在此我对作者表示感谢，一下内容，是我结合<a href="#http://www.opencv.org.cn/opencvdoc/2.3.2/html/doc/tutorials/tutorials.html">http://www.opencv.org.cn</a>写的一个简单教程，对该工程所用到的方法进行解读，在本文的最后，会附上完整的代码.</p>
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><h3 id="iOS-文字识别准备"><a href="#iOS-文字识别准备" class="headerlink" title="iOS 文字识别准备"></a>iOS 文字识别准备</h3><p>文字识别重要点在对图片的预处理，预处理做的比较好，识别率就会比较高，本次所介绍的身份证号识别是基于OpenCV、TesseractOCRiOS来实现的<br>首先使用CocoaPods导入三方库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pod &apos;OpenCV&apos;, &apos;~&gt; 3.0.0&apos;</span><br><span class="line">pod &apos;TesseractOCRiOS&apos;, &apos;~&gt; 4.0.0&apos;</span><br></pre></td></tr></table></figure></p>
+<h3 id="灰度化"><a href="#灰度化" class="headerlink" title="灰度化"></a>灰度化</h3><p>灰度化，在RGB模型中，如果R=G=B时，则彩色表示一种灰度颜色，其中R=G=B的值叫灰度值，因此，灰度图像每个像素只需一个字节存放灰度值（又称强度值、亮度值），灰度范围为0-255。<br>下面说一下如何使用OpenCV进行灰度化处理，使用的OpenCV是一个C++ 的代码，在使用的类中要将.m文件改为.mm<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//将UIImage转换成矩阵</span><br><span class="line">cv::Mat resultImage;//定义矩阵</span><br><span class="line">UIImageToMat(image, resultImage);</span><br><span class="line">//转为灰度图</span><br><span class="line">cvtColor(resultImage, resultImage, cv::COLOR_BGR2GRAY);</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2901013-424632f532885b61.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="原图.png"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2901013-ea2ccca4c85c5a2b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="灰度化.png"></p>
+<h3 id="二值化"><a href="#二值化" class="headerlink" title="二值化"></a>二值化</h3><p>图像的二值化，就是将图像上的像素点的灰度值设置为0或255，也就是将整个图像呈现出明显的只有黑和白的视觉效果。</p>
+<h5 id="固定阈值门限分割"><a href="#固定阈值门限分割" class="headerlink" title="固定阈值门限分割"></a>固定阈值门限分割</h5><ul>
+<li><p>方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">double threshold( InputArray src, OutputArray dst,</span><br><span class="line">                               double thresh, double maxval, int type );</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>参数说明</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">src 输入矩阵</span><br><span class="line">dst 输出矩阵</span><br><span class="line">thresh 阀值</span><br><span class="line">maxval 最大值（这里通常设置为255）</span><br><span class="line">thresholdType 分割类型</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>分割类型说明</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//value 矩阵中一个单位的颜色的值</span><br><span class="line">//threshold 阀值</span><br><span class="line">CV_THRESH_BINARY      =0,  /**value &gt; threshold ? max_value : 0       */</span><br><span class="line">    CV_THRESH_BINARY_INV  =1,  /**value &gt; threshold ? 0 : max_value       */</span><br><span class="line">    CV_THRESH_TRUNC       =2,  /** value &gt; threshold ? threshold : value   */</span><br><span class="line">    CV_THRESH_TOZERO      =3,  /**value &gt; threshold ? value : 0           */</span><br><span class="line">    CV_THRESH_TOZERO_INV  =4,  /** value &gt; threshold ? 0 : value */</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv::threshold(resultImage, resultImage, 100, 255, CV_THRESH_BINARY);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/2901013-d3a1d9852e19eb75.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="阀值为100二值化.png"></p>
+<p>这里又有一个很重要的点，阀值的确定，我是在网上找了个计算阀值的算法，不过不是很理想，现在也贴出来，但是不知道作者是谁了，很抱歉…<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">int cvThresholdOtsu(IplImage* src)</span><br><span class="line">&#123;</span><br><span class="line">    int height=src-&gt;height;</span><br><span class="line">    int width=src-&gt;width;</span><br><span class="line">    </span><br><span class="line">    //histogram</span><br><span class="line">    float histogram[256]=&#123;0&#125;;</span><br><span class="line">    for(int i=0;i&lt;height;i++) &#123;</span><br><span class="line">        unsigned char* p=(unsigned char*)src-&gt;imageData+src-&gt;widthStep*i;</span><br><span class="line">        for(int j=0;j&lt;width;j++) &#123;</span><br><span class="line">            histogram[*p++]++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    //normalize histogram</span><br><span class="line">    int size=height*width;</span><br><span class="line">    for(int i=0;i&lt;256;i++) &#123;</span><br><span class="line">        histogram[i]=histogram[i]/size;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //average pixel value</span><br><span class="line">    float avgValue=0;</span><br><span class="line">    for(int i=0;i&lt;256;i++) &#123;</span><br><span class="line">        avgValue+=i*histogram[i];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    int threshold = 0;</span><br><span class="line">    float maxVariance=0;</span><br><span class="line">    float w=0,u=0;</span><br><span class="line">    for(int i=0;i&lt;256;i++) &#123;</span><br><span class="line">        w+=histogram[i];</span><br><span class="line">        u+=i*histogram[i];</span><br><span class="line">        </span><br><span class="line">        float t=avgValue*w-u;</span><br><span class="line">        float variance=t*t/(w*(1-w));</span><br><span class="line">        if(variance&gt;maxVariance) &#123;</span><br><span class="line">            maxVariance=variance;</span><br><span class="line">            threshold=i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    return threshold;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>截取卡号区域<br>思路，现将黑色的点放大，这样点会连接到一起，变成一块儿黑色，然后我们通过图片的轮廓，宽高比例来寻找复合的一个区域，将其截取下来</li>
+</ul>
+<p>###<a href="http://www.opencv.org.cn/opencvdoc/2.3.2/html/doc/tutorials/imgproc/erosion_dilatation/erosion_dilatation.html" target="_blank" rel="noopener">腐蚀&amp;膨胀</a></p>
+<ul>
+<li>官方解释：<br>腐蚀：进行腐蚀操作时，将内核B划过图像,将内核B覆盖区域的最小相素值提取，并代替锚点位置的相素。<br>膨胀：进行膨胀操作时，将内核B划过图像,将内核B覆盖区域的最大相素值提取，并代替锚点位置的相素。显然，这一最大化操作将会导致图像中的亮区开始”扩展” (因此有了术语膨胀 <em>dilation</em> )。对上图采用膨胀操作我们得到:</li>
+<li>个人理解：<br>腐蚀：定义一个size，用这个size替换图片每个点（加粗）<br>膨胀：与腐蚀相反（变细）<br>个人的认识比较low，在这里呢使用腐蚀目的是将相近的黑色点连接到一块，已便后面获取所有数字连接到一块儿的轮廓，对比每个轮廓的宽高比，截取到卡号区域。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cv::Mat erodeElement = getStructuringElement(cv::MORPH_RECT, cv::Size(25,1));</span><br><span class="line">cv::erode(resultImage, resultImage, erodeElement);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/2901013-34bfb42366251428.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="腐蚀之后的照片"></p>
+<p>###<a href="http://www.opencv.org.cn/opencvdoc/2.3.2/html/doc/tutorials/imgproc/shapedescriptors/find_contours/find_contours.html#find-contours" target="_blank" rel="noopener">在图像中寻找轮廓</a></p>
+<ul>
+<li><p>方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//获取图片轮廓</span><br><span class="line">findContours( InputOutputArray image, OutputArrayOfArrays contours,</span><br><span class="line">                              int mode, int method, Point offset = Point());</span><br><span class="line">//将存放Point的数组转为Rect</span><br><span class="line">Rect boundingRect( InputArray points );</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>findContours参数说明</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">InputOutputArray:输入输出的图片</span><br><span class="line">OutputArrayOfArrays:输出的轮廓点，这是一个三维数</span><br><span class="line">std::vector&lt;std::vector&lt;cv::Point&gt;&gt; contours;</span><br><span class="line"></span><br><span class="line">mode:轮廓检索模式,具体参考cv::RetrievalModes</span><br><span class="line">CV_RETR_EXTERNAL：只检索最外面的轮廓；</span><br><span class="line">CV_RETR_LIST：检索所有的轮廓，并将其放入list中；</span><br><span class="line">CV_RETR_CCOMP：检索所有的轮廓，并将他们组织为两层：顶层是各部分的外部边界，第二层是空洞的边界；</span><br><span class="line">CV_RETR_TREE：检索所有的轮廓，并重构嵌套轮廓的整个层次。</span><br><span class="line"></span><br><span class="line">method:轮廓近似法,具体参考cv::ContourApproximationModes</span><br><span class="line">CV_CHAIN_CODE：以Freeman链码的方式输出轮廓，所有其他方法输出多边形（顶点的序列）。</span><br><span class="line">CV_CHAIN_APPROX_NONE：将所有的连码点，转换成点。</span><br><span class="line">CV_CHAIN_APPROX_SIMPLE：压缩水平的、垂直的和斜的部分，也就是，函数只保留他们的终点部分。</span><br><span class="line">CV_CHAIN_APPROX_TC89_L1，CV_CHAIN_APPROX_TC89_KCOS：使用the flavors of Teh-Chin chain近似算法</span><br><span class="line">的一种。</span><br><span class="line">CV_LINK_RUNS：通过连接水平段的1，使用完全不同的边缘提取算法。使用CV_RETR_LIST检索模式能使用此方法。</span><br><span class="line">offset：偏移量，用于移动所有轮廓点。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv::findContours(resultImage, contours, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, cvPoint(0, 0));</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>###根据轮廓选取目标区域</p>
+<p>本文出自codeaword的博客 <a href="https://codeaword.github.io/2017/10/10/OpenCV+TesseractOCRiOS实现身份证号识别/">https://codeaword.github.io/2017/10/10/OpenCV+TesseractOCRiOS实现身份证号识别/</a> 欢迎转载，转载请注明出处！</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://codeaword.github.io/2017/10/10/UILocalizedIndexedCollation通讯录分组排序/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -490,198 +682,6 @@
 </ul>
 <h3 id="未解决的问题："><a href="#未解决的问题：" class="headerlink" title="未解决的问题："></a>未解决的问题：</h3><p>无论怎么切换语言，LaunchScreen 只使用英文的文字，看了很多文章有写以其他其他方式进行国际化，不过暂时还没有去试验。<br>本次设置国际化主要是用来通过xcodebuild来打包的时候动态修改LaunchScreen的文字才使用的，目的达到了，偏离了主题，很抱歉</p>
 <p>本文出自codeaword的博客 <a href="https://codeaword.github.io/2017/10/10/iOS-LaunchScreen-国际化/">https://codeaword.github.io/2017/10/10/iOS-LaunchScreen-国际化/</a> 欢迎转载，转载请注明出处！</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://codeaword.github.io/2017/10/10/OpenCV+TesseractOCRiOS实现身份证号识别/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Li Cong">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Code a word">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/10/OpenCV+TesseractOCRiOS实现身份证号识别/" itemprop="url">OpenCV+TesseractOCRiOS实现身份证号识别</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-10T11:26:10+08:00">
-                2017-10-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/10/10/OpenCV+TesseractOCRiOS实现身份证号识别/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2017/10/10/OpenCV+TesseractOCRiOS实现身份证号识别/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2017/10/10/OpenCV+TesseractOCRiOS实现身份证号识别/" class="leancloud_visitors" data-flag-title="OpenCV+TesseractOCRiOS实现身份证号识别">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li>iOS 文字识别准备</li>
-<li>图片灰度化</li>
-<li>图片二值化</li>
-<li>根据特征点提取某一区域</li>
-</ul>
-<p>声明：思路来源于 <a href="http://www.jianshu.com/p/ac4c4536ca3e" target="_blank" rel="noopener">iOS身份证号码识别</a> ,在此我对作者表示感谢，一下内容，是我结合<a href="#http://www.opencv.org.cn/opencvdoc/2.3.2/html/doc/tutorials/tutorials.html">http://www.opencv.org.cn</a>写的一个简单教程，对该工程所用到的方法进行解读，在本文的最后，会附上完整的代码.</p>
-<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><h3 id="iOS-文字识别准备"><a href="#iOS-文字识别准备" class="headerlink" title="iOS 文字识别准备"></a>iOS 文字识别准备</h3><p>文字识别重要点在对图片的预处理，预处理做的比较好，识别率就会比较高，本次所介绍的身份证号识别是基于OpenCV、TesseractOCRiOS来实现的<br>首先使用CocoaPods导入三方库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pod &apos;OpenCV&apos;, &apos;~&gt; 3.0.0&apos;</span><br><span class="line">pod &apos;TesseractOCRiOS&apos;, &apos;~&gt; 4.0.0&apos;</span><br></pre></td></tr></table></figure></p>
-<h3 id="灰度化"><a href="#灰度化" class="headerlink" title="灰度化"></a>灰度化</h3><p>灰度化，在RGB模型中，如果R=G=B时，则彩色表示一种灰度颜色，其中R=G=B的值叫灰度值，因此，灰度图像每个像素只需一个字节存放灰度值（又称强度值、亮度值），灰度范围为0-255。<br>下面说一下如何使用OpenCV进行灰度化处理，使用的OpenCV是一个C++ 的代码，在使用的类中要将.m文件改为.mm<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//将UIImage转换成矩阵</span><br><span class="line">cv::Mat resultImage;//定义矩阵</span><br><span class="line">UIImageToMat(image, resultImage);</span><br><span class="line">//转为灰度图</span><br><span class="line">cvtColor(resultImage, resultImage, cv::COLOR_BGR2GRAY);</span><br></pre></td></tr></table></figure></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2901013-424632f532885b61.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="原图.png"></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2901013-ea2ccca4c85c5a2b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="灰度化.png"></p>
-<h3 id="二值化"><a href="#二值化" class="headerlink" title="二值化"></a>二值化</h3><p>图像的二值化，就是将图像上的像素点的灰度值设置为0或255，也就是将整个图像呈现出明显的只有黑和白的视觉效果。</p>
-<h5 id="固定阈值门限分割"><a href="#固定阈值门限分割" class="headerlink" title="固定阈值门限分割"></a>固定阈值门限分割</h5><ul>
-<li><p>方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">double threshold( InputArray src, OutputArray dst,</span><br><span class="line">                               double thresh, double maxval, int type );</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>参数说明</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">src 输入矩阵</span><br><span class="line">dst 输出矩阵</span><br><span class="line">thresh 阀值</span><br><span class="line">maxval 最大值（这里通常设置为255）</span><br><span class="line">thresholdType 分割类型</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>分割类型说明</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//value 矩阵中一个单位的颜色的值</span><br><span class="line">//threshold 阀值</span><br><span class="line">CV_THRESH_BINARY      =0,  /**value &gt; threshold ? max_value : 0       */</span><br><span class="line">    CV_THRESH_BINARY_INV  =1,  /**value &gt; threshold ? 0 : max_value       */</span><br><span class="line">    CV_THRESH_TRUNC       =2,  /** value &gt; threshold ? threshold : value   */</span><br><span class="line">    CV_THRESH_TOZERO      =3,  /**value &gt; threshold ? value : 0           */</span><br><span class="line">    CV_THRESH_TOZERO_INV  =4,  /** value &gt; threshold ? 0 : value */</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv::threshold(resultImage, resultImage, 100, 255, CV_THRESH_BINARY);</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p><img src="http://upload-images.jianshu.io/upload_images/2901013-d3a1d9852e19eb75.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="阀值为100二值化.png"></p>
-<p>这里又有一个很重要的点，阀值的确定，我是在网上找了个计算阀值的算法，不过不是很理想，现在也贴出来，但是不知道作者是谁了，很抱歉…<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">int cvThresholdOtsu(IplImage* src)</span><br><span class="line">&#123;</span><br><span class="line">    int height=src-&gt;height;</span><br><span class="line">    int width=src-&gt;width;</span><br><span class="line">    </span><br><span class="line">    //histogram</span><br><span class="line">    float histogram[256]=&#123;0&#125;;</span><br><span class="line">    for(int i=0;i&lt;height;i++) &#123;</span><br><span class="line">        unsigned char* p=(unsigned char*)src-&gt;imageData+src-&gt;widthStep*i;</span><br><span class="line">        for(int j=0;j&lt;width;j++) &#123;</span><br><span class="line">            histogram[*p++]++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    //normalize histogram</span><br><span class="line">    int size=height*width;</span><br><span class="line">    for(int i=0;i&lt;256;i++) &#123;</span><br><span class="line">        histogram[i]=histogram[i]/size;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //average pixel value</span><br><span class="line">    float avgValue=0;</span><br><span class="line">    for(int i=0;i&lt;256;i++) &#123;</span><br><span class="line">        avgValue+=i*histogram[i];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    int threshold = 0;</span><br><span class="line">    float maxVariance=0;</span><br><span class="line">    float w=0,u=0;</span><br><span class="line">    for(int i=0;i&lt;256;i++) &#123;</span><br><span class="line">        w+=histogram[i];</span><br><span class="line">        u+=i*histogram[i];</span><br><span class="line">        </span><br><span class="line">        float t=avgValue*w-u;</span><br><span class="line">        float variance=t*t/(w*(1-w));</span><br><span class="line">        if(variance&gt;maxVariance) &#123;</span><br><span class="line">            maxVariance=variance;</span><br><span class="line">            threshold=i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    return threshold;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>截取卡号区域<br>思路，现将黑色的点放大，这样点会连接到一起，变成一块儿黑色，然后我们通过图片的轮廓，宽高比例来寻找复合的一个区域，将其截取下来</li>
-</ul>
-<p>###<a href="http://www.opencv.org.cn/opencvdoc/2.3.2/html/doc/tutorials/imgproc/erosion_dilatation/erosion_dilatation.html" target="_blank" rel="noopener">腐蚀&amp;膨胀</a></p>
-<ul>
-<li>官方解释：<br>腐蚀：进行腐蚀操作时，将内核B划过图像,将内核B覆盖区域的最小相素值提取，并代替锚点位置的相素。<br>膨胀：进行膨胀操作时，将内核B划过图像,将内核B覆盖区域的最大相素值提取，并代替锚点位置的相素。显然，这一最大化操作将会导致图像中的亮区开始”扩展” (因此有了术语膨胀 <em>dilation</em> )。对上图采用膨胀操作我们得到:</li>
-<li>个人理解：<br>腐蚀：定义一个size，用这个size替换图片每个点（加粗）<br>膨胀：与腐蚀相反（变细）<br>个人的认识比较low，在这里呢使用腐蚀目的是将相近的黑色点连接到一块，已便后面获取所有数字连接到一块儿的轮廓，对比每个轮廓的宽高比，截取到卡号区域。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cv::Mat erodeElement = getStructuringElement(cv::MORPH_RECT, cv::Size(25,1));</span><br><span class="line">cv::erode(resultImage, resultImage, erodeElement);</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p><img src="http://upload-images.jianshu.io/upload_images/2901013-34bfb42366251428.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="腐蚀之后的照片"></p>
-<p>###<a href="http://www.opencv.org.cn/opencvdoc/2.3.2/html/doc/tutorials/imgproc/shapedescriptors/find_contours/find_contours.html#find-contours" target="_blank" rel="noopener">在图像中寻找轮廓</a></p>
-<ul>
-<li><p>方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//获取图片轮廓</span><br><span class="line">findContours( InputOutputArray image, OutputArrayOfArrays contours,</span><br><span class="line">                              int mode, int method, Point offset = Point());</span><br><span class="line">//将存放Point的数组转为Rect</span><br><span class="line">Rect boundingRect( InputArray points );</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>findContours参数说明</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">InputOutputArray:输入输出的图片</span><br><span class="line">OutputArrayOfArrays:输出的轮廓点，这是一个三维数</span><br><span class="line">std::vector&lt;std::vector&lt;cv::Point&gt;&gt; contours;</span><br><span class="line"></span><br><span class="line">mode:轮廓检索模式,具体参考cv::RetrievalModes</span><br><span class="line">CV_RETR_EXTERNAL：只检索最外面的轮廓；</span><br><span class="line">CV_RETR_LIST：检索所有的轮廓，并将其放入list中；</span><br><span class="line">CV_RETR_CCOMP：检索所有的轮廓，并将他们组织为两层：顶层是各部分的外部边界，第二层是空洞的边界；</span><br><span class="line">CV_RETR_TREE：检索所有的轮廓，并重构嵌套轮廓的整个层次。</span><br><span class="line"></span><br><span class="line">method:轮廓近似法,具体参考cv::ContourApproximationModes</span><br><span class="line">CV_CHAIN_CODE：以Freeman链码的方式输出轮廓，所有其他方法输出多边形（顶点的序列）。</span><br><span class="line">CV_CHAIN_APPROX_NONE：将所有的连码点，转换成点。</span><br><span class="line">CV_CHAIN_APPROX_SIMPLE：压缩水平的、垂直的和斜的部分，也就是，函数只保留他们的终点部分。</span><br><span class="line">CV_CHAIN_APPROX_TC89_L1，CV_CHAIN_APPROX_TC89_KCOS：使用the flavors of Teh-Chin chain近似算法</span><br><span class="line">的一种。</span><br><span class="line">CV_LINK_RUNS：通过连接水平段的1，使用完全不同的边缘提取算法。使用CV_RETR_LIST检索模式能使用此方法。</span><br><span class="line">offset：偏移量，用于移动所有轮廓点。</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv::findContours(resultImage, contours, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, cvPoint(0, 0));</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>###根据轮廓选取目标区域</p>
-<p>本文出自codeaword的博客 <a href="https://codeaword.github.io/2017/10/10/OpenCV+TesseractOCRiOS实现身份证号识别/">https://codeaword.github.io/2017/10/10/OpenCV+TesseractOCRiOS实现身份证号识别/</a> 欢迎转载，转载请注明出处！</p>
 
           
         
@@ -1470,175 +1470,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://codeaword.github.io/2017/10/10/环信SDK-自定义扩展消息/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Li Cong">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Code a word">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/10/环信SDK-自定义扩展消息/" itemprop="url">环信SDK-自定义扩展消息</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-10T11:26:10+08:00">
-                2017-10-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/10/10/环信SDK-自定义扩展消息/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2017/10/10/环信SDK-自定义扩展消息/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2017/10/10/环信SDK-自定义扩展消息/" class="leancloud_visitors" data-flag-title="环信SDK-自定义扩展消息">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>项目中集成了环信即时通讯，但是项目需要自定义消息类型，看环信发送消息方法，在发送消息的时候可以附加自定义的内容。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2901013-8b8b2131891bb3a2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
-<p>下面我将拿微信中名片为例来介绍：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2901013-e9a78c2d021b5749.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="名片"></p>
-<p>###确定发送方式：<br>首先需要与Android开发人员沟通发送什么类型消息的时候传递，环信sdk中封装的任何消息都是可以附加自定义内容的，在这里我们定义的是在发送文本消息的时候传递，也就是说发送自定义的名片等于发送的是文本消息。</p>
-<p>###确定字段：<br>先看自定义消息中所显示的内容：头像、昵称、效应号；我们定义的字典字段为：nickname、user_pic、num这三个，由于在点击这条消息的时候需要跳转到这个人的个人信息页面，所有又应该加上user_id，我们项目中所自定义的 消息不只一种还有其他的消息，这样我们又需要加上一个type来区分,最终附加字段为： nickname、user_pic、num、user_id、type</p>
-<p>###发送消息：<br>在选择完联系人后，回调信息到聊天页面发送消息</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NSDictionary *dict = @&#123;@&quot;user_id&quot;:user_id,@&quot;nickname&quot;:nickname,@&quot;user_pic&quot;:user_pic,@&quot;num&quot;:number,@&quot;type&quot;:@&quot;0&quot;&#125;;</span><br><span class="line">[self sendTextMessage:@&quot;[效应名片]&quot; withExt:dict];</span><br></pre></td></tr></table></figure>
-<p>###定义UI<br>每条消息都是显示都是一个Cell，Cell要继承EaseBaseMessageCell，聊天的Cell都是有气泡的，显示的信息都是在气泡上，也就是说，我们只需要定义一个View然后放到气泡上，并且修改气泡的大小，就可以了。</p>
-<ol>
-<li>定义UI页面<br>创建一个创建一个继承UIView的类，在这个类上定义自己需要的UI，也就是下图所显示的内容</li>
-</ol>
-<p><img src="http://upload-images.jianshu.io/upload_images/2901013-8b2861d03c0e92a1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="定义的UI"><br>下面是我定义的LCChatXiaoYingCardView.m代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">@interface LCChatXiaoYingCardView ()</span><br><span class="line">/**</span><br><span class="line"> 头像</span><br><span class="line"> */</span><br><span class="line">@property (strong, nonatomic)  UIImageView *iconImageView;</span><br><span class="line">/**</span><br><span class="line"> 昵称</span><br><span class="line"> */</span><br><span class="line">@property (strong, nonatomic)  UILabel *nameLabel;</span><br><span class="line">/**</span><br><span class="line"> 效应号</span><br><span class="line"> */</span><br><span class="line">@property (strong, nonatomic)  UILabel *numberLabel;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation LCChatXiaoYingCardView</span><br><span class="line"></span><br><span class="line">- (instancetype)initWithFrame:(CGRect)frame</span><br><span class="line">&#123;</span><br><span class="line">    self = [super initWithFrame:frame];</span><br><span class="line">    if (self) &#123;</span><br><span class="line">        [self loadView];</span><br><span class="line">    &#125;</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)loadView&#123;</span><br><span class="line">    _iconImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 5, 30, 30)];</span><br><span class="line">    [self addSubview:_iconImageView];</span><br><span class="line">   </span><br><span class="line">    self.nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 5, 100, 15)];</span><br><span class="line">    _nameLabel.font = [UIFont systemFontOfSize:13];</span><br><span class="line">    [self addSubview:self.nameLabel];</span><br><span class="line">    </span><br><span class="line">    _numberLabel = [[UILabel alloc]init];</span><br><span class="line">    [self addSubview:_numberLabel];</span><br><span class="line">    _numberLabel.font = [UIFont systemFontOfSize:12];</span><br><span class="line">    _numberLabel.textColor = [UIColor grayColor];</span><br><span class="line">    [self.numberLabel makeConstraints:^(MASConstraintMaker *make) &#123;</span><br><span class="line">        make.left.equalTo(_iconImageView.right).offset(10);</span><br><span class="line">        make.bottom.equalTo(_iconImageView.bottom).offset(0);</span><br><span class="line">        make.width.offset(100);</span><br><span class="line">    &#125;];</span><br><span class="line"></span><br><span class="line">    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, 45, 180, 0.5)];</span><br><span class="line">    lineView.backgroundColor = [UIColor groupTableViewBackgroundColor];</span><br><span class="line">    [self addSubview:lineView];</span><br><span class="line">    </span><br><span class="line">    UILabel *myLabel = [[UILabel alloc]init];</span><br><span class="line">    [self addSubview:myLabel];</span><br><span class="line">    myLabel.text = @&quot;效应名片&quot;;</span><br><span class="line">    [myLabel makeConstraints:^(MASConstraintMaker *make) &#123;</span><br><span class="line">        make.top.equalTo(lineView.bottom).offset(0);</span><br><span class="line">        make.left.equalTo(_iconImageView.left);</span><br><span class="line">        make.height.offset(15);</span><br><span class="line">        make.width.offset(50);</span><br><span class="line">    &#125;];</span><br><span class="line">    myLabel.font = [UIFont systemFontOfSize:11];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)setExtInfo:(LCChatExtModel *)extInfo</span><br><span class="line">&#123;</span><br><span class="line">    [_iconImageView sd_setImageWithURL:[NSURL URLWithString:extInfo.user_pic] placeholderImage:[UIImage imageNamed:@&quot;image&quot;]];</span><br><span class="line">    _nameLabel.text = extInfo.nickname;</span><br><span class="line">    _numberLabel.text = [NSString stringWithFormat:@&quot;效应号：%@&quot;,extInfo.num];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
-<ol start="2">
-<li>自定义Cell<br>创建一个继承于EaseBaseMessageCell的cell<br>先重写EaseBaseMessageCell的initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier model:(id<imessagemodel>)model方法<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier model:(id&lt;IMessageModel&gt;)model</span><br><span class="line">&#123;</span><br><span class="line">   self =  [super initWithStyle:style reuseIdentifier:reuseIdentifier model:model];</span><br><span class="line">    if (self) &#123;</span><br><span class="line">        self.avatarSize = 35;//头像尺寸</span><br><span class="line">        self.messageNameIsHidden = YES;//是否显示发送者昵称</span><br><span class="line">        self.avatarCornerRadius = 3;//头像圆角大小</span><br><span class="line">    &#125;</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</imessagemodel></li>
-</ol>
-<p>再重写setModel:(id<imessagemodel>)model方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">- (void)setModel:(id&lt;IMessageModel&gt;)model</span><br><span class="line">&#123;</span><br><span class="line">    [super setModel:model];</span><br><span class="line"></span><br><span class="line">    NSDictionary *dict = model.message.ext;   </span><br><span class="line">    LCChatExtModel *extModel = [LCChatExtModel mj_objectWithKeyValues:dict]; </span><br><span class="line">    if (extModel.type == 0]) &#123;//名片</span><br><span class="line">        self.bubbleView.textLabel.hidden = YES;</span><br><span class="line">        self.cardView.hidden = NO;</span><br><span class="line">        self.cardView.extInfo = extModel;</span><br><span class="line">        [self _updateStatusWithWidth:195 withHeight:70];</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        self.cardView.hidden = YES;</span><br><span class="line">        self.bubbleView.textLabel.hidden = NO;</span><br><span class="line">        [self removeConstraint:_bubbleViewH];</span><br><span class="line">        [self removeConstraint:_bubbleViewW];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></imessagemodel></p>
-<p>设置气泡，在这里说明一下，我最开始应该是直接修改气泡的frame没有成功，然后看环信是使用NSLayoutConstraint来UI适配，所以在这里我也使用了NSLayoutConstraint约束来调整气泡大小<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> 设置气泡</span><br><span class="line"> */</span><br><span class="line">- (void)_updateStatusWithWidth:(CGFloat)width withHeight:(CGFloat)height</span><br><span class="line">&#123;</span><br><span class="line">    [self removeConstraint:_bubbleViewH];</span><br><span class="line">    [self removeConstraint:_bubbleViewW];</span><br><span class="line">    _bubbleViewW = [NSLayoutConstraint constraintWithItem:self.bubbleView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:width];</span><br><span class="line">    [self addConstraint:_bubbleViewW];</span><br><span class="line">    </span><br><span class="line">    _bubbleViewH = [NSLayoutConstraint constraintWithItem:self.bubbleView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:height    ];</span><br><span class="line">    [self addConstraint:_bubbleViewH];</span><br><span class="line">    [self layoutIfNeeded];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>重写cellHeightWithModel方法，该方法是定义在tableView中获取Cell高度的方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">+ (CGFloat)cellHeightWithModel:(id&lt;IMessageModel&gt;)model</span><br><span class="line">&#123;</span><br><span class="line">    CGFloat surperHeight = [super cellHeightWithModel:model];</span><br><span class="line">    NSDictionary *dict = model.message.ext;</span><br><span class="line">    LCChatExtModel *extModel = [LCChatExtModel mj_objectWithKeyValues:dict];</span><br><span class="line">    if (extModel.type == 0) &#123;</span><br><span class="line">        return surperHeight +55;</span><br><span class="line">    &#125;</span><br><span class="line">    return surperHeight;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<ol start="3">
-<li>加载Cell<br>定义一个继承EaseMessageViewController的类，以后跳转到聊天页面使用该类，那么如何将cell放到TableView上呢？环信已经开发这个接口，下面在类中实现EaseMessageViewControllerDelegate的方法就可以了</li>
-</ol>
-<p><img src="http://upload-images.jianshu.io/upload_images/2901013-f8980ba6493c30d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
-<p>遵守协议<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">self.delegate = self;//EaseMessageViewControllerDelegate</span><br></pre></td></tr></table></figure></p>
-<p>实现EaseMessageViewControllerDelegate方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> 设置自定义Cell</span><br><span class="line"> */</span><br><span class="line">- (UITableViewCell *)messageViewController:(UITableView *)tableView cellForMessageModel:(id&lt;IMessageModel&gt;)model&#123;</span><br><span class="line">    if (model.bodyType == EMMessageBodyTypeText ) &#123;</span><br><span class="line">        NSString *CellIdentifier = [LCChatXiaoYingCardCell cellIdentifierWithModel:model];</span><br><span class="line">        LCChatXiaoYingCardCell *cardCell = (LCChatXiaoYingCardCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];</span><br><span class="line">        if (cardCell == nil) &#123;</span><br><span class="line">            cardCell = [[LCChatXiaoYingCardCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier model:model];</span><br><span class="line">            cardCell.selectionStyle = UITableViewCellSelectionStyleNone;</span><br><span class="line">            cardCell.delegate = self;</span><br><span class="line">        &#125;</span><br><span class="line">        cardCell.model = model;</span><br><span class="line">        return cardCell;</span><br><span class="line">    &#125;</span><br><span class="line">    return nil;//如果不是自定义类型返回空</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> 设置聊天高度</span><br><span class="line"> */</span><br><span class="line">- (CGFloat)messageViewController:(EaseMessageViewController *)viewController</span><br><span class="line">        heightForMessageModel:(id&lt;IMessageModel&gt;)messageModel</span><br><span class="line">                   withCellWidth:(CGFloat)cellWidth</span><br><span class="line">&#123;</span><br><span class="line">    LCChatExtModel *extModel = [LCChatExtModel mj_objectWithKeyValues:messageModel.message.ext];</span><br><span class="line">    if ([extModel.type == 0]) &#123;</span><br><span class="line">        return [LCChatXiaoYingCardCell cellHeightWithModel:messageModel] ;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;//如果不是自定义类型返回0</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>到这里呢，整个自定义就结束了</p>
-<p>本文出自codeaword的博客 <a href="https://codeaword.github.io/2017/10/10/环信SDK-自定义扩展消息/">https://codeaword.github.io/2017/10/10/环信SDK-自定义扩展消息/</a> 欢迎转载，转载请注明出处！</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://codeaword.github.io/2017/10/10/iOS11-iPhone-X-适配之路/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1765,6 +1596,175 @@
 <p>未完，持续更新~</p>
 <p>#参考文章链接<br><a href="https://devstreaming-cdn.apple.com/videos/wwdc/2017/204kty9amomlmk222/204/204_updating_your_app_for_ios_11.pdf" target="_blank" rel="noopener">Updating Your App for iOS 11</a><br><a href="https://developer.apple.com/design/" target="_blank" rel="noopener">Designing for iPhone X</a><br><a href="http://www.jianshu.com/p/370d82ba3939" target="_blank" rel="noopener">你可能需要为你的APP适配iOS11</a><br><a href="https://mp.weixin.qq.com/s?__biz=MzUxODI3MjY2Ng==&amp;mid=2247483816&amp;idx=1&amp;sn=c3fe3a5c5761fb55a69a008a08fef9aa&amp;chksm=f98a225dcefdab4b42d9778b09c4d5b587094a4209c48171901e04e570477c8bed5bf61106ce&amp;mpshare=1&amp;scene=23&amp;srcid=0920XPZzBwLPNHV94w7XwW9s#rd" target="_blank" rel="noopener">刘海 |关于iPhone X 的适配</a></p>
 <p>本文出自codeaword的博客 <a href="https://codeaword.github.io/2017/10/10/iOS11-iPhone-X-适配之路/">https://codeaword.github.io/2017/10/10/iOS11-iPhone-X-适配之路/</a> 欢迎转载，转载请注明出处！</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://codeaword.github.io/2017/10/10/环信SDK-自定义扩展消息/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Li Cong">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Code a word">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/10/环信SDK-自定义扩展消息/" itemprop="url">环信SDK-自定义扩展消息</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-10T11:26:10+08:00">
+                2017-10-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/10/10/环信SDK-自定义扩展消息/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2017/10/10/环信SDK-自定义扩展消息/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/10/10/环信SDK-自定义扩展消息/" class="leancloud_visitors" data-flag-title="环信SDK-自定义扩展消息">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>项目中集成了环信即时通讯，但是项目需要自定义消息类型，看环信发送消息方法，在发送消息的时候可以附加自定义的内容。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2901013-8b8b2131891bb3a2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
+<p>下面我将拿微信中名片为例来介绍：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2901013-e9a78c2d021b5749.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="名片"></p>
+<p>###确定发送方式：<br>首先需要与Android开发人员沟通发送什么类型消息的时候传递，环信sdk中封装的任何消息都是可以附加自定义内容的，在这里我们定义的是在发送文本消息的时候传递，也就是说发送自定义的名片等于发送的是文本消息。</p>
+<p>###确定字段：<br>先看自定义消息中所显示的内容：头像、昵称、效应号；我们定义的字典字段为：nickname、user_pic、num这三个，由于在点击这条消息的时候需要跳转到这个人的个人信息页面，所有又应该加上user_id，我们项目中所自定义的 消息不只一种还有其他的消息，这样我们又需要加上一个type来区分,最终附加字段为： nickname、user_pic、num、user_id、type</p>
+<p>###发送消息：<br>在选择完联系人后，回调信息到聊天页面发送消息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NSDictionary *dict = @&#123;@&quot;user_id&quot;:user_id,@&quot;nickname&quot;:nickname,@&quot;user_pic&quot;:user_pic,@&quot;num&quot;:number,@&quot;type&quot;:@&quot;0&quot;&#125;;</span><br><span class="line">[self sendTextMessage:@&quot;[效应名片]&quot; withExt:dict];</span><br></pre></td></tr></table></figure>
+<p>###定义UI<br>每条消息都是显示都是一个Cell，Cell要继承EaseBaseMessageCell，聊天的Cell都是有气泡的，显示的信息都是在气泡上，也就是说，我们只需要定义一个View然后放到气泡上，并且修改气泡的大小，就可以了。</p>
+<ol>
+<li>定义UI页面<br>创建一个创建一个继承UIView的类，在这个类上定义自己需要的UI，也就是下图所显示的内容</li>
+</ol>
+<p><img src="http://upload-images.jianshu.io/upload_images/2901013-8b2861d03c0e92a1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="定义的UI"><br>下面是我定义的LCChatXiaoYingCardView.m代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">@interface LCChatXiaoYingCardView ()</span><br><span class="line">/**</span><br><span class="line"> 头像</span><br><span class="line"> */</span><br><span class="line">@property (strong, nonatomic)  UIImageView *iconImageView;</span><br><span class="line">/**</span><br><span class="line"> 昵称</span><br><span class="line"> */</span><br><span class="line">@property (strong, nonatomic)  UILabel *nameLabel;</span><br><span class="line">/**</span><br><span class="line"> 效应号</span><br><span class="line"> */</span><br><span class="line">@property (strong, nonatomic)  UILabel *numberLabel;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation LCChatXiaoYingCardView</span><br><span class="line"></span><br><span class="line">- (instancetype)initWithFrame:(CGRect)frame</span><br><span class="line">&#123;</span><br><span class="line">    self = [super initWithFrame:frame];</span><br><span class="line">    if (self) &#123;</span><br><span class="line">        [self loadView];</span><br><span class="line">    &#125;</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)loadView&#123;</span><br><span class="line">    _iconImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 5, 30, 30)];</span><br><span class="line">    [self addSubview:_iconImageView];</span><br><span class="line">   </span><br><span class="line">    self.nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 5, 100, 15)];</span><br><span class="line">    _nameLabel.font = [UIFont systemFontOfSize:13];</span><br><span class="line">    [self addSubview:self.nameLabel];</span><br><span class="line">    </span><br><span class="line">    _numberLabel = [[UILabel alloc]init];</span><br><span class="line">    [self addSubview:_numberLabel];</span><br><span class="line">    _numberLabel.font = [UIFont systemFontOfSize:12];</span><br><span class="line">    _numberLabel.textColor = [UIColor grayColor];</span><br><span class="line">    [self.numberLabel makeConstraints:^(MASConstraintMaker *make) &#123;</span><br><span class="line">        make.left.equalTo(_iconImageView.right).offset(10);</span><br><span class="line">        make.bottom.equalTo(_iconImageView.bottom).offset(0);</span><br><span class="line">        make.width.offset(100);</span><br><span class="line">    &#125;];</span><br><span class="line"></span><br><span class="line">    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, 45, 180, 0.5)];</span><br><span class="line">    lineView.backgroundColor = [UIColor groupTableViewBackgroundColor];</span><br><span class="line">    [self addSubview:lineView];</span><br><span class="line">    </span><br><span class="line">    UILabel *myLabel = [[UILabel alloc]init];</span><br><span class="line">    [self addSubview:myLabel];</span><br><span class="line">    myLabel.text = @&quot;效应名片&quot;;</span><br><span class="line">    [myLabel makeConstraints:^(MASConstraintMaker *make) &#123;</span><br><span class="line">        make.top.equalTo(lineView.bottom).offset(0);</span><br><span class="line">        make.left.equalTo(_iconImageView.left);</span><br><span class="line">        make.height.offset(15);</span><br><span class="line">        make.width.offset(50);</span><br><span class="line">    &#125;];</span><br><span class="line">    myLabel.font = [UIFont systemFontOfSize:11];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)setExtInfo:(LCChatExtModel *)extInfo</span><br><span class="line">&#123;</span><br><span class="line">    [_iconImageView sd_setImageWithURL:[NSURL URLWithString:extInfo.user_pic] placeholderImage:[UIImage imageNamed:@&quot;image&quot;]];</span><br><span class="line">    _nameLabel.text = extInfo.nickname;</span><br><span class="line">    _numberLabel.text = [NSString stringWithFormat:@&quot;效应号：%@&quot;,extInfo.num];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
+<ol start="2">
+<li>自定义Cell<br>创建一个继承于EaseBaseMessageCell的cell<br>先重写EaseBaseMessageCell的initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier model:(id<imessagemodel>)model方法<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier model:(id&lt;IMessageModel&gt;)model</span><br><span class="line">&#123;</span><br><span class="line">   self =  [super initWithStyle:style reuseIdentifier:reuseIdentifier model:model];</span><br><span class="line">    if (self) &#123;</span><br><span class="line">        self.avatarSize = 35;//头像尺寸</span><br><span class="line">        self.messageNameIsHidden = YES;//是否显示发送者昵称</span><br><span class="line">        self.avatarCornerRadius = 3;//头像圆角大小</span><br><span class="line">    &#125;</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</imessagemodel></li>
+</ol>
+<p>再重写setModel:(id<imessagemodel>)model方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">- (void)setModel:(id&lt;IMessageModel&gt;)model</span><br><span class="line">&#123;</span><br><span class="line">    [super setModel:model];</span><br><span class="line"></span><br><span class="line">    NSDictionary *dict = model.message.ext;   </span><br><span class="line">    LCChatExtModel *extModel = [LCChatExtModel mj_objectWithKeyValues:dict]; </span><br><span class="line">    if (extModel.type == 0]) &#123;//名片</span><br><span class="line">        self.bubbleView.textLabel.hidden = YES;</span><br><span class="line">        self.cardView.hidden = NO;</span><br><span class="line">        self.cardView.extInfo = extModel;</span><br><span class="line">        [self _updateStatusWithWidth:195 withHeight:70];</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        self.cardView.hidden = YES;</span><br><span class="line">        self.bubbleView.textLabel.hidden = NO;</span><br><span class="line">        [self removeConstraint:_bubbleViewH];</span><br><span class="line">        [self removeConstraint:_bubbleViewW];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></imessagemodel></p>
+<p>设置气泡，在这里说明一下，我最开始应该是直接修改气泡的frame没有成功，然后看环信是使用NSLayoutConstraint来UI适配，所以在这里我也使用了NSLayoutConstraint约束来调整气泡大小<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> 设置气泡</span><br><span class="line"> */</span><br><span class="line">- (void)_updateStatusWithWidth:(CGFloat)width withHeight:(CGFloat)height</span><br><span class="line">&#123;</span><br><span class="line">    [self removeConstraint:_bubbleViewH];</span><br><span class="line">    [self removeConstraint:_bubbleViewW];</span><br><span class="line">    _bubbleViewW = [NSLayoutConstraint constraintWithItem:self.bubbleView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:width];</span><br><span class="line">    [self addConstraint:_bubbleViewW];</span><br><span class="line">    </span><br><span class="line">    _bubbleViewH = [NSLayoutConstraint constraintWithItem:self.bubbleView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:height    ];</span><br><span class="line">    [self addConstraint:_bubbleViewH];</span><br><span class="line">    [self layoutIfNeeded];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>重写cellHeightWithModel方法，该方法是定义在tableView中获取Cell高度的方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">+ (CGFloat)cellHeightWithModel:(id&lt;IMessageModel&gt;)model</span><br><span class="line">&#123;</span><br><span class="line">    CGFloat surperHeight = [super cellHeightWithModel:model];</span><br><span class="line">    NSDictionary *dict = model.message.ext;</span><br><span class="line">    LCChatExtModel *extModel = [LCChatExtModel mj_objectWithKeyValues:dict];</span><br><span class="line">    if (extModel.type == 0) &#123;</span><br><span class="line">        return surperHeight +55;</span><br><span class="line">    &#125;</span><br><span class="line">    return surperHeight;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ol start="3">
+<li>加载Cell<br>定义一个继承EaseMessageViewController的类，以后跳转到聊天页面使用该类，那么如何将cell放到TableView上呢？环信已经开发这个接口，下面在类中实现EaseMessageViewControllerDelegate的方法就可以了</li>
+</ol>
+<p><img src="http://upload-images.jianshu.io/upload_images/2901013-f8980ba6493c30d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
+<p>遵守协议<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">self.delegate = self;//EaseMessageViewControllerDelegate</span><br></pre></td></tr></table></figure></p>
+<p>实现EaseMessageViewControllerDelegate方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> 设置自定义Cell</span><br><span class="line"> */</span><br><span class="line">- (UITableViewCell *)messageViewController:(UITableView *)tableView cellForMessageModel:(id&lt;IMessageModel&gt;)model&#123;</span><br><span class="line">    if (model.bodyType == EMMessageBodyTypeText ) &#123;</span><br><span class="line">        NSString *CellIdentifier = [LCChatXiaoYingCardCell cellIdentifierWithModel:model];</span><br><span class="line">        LCChatXiaoYingCardCell *cardCell = (LCChatXiaoYingCardCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];</span><br><span class="line">        if (cardCell == nil) &#123;</span><br><span class="line">            cardCell = [[LCChatXiaoYingCardCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier model:model];</span><br><span class="line">            cardCell.selectionStyle = UITableViewCellSelectionStyleNone;</span><br><span class="line">            cardCell.delegate = self;</span><br><span class="line">        &#125;</span><br><span class="line">        cardCell.model = model;</span><br><span class="line">        return cardCell;</span><br><span class="line">    &#125;</span><br><span class="line">    return nil;//如果不是自定义类型返回空</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> 设置聊天高度</span><br><span class="line"> */</span><br><span class="line">- (CGFloat)messageViewController:(EaseMessageViewController *)viewController</span><br><span class="line">        heightForMessageModel:(id&lt;IMessageModel&gt;)messageModel</span><br><span class="line">                   withCellWidth:(CGFloat)cellWidth</span><br><span class="line">&#123;</span><br><span class="line">    LCChatExtModel *extModel = [LCChatExtModel mj_objectWithKeyValues:messageModel.message.ext];</span><br><span class="line">    if ([extModel.type == 0]) &#123;</span><br><span class="line">        return [LCChatXiaoYingCardCell cellHeightWithModel:messageModel] ;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;//如果不是自定义类型返回0</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>到这里呢，整个自定义就结束了</p>
+<p>本文出自codeaword的博客 <a href="https://codeaword.github.io/2017/10/10/环信SDK-自定义扩展消息/">https://codeaword.github.io/2017/10/10/环信SDK-自定义扩展消息/</a> 欢迎转载，转载请注明出处！</p>
 
           
         
