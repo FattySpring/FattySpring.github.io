@@ -360,7 +360,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  300
+                  294
                 </span>
               
 
@@ -407,10 +407,10 @@
 <li><p>&amp;<br>对二进制操作，将二进制合并，同为1则为1<br>2(0010) = 2(0010)|6(0110)   </p>
 </li>
 </ul>
-<p>####定义枚举<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">typedef NS_ENUM(NSUInteger, WebViewType) &#123;</span><br><span class="line">    WebViewTypeNor           = 1,                  //0001   1</span><br><span class="line">    WebViewTypeTest1         = WebViewTypeNor &lt;&lt; 1,//0010   2</span><br><span class="line">    WebViewTypeTest2         = WebViewTypeNor &lt;&lt; 2,//0100   4</span><br><span class="line">    WebViewTypeTest3         = WebViewTypeNor &lt;&lt; 3,//1000   8</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<p>####使用枚举<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">WebViewType webType = WebViewTypeTest1 | WebViewTypeTest2;</span><br><span class="line"></span><br><span class="line">if (webType &amp; WebViewTypeNor) &#123;</span><br><span class="line">      NSLog(@&quot;this is WebViewTypeNor&quot;);</span><br><span class="line">&#125;</span><br><span class="line">if (webType &amp; WebViewTypeTest1) &#123;</span><br><span class="line">      NSLog(@&quot;this is WebViewTypeTest1&quot;);</span><br><span class="line">&#125;</span><br><span class="line">if (webType &amp; WebViewTypeTest2) &#123;</span><br><span class="line">      NSLog(@&quot;this is WebViewTypeTest2&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>####定义枚举<br><figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">typedef <span class="type">NS_ENUM</span>(<span class="type">NSUInteger</span>, <span class="type">WebViewType</span>) &#123;</span><br><span class="line">    <span class="type">WebViewTypeNor</span>           = 1,                  //0001   1</span><br><span class="line">    <span class="type">WebViewTypeTest1</span>         = <span class="type">WebViewTypeNor</span> &lt;&lt; 1,//0010   2</span><br><span class="line">    <span class="type">WebViewTypeTest2</span>         = <span class="type">WebViewTypeNor</span> &lt;&lt; 2,//0100   4</span><br><span class="line">    <span class="type">WebViewTypeTest3</span>         = <span class="type">WebViewTypeNor</span> &lt;&lt; 3,//1000   8</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>####使用枚举<br><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">WebViewType webType = WebViewTypeTest1 <span class="string">| WebViewTypeTest2;</span></span><br><span class="line"></span><br><span class="line">if (webType <span class="meta">&amp; WebViewTypeNor) &#123;</span></span><br><span class="line">      NSLog(@<span class="string">"this is WebViewTypeNor"</span>);</span><br><span class="line">&#125;</span><br><span class="line">if (webType <span class="meta">&amp; WebViewTypeTest1) &#123;</span></span><br><span class="line">      NSLog(@<span class="string">"this is WebViewTypeTest1"</span>);</span><br><span class="line">&#125;</span><br><span class="line">if (webType <span class="meta">&amp; WebViewTypeTest2) &#123;</span></span><br><span class="line">      NSLog(@<span class="string">"this is WebViewTypeTest2"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p><img src="http://upload-images.jianshu.io/upload_images/2901013-334ae64514bd8377.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="输出.png"></p>
-<p>本文出自codeaword的博客 <a href="https://codeaword.github.io/2017/10/10/iOS-枚举位移/">https://codeaword.github.io/2017/10/10/iOS-枚举位移/</a> 欢迎转载，转载请注明出处！</p>
+<p>本文出自FattySpring的博客 <a href="https://FattySpring.github.io/2017/10/10/iOS-枚举位移/">https://FattySpring.github.io/2017/10/10/iOS-枚举位移/</a> 欢迎转载，转载请注明出处！</p>
 
       
     </div>
@@ -441,8 +441,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/10/10/iOS-根据视频url获取某一帧图片并实现三级缓存/" rel="next" title="iOS-根据视频url获取某一帧图片并实现三级缓存">
-                <i class="fa fa-chevron-left"></i> iOS-根据视频url获取某一帧图片并实现三级缓存
+              <a href="/2017/10/10/iOS-WebService-SOAP-请求的实现/" rel="next" title="iOS WebService SOAP 请求的实现">
+                <i class="fa fa-chevron-left"></i> iOS WebService SOAP 请求的实现
               </a>
             
           </div>
@@ -451,8 +451,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/10/10/iOS-WebService-SOAP-请求的实现/" rel="prev" title="iOS WebService SOAP 请求的实现">
-                iOS WebService SOAP 请求的实现 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/10/10/iOS-LaunchScreen-国际化/" rel="prev" title="iOS LaunchScreen 国际化">
+                iOS LaunchScreen 国际化 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -590,7 +590,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">5.8k</span>
+    <span title="Site words total count">5.7k</span>
   
 </div>
 

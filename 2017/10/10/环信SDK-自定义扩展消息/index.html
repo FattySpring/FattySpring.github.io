@@ -427,7 +427,7 @@
 <p>实现EaseMessageViewControllerDelegate方法<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 设置自定义Cell</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">- (<span class="built_in">UITableViewCell</span> *)messageViewController:(<span class="built_in">UITableView</span> *)tableView cellForMessageModel:(<span class="keyword">id</span>&lt;IMessageModel&gt;)model&#123;</span><br><span class="line">    <span class="keyword">if</span> (model.bodyType == EMMessageBodyTypeText ) &#123;</span><br><span class="line">        <span class="built_in">NSString</span> *CellIdentifier = [LCChatXiaoYingCardCell cellIdentifierWithModel:model];</span><br><span class="line">        LCChatXiaoYingCardCell *cardCell = (LCChatXiaoYingCardCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];</span><br><span class="line">        <span class="keyword">if</span> (cardCell == <span class="literal">nil</span>) &#123;</span><br><span class="line">            cardCell = [[LCChatXiaoYingCardCell alloc] initWithStyle:<span class="built_in">UITableViewCellStyleDefault</span> reuseIdentifier:CellIdentifier model:model];</span><br><span class="line">            cardCell.selectionStyle = <span class="built_in">UITableViewCellSelectionStyleNone</span>;</span><br><span class="line">            cardCell.delegate = <span class="keyword">self</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        cardCell.model = model;</span><br><span class="line">        <span class="keyword">return</span> cardCell;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span>;<span class="comment">//如果不是自定义类型返回空</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 设置聊天高度</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">- (<span class="built_in">CGFloat</span>)messageViewController:(EaseMessageViewController *)viewController</span><br><span class="line">        heightForMessageModel:(<span class="keyword">id</span>&lt;IMessageModel&gt;)messageModel</span><br><span class="line">                   withCellWidth:(<span class="built_in">CGFloat</span>)cellWidth</span><br><span class="line">&#123;</span><br><span class="line">    LCChatExtModel *extModel = [LCChatExtModel mj_objectWithKeyValues:messageModel.message.ext];</span><br><span class="line">    <span class="keyword">if</span> ([extModel.type == <span class="number">0</span>]) &#123;</span><br><span class="line">        <span class="keyword">return</span> [LCChatXiaoYingCardCell cellHeightWithModel:messageModel] ;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;<span class="comment">//如果不是自定义类型返回0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>到这里呢，整个自定义就结束了</p>
-<p>本文出自codeaword的博客 <a href="https://codeaword.github.io/2017/10/10/环信SDK-自定义扩展消息/">https://codeaword.github.io/2017/10/10/环信SDK-自定义扩展消息/</a> 欢迎转载，转载请注明出处！</p>
+<p>本文出自FattySpring的博客 <a href="https://FattySpring.github.io/2017/10/10/环信SDK-自定义扩展消息/">https://FattySpring.github.io/2017/10/10/环信SDK-自定义扩展消息/</a> 欢迎转载，转载请注明出处！</p>
 
       
     </div>
@@ -458,8 +458,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/10/10/iOS11-iPhone-X-适配之路/" rel="next" title="iOS11-iPhone-X-适配之路">
-                <i class="fa fa-chevron-left"></i> iOS11-iPhone-X-适配之路
+              <a href="/2017/05/11/Hexo使用/" rel="next" title="Hexo使用">
+                <i class="fa fa-chevron-left"></i> Hexo使用
               </a>
             
           </div>
@@ -468,8 +468,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/10/10/iOS-计算文本的高度/" rel="prev" title="iOS-计算文本的高度">
-                iOS-计算文本的高度 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/10/10/iOS11-iPhone-X-适配之路/" rel="prev" title="iOS11-iPhone-X-适配之路">
+                iOS11-iPhone-X-适配之路 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -607,7 +607,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">5.8k</span>
+    <span title="Site words total count">5.7k</span>
   
 </div>
 
