@@ -25,6 +25,8 @@
 
 
 
+  <meta name="google-site-verification" content="LL6OUyFuM2i27lQuG659zjazxo4I4wWJiRPRjR47skw">
+
 
 
 
@@ -89,7 +91,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2901013-d0ca52f7ce1b82d6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2901013-334ae64514bd8377.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2020-04-16T10:54:26.968Z">
+<meta property="og:updated_time" content="2020-04-18T15:45:09.446Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS-枚举位移">
 <meta name="twitter:description" content="####简介在iOS开发中，我们在Apple SDK和第三方SDK中经常可以看到这样的位移枚举值，作用呢大家都知道可以同时使用多个，下面我说下位移运算符所需要使用到的一些预算符，并写一个简单示例 ####需要使用的运算符  &amp;lt;&amp;lt;对二进制操作，进行整体向左位移操作末尾补0操作如：3//二进制为00116  = 3&amp;lt;&amp;lt;1//二进制为011012 = 3&amp;lt;&amp;lt;2//二进">
@@ -407,7 +409,7 @@
 <li><p>&amp;<br>对二进制操作，将二进制合并，同为1则为1<br>2(0010) = 2(0010)|6(0110)   </p>
 </li>
 </ul>
-<p>####定义枚举<br><figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">typedef <span class="type">NS_ENUM</span>(<span class="type">NSUInteger</span>, <span class="type">WebViewType</span>) &#123;</span><br><span class="line">    <span class="type">WebViewTypeNor</span>           = 1,                  //0001   1</span><br><span class="line">    <span class="type">WebViewTypeTest1</span>         = <span class="type">WebViewTypeNor</span> &lt;&lt; 1,//0010   2</span><br><span class="line">    <span class="type">WebViewTypeTest2</span>         = <span class="type">WebViewTypeNor</span> &lt;&lt; 2,//0100   4</span><br><span class="line">    <span class="type">WebViewTypeTest3</span>         = <span class="type">WebViewTypeNor</span> &lt;&lt; 3,//1000   8</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>####定义枚举<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">typedef NS_ENUM(NSUInteger, WebViewType) &#123;</span><br><span class="line">    WebViewTypeNor           = 1,                  //0001   1</span><br><span class="line">    WebViewTypeTest1         = WebViewTypeNor &lt;&lt; 1,//0010   2</span><br><span class="line">    WebViewTypeTest2         = WebViewTypeNor &lt;&lt; 2,//0100   4</span><br><span class="line">    WebViewTypeTest3         = WebViewTypeNor &lt;&lt; 3,//1000   8</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
 <p>####使用枚举<br><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">WebViewType webType = WebViewTypeTest1 <span class="string">| WebViewTypeTest2;</span></span><br><span class="line"></span><br><span class="line">if (webType <span class="meta">&amp; WebViewTypeNor) &#123;</span></span><br><span class="line">      NSLog(@<span class="string">"this is WebViewTypeNor"</span>);</span><br><span class="line">&#125;</span><br><span class="line">if (webType <span class="meta">&amp; WebViewTypeTest1) &#123;</span></span><br><span class="line">      NSLog(@<span class="string">"this is WebViewTypeTest1"</span>);</span><br><span class="line">&#125;</span><br><span class="line">if (webType <span class="meta">&amp; WebViewTypeTest2) &#123;</span></span><br><span class="line">      NSLog(@<span class="string">"this is WebViewTypeTest2"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p><img src="http://upload-images.jianshu.io/upload_images/2901013-334ae64514bd8377.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="输出.png"></p>
 <p>本文出自FattySpring的博客 <a href="https://FattySpring.github.io/2017/10/10/iOS-枚举位移/">https://FattySpring.github.io/2017/10/10/iOS-枚举位移/</a> 欢迎转载，转载请注明出处！</p>
@@ -471,6 +473,32 @@
 
 
     <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
       
     </div>
   </div>
