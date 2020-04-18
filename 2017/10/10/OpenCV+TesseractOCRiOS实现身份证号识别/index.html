@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="zh-Hans">
+<html class="theme-next gemini use-motion" lang="zh-Hans">
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -83,15 +83,15 @@
 <meta name="keywords" content="iOS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OpenCV+TesseractOCRiOS实现身份证号识别">
-<meta property="og:url" content="https://codeaword.github.io/2017/10/10/OpenCV+TesseractOCRiOS实现身份证号识别/index.html">
-<meta property="og:site_name" content="Code a word">
+<meta property="og:url" content="https://FattySpring.github.io/2017/10/10/OpenCV+TesseractOCRiOS实现身份证号识别/index.html">
+<meta property="og:site_name" content="Fatty spring">
 <meta property="og:description" content="iOS 文字识别准备 图片灰度化 图片二值化 根据特征点提取某一区域  声明：思路来源于 iOS身份证号码识别 ,在此我对作者表示感谢，一下内容，是我结合http://www.opencv.org.cn写的一个简单教程，对该工程所用到的方法进行解读，在本文的最后，会附上完整的代码. 正文iOS 文字识别准备文字识别重要点在对图片的预处理，预处理做的比较好，识别率就会比较高，本次所介绍的身份证号识">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2901013-424632f532885b61.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2901013-ea2ccca4c85c5a2b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2901013-d3a1d9852e19eb75.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2901013-34bfb42366251428.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2020-04-16T11:10:00.471Z">
+<meta property="og:updated_time" content="2020-04-18T15:09:26.033Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OpenCV+TesseractOCRiOS实现身份证号识别">
 <meta name="twitter:description" content="iOS 文字识别准备 图片灰度化 图片二值化 根据特征点提取某一区域  声明：思路来源于 iOS身份证号码识别 ,在此我对作者表示感谢，一下内容，是我结合http://www.opencv.org.cn写的一个简单教程，对该工程所用到的方法进行解读，在本文的最后，会附上完整的代码. 正文iOS 文字识别准备文字识别重要点在对图片的预处理，预处理做的比较好，识别率就会比较高，本次所介绍的身份证号识">
@@ -103,7 +103,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Gemini',
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
@@ -125,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="https://codeaword.github.io/2017/10/10/OpenCV+TesseractOCRiOS实现身份证号识别/">
+  <link rel="canonical" href="https://FattySpring.github.io/2017/10/10/OpenCV+TesseractOCRiOS实现身份证号识别/">
 
 
 
 
 
-  <title>OpenCV+TesseractOCRiOS实现身份证号识别 | Code a word</title>
+  <title>OpenCV+TesseractOCRiOS实现身份证号识别 | Fatty spring</title>
   
 
 
@@ -161,12 +161,12 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Code a word</span>
+        <span class="site-title">Fatty spring</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
       
-        <p class="site-subtitle"></p>
+        <h1 class="site-subtitle" itemprop="description"></h1>
       
   </div>
 
@@ -217,9 +217,41 @@
       
 
       
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
     </ul>
   
 
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
   
 </nav>
 
@@ -248,7 +280,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://codeaword.github.io/2017/10/10/OpenCV+TesseractOCRiOS实现身份证号识别/">
+    <link itemprop="mainEntityOfPage" href="https://FattySpring.github.io/2017/10/10/OpenCV+TesseractOCRiOS实现身份证号识别/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Li Cong">
@@ -257,7 +289,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Code a word">
+      <meta itemprop="name" content="Fatty spring">
     </span>
 
     
@@ -265,7 +297,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">OpenCV+TesseractOCRiOS实现身份证号识别</h1>
+          <h2 class="post-title" itemprop="name headline">OpenCV+TesseractOCRiOS实现身份证号识别</h2>
         
 
         <div class="post-meta">
@@ -320,6 +352,37 @@
           
 
           
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.4k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
 
           
 
@@ -343,49 +406,40 @@
 <li>根据特征点提取某一区域</li>
 </ul>
 <p>声明：思路来源于 <a href="http://www.jianshu.com/p/ac4c4536ca3e" target="_blank" rel="noopener">iOS身份证号码识别</a> ,在此我对作者表示感谢，一下内容，是我结合<a href="#http://www.opencv.org.cn/opencvdoc/2.3.2/html/doc/tutorials/tutorials.html">http://www.opencv.org.cn</a>写的一个简单教程，对该工程所用到的方法进行解读，在本文的最后，会附上完整的代码.</p>
-<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><h3 id="iOS-文字识别准备"><a href="#iOS-文字识别准备" class="headerlink" title="iOS 文字识别准备"></a>iOS 文字识别准备</h3><p>文字识别重要点在对图片的预处理，预处理做的比较好，识别率就会比较高，本次所介绍的身份证号识别是基于OpenCV、TesseractOCRiOS来实现的<br>首先使用CocoaPods导入三方库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pod &apos;OpenCV&apos;, &apos;~&gt; 3.0.0&apos;</span><br><span class="line">pod &apos;TesseractOCRiOS&apos;, &apos;~&gt; 4.0.0&apos;</span><br></pre></td></tr></table></figure></p>
-<h3 id="灰度化"><a href="#灰度化" class="headerlink" title="灰度化"></a>灰度化</h3><p>灰度化，在RGB模型中，如果R=G=B时，则彩色表示一种灰度颜色，其中R=G=B的值叫灰度值，因此，灰度图像每个像素只需一个字节存放灰度值（又称强度值、亮度值），灰度范围为0-255。<br>下面说一下如何使用OpenCV进行灰度化处理，使用的OpenCV是一个C++ 的代码，在使用的类中要将.m文件改为.mm<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//将UIImage转换成矩阵</span><br><span class="line">cv::Mat resultImage;//定义矩阵</span><br><span class="line">UIImageToMat(image, resultImage);</span><br><span class="line">//转为灰度图</span><br><span class="line">cvtColor(resultImage, resultImage, cv::COLOR_BGR2GRAY);</span><br></pre></td></tr></table></figure></p>
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><h3 id="iOS-文字识别准备"><a href="#iOS-文字识别准备" class="headerlink" title="iOS 文字识别准备"></a>iOS 文字识别准备</h3><p>文字识别重要点在对图片的预处理，预处理做的比较好，识别率就会比较高，本次所介绍的身份证号识别是基于OpenCV、TesseractOCRiOS来实现的<br>首先使用CocoaPods导入三方库<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pod 'OpenCV', '~&gt; 3.0.0'</span><br><span class="line">pod 'TesseractOCRiOS', '~&gt; 4.0.0'</span><br></pre></td></tr></table></figure></p>
+<h3 id="灰度化"><a href="#灰度化" class="headerlink" title="灰度化"></a>灰度化</h3><p>灰度化，在RGB模型中，如果R=G=B时，则彩色表示一种灰度颜色，其中R=G=B的值叫灰度值，因此，灰度图像每个像素只需一个字节存放灰度值（又称强度值、亮度值），灰度范围为0-255。<br>下面说一下如何使用OpenCV进行灰度化处理，使用的OpenCV是一个C++ 的代码，在使用的类中要将.m文件改为.mm<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//将UIImage转换成矩阵</span></span><br><span class="line">cv::Mat resultImage;<span class="comment">//定义矩阵</span></span><br><span class="line">UIImageToMat(<span class="built_in">image</span>, resultImage);</span><br><span class="line"><span class="comment">//转为灰度图</span></span><br><span class="line">cvtColor(resultImage, resultImage, cv::COLOR_BGR2GRAY);</span><br></pre></td></tr></table></figure></p>
 <p><img src="http://upload-images.jianshu.io/upload_images/2901013-424632f532885b61.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="原图.png"></p>
 <p><img src="http://upload-images.jianshu.io/upload_images/2901013-ea2ccca4c85c5a2b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="灰度化.png"></p>
 <h3 id="二值化"><a href="#二值化" class="headerlink" title="二值化"></a>二值化</h3><p>图像的二值化，就是将图像上的像素点的灰度值设置为0或255，也就是将整个图像呈现出明显的只有黑和白的视觉效果。</p>
 <h5 id="固定阈值门限分割"><a href="#固定阈值门限分割" class="headerlink" title="固定阈值门限分割"></a>固定阈值门限分割</h5><ul>
 <li><p>方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">double threshold( InputArray src, OutputArray dst,</span><br><span class="line">                               double thresh, double maxval, int type );</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">threshold</span><span class="params">( InputArray src, OutputArray dst,</span></span></span><br><span class="line"><span class="function"><span class="params">                               <span class="keyword">double</span> thresh, <span class="keyword">double</span> maxval, <span class="keyword">int</span> type )</span></span>;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>参数说明</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">src 输入矩阵</span><br><span class="line">dst 输出矩阵</span><br><span class="line">thresh 阀值</span><br><span class="line">maxval 最大值（这里通常设置为255）</span><br><span class="line">thresholdType 分割类型</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>src 输入矩阵<br>dst 输出矩阵<br>thresh 阀值<br>maxval 最大值（这里通常设置为255）<br>thresholdType 分割类型</p>
+</blockquote>
 </li>
 <li><p>分割类型说明</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//value 矩阵中一个单位的颜色的值</span><br><span class="line">//threshold 阀值</span><br><span class="line">CV_THRESH_BINARY      =0,  /**value &gt; threshold ? max_value : 0       */</span><br><span class="line">    CV_THRESH_BINARY_INV  =1,  /**value &gt; threshold ? 0 : max_value       */</span><br><span class="line">    CV_THRESH_TRUNC       =2,  /** value &gt; threshold ? threshold : value   */</span><br><span class="line">    CV_THRESH_TOZERO      =3,  /**value &gt; threshold ? value : 0           */</span><br><span class="line">    CV_THRESH_TOZERO_INV  =4,  /** value &gt; threshold ? 0 : value */</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv::threshold(resultImage, resultImage, 100, 255, CV_THRESH_BINARY);</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//value 矩阵中一个单位的颜色的值</span></span><br><span class="line"><span class="comment">//threshold 阀值</span></span><br><span class="line">CV_THRESH_BINARY      =<span class="number">0</span>,  <span class="comment">/**value &gt; threshold ? max_value : 0       */</span></span><br><span class="line">    CV_THRESH_BINARY_INV  =<span class="number">1</span>,  <span class="comment">/**value &gt; threshold ? 0 : max_value       */</span></span><br><span class="line">    CV_THRESH_TRUNC       =<span class="number">2</span>,  <span class="comment">/** value &gt; threshold ? threshold : value   */</span></span><br><span class="line">    CV_THRESH_TOZERO      =<span class="number">3</span>,  <span class="comment">/**value &gt; threshold ? value : 0           */</span></span><br><span class="line">    CV_THRESH_TOZERO_INV  =<span class="number">4</span>,  <span class="comment">/** value &gt; threshold ? 0 : value */</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv::threshold(resultImage, resultImage, <span class="number">100</span>, <span class="number">255</span>, CV_THRESH_BINARY);</span><br></pre></td></tr></table></figure>
 <p><img src="http://upload-images.jianshu.io/upload_images/2901013-d3a1d9852e19eb75.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="阀值为100二值化.png"></p>
-<p>这里又有一个很重要的点，阀值的确定，我是在网上找了个计算阀值的算法，不过不是很理想，现在也贴出来，但是不知道作者是谁了，很抱歉…<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">int cvThresholdOtsu(IplImage* src)</span><br><span class="line">&#123;</span><br><span class="line">    int height=src-&gt;height;</span><br><span class="line">    int width=src-&gt;width;</span><br><span class="line">    </span><br><span class="line">    //histogram</span><br><span class="line">    float histogram[256]=&#123;0&#125;;</span><br><span class="line">    for(int i=0;i&lt;height;i++) &#123;</span><br><span class="line">        unsigned char* p=(unsigned char*)src-&gt;imageData+src-&gt;widthStep*i;</span><br><span class="line">        for(int j=0;j&lt;width;j++) &#123;</span><br><span class="line">            histogram[*p++]++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    //normalize histogram</span><br><span class="line">    int size=height*width;</span><br><span class="line">    for(int i=0;i&lt;256;i++) &#123;</span><br><span class="line">        histogram[i]=histogram[i]/size;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //average pixel value</span><br><span class="line">    float avgValue=0;</span><br><span class="line">    for(int i=0;i&lt;256;i++) &#123;</span><br><span class="line">        avgValue+=i*histogram[i];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    int threshold = 0;</span><br><span class="line">    float maxVariance=0;</span><br><span class="line">    float w=0,u=0;</span><br><span class="line">    for(int i=0;i&lt;256;i++) &#123;</span><br><span class="line">        w+=histogram[i];</span><br><span class="line">        u+=i*histogram[i];</span><br><span class="line">        </span><br><span class="line">        float t=avgValue*w-u;</span><br><span class="line">        float variance=t*t/(w*(1-w));</span><br><span class="line">        if(variance&gt;maxVariance) &#123;</span><br><span class="line">            maxVariance=variance;</span><br><span class="line">            threshold=i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    return threshold;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>截取卡号区域<br>思路，现将黑色的点放大，这样点会连接到一起，变成一块儿黑色，然后我们通过图片的轮廓，宽高比例来寻找复合的一个区域，将其截取下来</li>
-</ul>
-<p>###<a href="http://www.opencv.org.cn/opencvdoc/2.3.2/html/doc/tutorials/imgproc/erosion_dilatation/erosion_dilatation.html" target="_blank" rel="noopener">腐蚀&amp;膨胀</a></p>
-<ul>
-<li>官方解释：<br>腐蚀：进行腐蚀操作时，将内核B划过图像,将内核B覆盖区域的最小相素值提取，并代替锚点位置的相素。<br>膨胀：进行膨胀操作时，将内核B划过图像,将内核B覆盖区域的最大相素值提取，并代替锚点位置的相素。显然，这一最大化操作将会导致图像中的亮区开始”扩展” (因此有了术语膨胀 <em>dilation</em> )。对上图采用膨胀操作我们得到:</li>
-<li>个人理解：<br>腐蚀：定义一个size，用这个size替换图片每个点（加粗）<br>膨胀：与腐蚀相反（变细）<br>个人的认识比较low，在这里呢使用腐蚀目的是将相近的黑色点连接到一块，已便后面获取所有数字连接到一块儿的轮廓，对比每个轮廓的宽高比，截取到卡号区域。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cv::Mat erodeElement = getStructuringElement(cv::MORPH_RECT, cv::Size(25,1));</span><br><span class="line">cv::erode(resultImage, resultImage, erodeElement);</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
+<p>这里又有一个很重要的点，阀值的确定，我是在网上找了个计算阀值的算法，不过不是很理想，现在也贴出来，但是不知道作者是谁了，很抱歉…</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">cvThresholdOtsu</span><span class="params">(IplImage* src)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">height</span>=src-&gt;<span class="built_in">height</span>;</span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">width</span>=src-&gt;<span class="built_in">width</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//histogram</span></span><br><span class="line">    <span class="keyword">float</span> histogram[<span class="number">256</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="built_in">height</span>;i++) &#123;</span><br><span class="line">        <span class="keyword">unsigned</span> <span class="keyword">char</span>* p=(<span class="keyword">unsigned</span> <span class="keyword">char</span>*)src-&gt;imageData+src-&gt;widthStep*i;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;<span class="built_in">width</span>;j++) &#123;</span><br><span class="line">            histogram[*p++]++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//normalize histogram</span></span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">size</span>=<span class="built_in">height</span>*<span class="built_in">width</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">256</span>;i++) &#123;</span><br><span class="line">        histogram[i]=histogram[i]/<span class="built_in">size</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//average pixel value</span></span><br><span class="line">    <span class="keyword">float</span> avgValue=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">256</span>;i++) &#123;</span><br><span class="line">        avgValue+=i*histogram[i];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> threshold = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">float</span> maxVariance=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">float</span> w=<span class="number">0</span>,u=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">256</span>;i++) &#123;</span><br><span class="line">        w+=histogram[i];</span><br><span class="line">        u+=i*histogram[i];</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">float</span> t=avgValue*w-u;</span><br><span class="line">        <span class="keyword">float</span> variance=t*t/(w*(<span class="number">1</span>-w));</span><br><span class="line">        <span class="keyword">if</span>(variance&gt;maxVariance) &#123;</span><br><span class="line">            maxVariance=variance;</span><br><span class="line">            threshold=i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> threshold;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">``` </span><br><span class="line">- 截取卡号区域</span><br><span class="line">思路，现将黑色的点放大，这样点会连接到一起，变成一块儿黑色，然后我们通过图片的轮廓，宽高比例来寻找复合的一个区域，将其截取下来</span><br><span class="line"></span><br><span class="line">###[腐蚀&amp;膨胀](http:<span class="comment">//www.opencv.org.cn/opencvdoc/2.3.2/html/doc/tutorials/imgproc/erosion_dilatation/erosion_dilatation.html)</span></span><br><span class="line"></span><br><span class="line">- 官方解释：</span><br><span class="line">腐蚀：进行腐蚀操作时，将内核B划过图像,将内核B覆盖区域的最小相素值提取，并代替锚点位置的相素。</span><br><span class="line">膨胀：进行膨胀操作时，将内核B划过图像,将内核B覆盖区域的最大相素值提取，并代替锚点位置的相素。显然，这一最大化操作将会导致图像中的亮区开始”扩展” (因此有了术语膨胀 *dilation* )。对上图采用膨胀操作我们得到:</span><br><span class="line">- 个人理解：</span><br><span class="line">腐蚀：定义一个<span class="built_in">size</span>，用这个<span class="built_in">size</span>替换图片每个点（加粗）</span><br><span class="line">膨胀：与腐蚀相反（变细）</span><br><span class="line">个人的认识比较low，在这里呢使用腐蚀目的是将相近的黑色点连接到一块，已便后面获取所有数字连接到一块儿的轮廓，对比每个轮廓的宽高比，截取到卡号区域。</span><br><span class="line">``` c++</span><br><span class="line">cv::Mat erodeElement = getStructuringElement(cv::MORPH_RECT, cv::Size(<span class="number">25</span>,<span class="number">1</span>));</span><br><span class="line">cv::erode(resultImage, resultImage, erodeElement);</span><br></pre></td></tr></table></figure>
 <p><img src="http://upload-images.jianshu.io/upload_images/2901013-34bfb42366251428.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="腐蚀之后的照片"></p>
 <p>###<a href="http://www.opencv.org.cn/opencvdoc/2.3.2/html/doc/tutorials/imgproc/shapedescriptors/find_contours/find_contours.html#find-contours" target="_blank" rel="noopener">在图像中寻找轮廓</a></p>
 <ul>
-<li><p>方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//获取图片轮廓</span><br><span class="line">findContours( InputOutputArray image, OutputArrayOfArrays contours,</span><br><span class="line">                              int mode, int method, Point offset = Point());</span><br><span class="line">//将存放Point的数组转为Rect</span><br><span class="line">Rect boundingRect( InputArray points );</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>findContours参数说明</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">InputOutputArray:输入输出的图片</span><br><span class="line">OutputArrayOfArrays:输出的轮廓点，这是一个三维数</span><br><span class="line">std::vector&lt;std::vector&lt;cv::Point&gt;&gt; contours;</span><br><span class="line"></span><br><span class="line">mode:轮廓检索模式,具体参考cv::RetrievalModes</span><br><span class="line">CV_RETR_EXTERNAL：只检索最外面的轮廓；</span><br><span class="line">CV_RETR_LIST：检索所有的轮廓，并将其放入list中；</span><br><span class="line">CV_RETR_CCOMP：检索所有的轮廓，并将他们组织为两层：顶层是各部分的外部边界，第二层是空洞的边界；</span><br><span class="line">CV_RETR_TREE：检索所有的轮廓，并重构嵌套轮廓的整个层次。</span><br><span class="line"></span><br><span class="line">method:轮廓近似法,具体参考cv::ContourApproximationModes</span><br><span class="line">CV_CHAIN_CODE：以Freeman链码的方式输出轮廓，所有其他方法输出多边形（顶点的序列）。</span><br><span class="line">CV_CHAIN_APPROX_NONE：将所有的连码点，转换成点。</span><br><span class="line">CV_CHAIN_APPROX_SIMPLE：压缩水平的、垂直的和斜的部分，也就是，函数只保留他们的终点部分。</span><br><span class="line">CV_CHAIN_APPROX_TC89_L1，CV_CHAIN_APPROX_TC89_KCOS：使用the flavors of Teh-Chin chain近似算法</span><br><span class="line">的一种。</span><br><span class="line">CV_LINK_RUNS：通过连接水平段的1，使用完全不同的边缘提取算法。使用CV_RETR_LIST检索模式能使用此方法。</span><br><span class="line">offset：偏移量，用于移动所有轮廓点。</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv::findContours(resultImage, contours, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, cvPoint(0, 0));</span><br></pre></td></tr></table></figure>
+<li>方法<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取图片轮廓</span></span><br><span class="line">findContours( InputOutputArray <span class="built_in">image</span>, OutputArrayOfArrays contours,</span><br><span class="line">                              <span class="keyword">int</span> mode, <span class="keyword">int</span> method, Point offset = Point());</span><br><span class="line"><span class="comment">//将存放Point的数组转为Rect</span></span><br><span class="line"><span class="function">Rect <span class="title">boundingRect</span><span class="params">( InputArray points )</span></span>;</span><br><span class="line">``` c++</span><br><span class="line">- findContours参数说明</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
+<p>InputOutputArray:输入输出的图片<br>OutputArrayOfArrays:输出的轮廓点，这是一个三维数<br>std::vector&lt;std::vector<a href="cv::Point" target="_blank" rel="noopener">cv::Point</a>&gt; contours;</p>
+<p>mode:轮廓检索模式,具体参考cv::RetrievalModes<br>CV_RETR_EXTERNAL：只检索最外面的轮廓；<br>CV_RETR_LIST：检索所有的轮廓，并将其放入list中；<br>CV_RETR_CCOMP：检索所有的轮廓，并将他们组织为两层：顶层是各部分的外部边界，第二层是空洞的边界；<br>CV_RETR_TREE：检索所有的轮廓，并重构嵌套轮廓的整个层次。</p>
+<p>method:轮廓近似法,具体参考cv::ContourApproximationModes<br>CV_CHAIN_CODE：以Freeman链码的方式输出轮廓，所有其他方法输出多边形（顶点的序列）。<br>CV_CHAIN_APPROX_NONE：将所有的连码点，转换成点。<br>CV_CHAIN_APPROX_SIMPLE：压缩水平的、垂直的和斜的部分，也就是，函数只保留他们的终点部分。<br>CV_CHAIN_APPROX_TC89_L1，CV_CHAIN_APPROX_TC89_KCOS：使用the flavors of Teh-Chin chain近似算法<br>的一种。<br>CV_LINK_RUNS：通过连接水平段的1，使用完全不同的边缘提取算法。使用CV_RETR_LIST检索模式能使用此方法。<br>offset：偏移量，用于移动所有轮廓点。<br><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- 使用</span><br><span class="line">``` c++</span><br><span class="line">    cv::find<span class="constructor">Contours(<span class="params">resultImage</span>, <span class="params">contours</span>, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, <span class="params">cvPoint</span>(0, 0)</span>);</span><br></pre></td></tr></table></figure></p>
 <p>###根据轮廓选取目标区域</p>
 <p>本文出自codeaword的博客 <a href="https://codeaword.github.io/2017/10/10/OpenCV+TesseractOCRiOS实现身份证号识别/">https://codeaword.github.io/2017/10/10/OpenCV+TesseractOCRiOS实现身份证号识别/</a> 欢迎转载，转载请注明出处！</p>
 
@@ -418,8 +472,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/10/10/UILocalizedIndexedCollation通讯录分组排序/" rel="next" title="UILocalizedIndexedCollation通讯录分组排序">
-                <i class="fa fa-chevron-left"></i> UILocalizedIndexedCollation通讯录分组排序
+              <a href="/2017/10/10/iOS-LaunchScreen-国际化/" rel="next" title="iOS LaunchScreen 国际化">
+                <i class="fa fa-chevron-left"></i> iOS LaunchScreen 国际化
               </a>
             
           </div>
@@ -427,6 +481,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/10/UILocalizedIndexedCollation通讯录分组排序/" rel="prev" title="UILocalizedIndexedCollation通讯录分组排序">
+                UILocalizedIndexedCollation通讯录分组排序 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -498,7 +556,7 @@
               <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Li Cong">
             
               <p class="site-author-name" itemprop="name">Li Cong</p>
-              <p class="site-description motion-element" itemprop="description">没有人因为学习而变得贫困，活到老学到老！</p>
+              <p class="site-description motion-element" itemprop="description"></p>
           </div>
 
           <nav class="site-state motion-element">
@@ -574,12 +632,21 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Li Cong</span>
 
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">5.8k</span>
   
 </div>
 
@@ -592,7 +659,7 @@
 
 
 
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
 
 
 
@@ -692,6 +759,13 @@
   
   
 
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
   
   <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
@@ -761,6 +835,323 @@
 
 
   
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
 
 
 

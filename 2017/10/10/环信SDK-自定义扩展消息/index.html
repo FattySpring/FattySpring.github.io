@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="zh-Hans">
+<html class="theme-next gemini use-motion" lang="zh-Hans">
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -83,15 +83,15 @@
 <meta name="keywords" content="iOS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="环信SDK-自定义扩展消息">
-<meta property="og:url" content="https://codeaword.github.io/2017/10/10/环信SDK-自定义扩展消息/index.html">
-<meta property="og:site_name" content="Code a word">
+<meta property="og:url" content="https://FattySpring.github.io/2017/10/10/环信SDK-自定义扩展消息/index.html">
+<meta property="og:site_name" content="Fatty spring">
 <meta property="og:description" content="项目中集成了环信即时通讯，但是项目需要自定义消息类型，看环信发送消息方法，在发送消息的时候可以附加自定义的内容。  下面我将拿微信中名片为例来介绍：  ###确定发送方式：首先需要与Android开发人员沟通发送什么类型消息的时候传递，环信sdk中封装的任何消息都是可以附加自定义内容的，在这里我们定义的是在发送文本消息的时候传递，也就是说发送自定义的名片等于发送的是文本消息。 ###确定字段：先看">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2901013-8b8b2131891bb3a2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2901013-e9a78c2d021b5749.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2901013-8b2861d03c0e92a1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2901013-f8980ba6493c30d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2020-04-16T11:09:54.217Z">
+<meta property="og:updated_time" content="2020-04-18T15:10:59.134Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="环信SDK-自定义扩展消息">
 <meta name="twitter:description" content="项目中集成了环信即时通讯，但是项目需要自定义消息类型，看环信发送消息方法，在发送消息的时候可以附加自定义的内容。  下面我将拿微信中名片为例来介绍：  ###确定发送方式：首先需要与Android开发人员沟通发送什么类型消息的时候传递，环信sdk中封装的任何消息都是可以附加自定义内容的，在这里我们定义的是在发送文本消息的时候传递，也就是说发送自定义的名片等于发送的是文本消息。 ###确定字段：先看">
@@ -103,7 +103,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Gemini',
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
@@ -125,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="https://codeaword.github.io/2017/10/10/环信SDK-自定义扩展消息/">
+  <link rel="canonical" href="https://FattySpring.github.io/2017/10/10/环信SDK-自定义扩展消息/">
 
 
 
 
 
-  <title>环信SDK-自定义扩展消息 | Code a word</title>
+  <title>环信SDK-自定义扩展消息 | Fatty spring</title>
   
 
 
@@ -161,12 +161,12 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Code a word</span>
+        <span class="site-title">Fatty spring</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
       
-        <p class="site-subtitle"></p>
+        <h1 class="site-subtitle" itemprop="description"></h1>
       
   </div>
 
@@ -217,9 +217,41 @@
       
 
       
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
     </ul>
   
 
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
   
 </nav>
 
@@ -248,7 +280,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://codeaword.github.io/2017/10/10/环信SDK-自定义扩展消息/">
+    <link itemprop="mainEntityOfPage" href="https://FattySpring.github.io/2017/10/10/环信SDK-自定义扩展消息/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Li Cong">
@@ -257,7 +289,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Code a word">
+      <meta itemprop="name" content="Fatty spring">
     </span>
 
     
@@ -265,7 +297,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">环信SDK-自定义扩展消息</h1>
+          <h2 class="post-title" itemprop="name headline">环信SDK-自定义扩展消息</h2>
         
 
         <div class="post-meta">
@@ -320,6 +352,37 @@
           
 
           
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
 
           
 
@@ -348,21 +411,21 @@
 <ol>
 <li>定义UI页面<br>创建一个创建一个继承UIView的类，在这个类上定义自己需要的UI，也就是下图所显示的内容</li>
 </ol>
-<p><img src="http://upload-images.jianshu.io/upload_images/2901013-8b2861d03c0e92a1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="定义的UI"><br>下面是我定义的LCChatXiaoYingCardView.m代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">@interface LCChatXiaoYingCardView ()</span><br><span class="line">/**</span><br><span class="line"> 头像</span><br><span class="line"> */</span><br><span class="line">@property (strong, nonatomic)  UIImageView *iconImageView;</span><br><span class="line">/**</span><br><span class="line"> 昵称</span><br><span class="line"> */</span><br><span class="line">@property (strong, nonatomic)  UILabel *nameLabel;</span><br><span class="line">/**</span><br><span class="line"> 效应号</span><br><span class="line"> */</span><br><span class="line">@property (strong, nonatomic)  UILabel *numberLabel;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation LCChatXiaoYingCardView</span><br><span class="line"></span><br><span class="line">- (instancetype)initWithFrame:(CGRect)frame</span><br><span class="line">&#123;</span><br><span class="line">    self = [super initWithFrame:frame];</span><br><span class="line">    if (self) &#123;</span><br><span class="line">        [self loadView];</span><br><span class="line">    &#125;</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)loadView&#123;</span><br><span class="line">    _iconImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 5, 30, 30)];</span><br><span class="line">    [self addSubview:_iconImageView];</span><br><span class="line">   </span><br><span class="line">    self.nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 5, 100, 15)];</span><br><span class="line">    _nameLabel.font = [UIFont systemFontOfSize:13];</span><br><span class="line">    [self addSubview:self.nameLabel];</span><br><span class="line">    </span><br><span class="line">    _numberLabel = [[UILabel alloc]init];</span><br><span class="line">    [self addSubview:_numberLabel];</span><br><span class="line">    _numberLabel.font = [UIFont systemFontOfSize:12];</span><br><span class="line">    _numberLabel.textColor = [UIColor grayColor];</span><br><span class="line">    [self.numberLabel makeConstraints:^(MASConstraintMaker *make) &#123;</span><br><span class="line">        make.left.equalTo(_iconImageView.right).offset(10);</span><br><span class="line">        make.bottom.equalTo(_iconImageView.bottom).offset(0);</span><br><span class="line">        make.width.offset(100);</span><br><span class="line">    &#125;];</span><br><span class="line"></span><br><span class="line">    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, 45, 180, 0.5)];</span><br><span class="line">    lineView.backgroundColor = [UIColor groupTableViewBackgroundColor];</span><br><span class="line">    [self addSubview:lineView];</span><br><span class="line">    </span><br><span class="line">    UILabel *myLabel = [[UILabel alloc]init];</span><br><span class="line">    [self addSubview:myLabel];</span><br><span class="line">    myLabel.text = @&quot;效应名片&quot;;</span><br><span class="line">    [myLabel makeConstraints:^(MASConstraintMaker *make) &#123;</span><br><span class="line">        make.top.equalTo(lineView.bottom).offset(0);</span><br><span class="line">        make.left.equalTo(_iconImageView.left);</span><br><span class="line">        make.height.offset(15);</span><br><span class="line">        make.width.offset(50);</span><br><span class="line">    &#125;];</span><br><span class="line">    myLabel.font = [UIFont systemFontOfSize:11];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)setExtInfo:(LCChatExtModel *)extInfo</span><br><span class="line">&#123;</span><br><span class="line">    [_iconImageView sd_setImageWithURL:[NSURL URLWithString:extInfo.user_pic] placeholderImage:[UIImage imageNamed:@&quot;image&quot;]];</span><br><span class="line">    _nameLabel.text = extInfo.nickname;</span><br><span class="line">    _numberLabel.text = [NSString stringWithFormat:@&quot;效应号：%@&quot;,extInfo.num];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2901013-8b2861d03c0e92a1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="定义的UI"><br>下面是我定义的LCChatXiaoYingCardView.m代码<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">LCChatXiaoYingCardView</span> ()</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 头像</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">nonatomic</span>)  <span class="built_in">UIImageView</span> *iconImageView;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 昵称</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">nonatomic</span>)  <span class="built_in">UILabel</span> *nameLabel;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 效应号</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">nonatomic</span>)  <span class="built_in">UILabel</span> *numberLabel;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">LCChatXiaoYingCardView</span></span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">instancetype</span>)initWithFrame:(<span class="built_in">CGRect</span>)frame</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> initWithFrame:frame];</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>) &#123;</span><br><span class="line">        [<span class="keyword">self</span> loadView];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)loadView&#123;</span><br><span class="line">    _iconImageView = [[<span class="built_in">UIImageView</span> alloc]initWithFrame:<span class="built_in">CGRectMake</span>(<span class="number">10</span>, <span class="number">5</span>, <span class="number">30</span>, <span class="number">30</span>)];</span><br><span class="line">    [<span class="keyword">self</span> addSubview:_iconImageView];</span><br><span class="line">   </span><br><span class="line">    <span class="keyword">self</span>.nameLabel = [[<span class="built_in">UILabel</span> alloc]initWithFrame:<span class="built_in">CGRectMake</span>(<span class="number">50</span>, <span class="number">5</span>, <span class="number">100</span>, <span class="number">15</span>)];</span><br><span class="line">    _nameLabel.font = [<span class="built_in">UIFont</span> systemFontOfSize:<span class="number">13</span>];</span><br><span class="line">    [<span class="keyword">self</span> addSubview:<span class="keyword">self</span>.nameLabel];</span><br><span class="line">    </span><br><span class="line">    _numberLabel = [[<span class="built_in">UILabel</span> alloc]init];</span><br><span class="line">    [<span class="keyword">self</span> addSubview:_numberLabel];</span><br><span class="line">    _numberLabel.font = [<span class="built_in">UIFont</span> systemFontOfSize:<span class="number">12</span>];</span><br><span class="line">    _numberLabel.textColor = [<span class="built_in">UIColor</span> grayColor];</span><br><span class="line">    [<span class="keyword">self</span>.numberLabel makeConstraints:^(MASConstraintMaker *make) &#123;</span><br><span class="line">        make.left.equalTo(_iconImageView.right).offset(<span class="number">10</span>);</span><br><span class="line">        make.bottom.equalTo(_iconImageView.bottom).offset(<span class="number">0</span>);</span><br><span class="line">        make.width.offset(<span class="number">100</span>);</span><br><span class="line">    &#125;];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">UIView</span> *lineView = [[<span class="built_in">UIView</span> alloc]initWithFrame:<span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">45</span>, <span class="number">180</span>, <span class="number">0.5</span>)];</span><br><span class="line">    lineView.backgroundColor = [<span class="built_in">UIColor</span> groupTableViewBackgroundColor];</span><br><span class="line">    [<span class="keyword">self</span> addSubview:lineView];</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">UILabel</span> *myLabel = [[<span class="built_in">UILabel</span> alloc]init];</span><br><span class="line">    [<span class="keyword">self</span> addSubview:myLabel];</span><br><span class="line">    myLabel.text = <span class="string">@"效应名片"</span>;</span><br><span class="line">    [myLabel makeConstraints:^(MASConstraintMaker *make) &#123;</span><br><span class="line">        make.top.equalTo(lineView.bottom).offset(<span class="number">0</span>);</span><br><span class="line">        make.left.equalTo(_iconImageView.left);</span><br><span class="line">        make.height.offset(<span class="number">15</span>);</span><br><span class="line">        make.width.offset(<span class="number">50</span>);</span><br><span class="line">    &#125;];</span><br><span class="line">    myLabel.font = [<span class="built_in">UIFont</span> systemFontOfSize:<span class="number">11</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)setExtInfo:(LCChatExtModel *)extInfo</span><br><span class="line">&#123;</span><br><span class="line">    [_iconImageView sd_setImageWithURL:[<span class="built_in">NSURL</span> URLWithString:extInfo.user_pic] placeholderImage:[<span class="built_in">UIImage</span> imageNamed:<span class="string">@"image"</span>]];</span><br><span class="line">    _nameLabel.text = extInfo.nickname;</span><br><span class="line">    _numberLabel.text = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"效应号：%@"</span>,extInfo.num];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
 <ol start="2">
-<li>自定义Cell<br>创建一个继承于EaseBaseMessageCell的cell<br>先重写EaseBaseMessageCell的initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier model:(id<imessagemodel>)model方法<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier model:(id&lt;IMessageModel&gt;)model</span><br><span class="line">&#123;</span><br><span class="line">   self =  [super initWithStyle:style reuseIdentifier:reuseIdentifier model:model];</span><br><span class="line">    if (self) &#123;</span><br><span class="line">        self.avatarSize = 35;//头像尺寸</span><br><span class="line">        self.messageNameIsHidden = YES;//是否显示发送者昵称</span><br><span class="line">        self.avatarCornerRadius = 3;//头像圆角大小</span><br><span class="line">    &#125;</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<li>自定义Cell<br>创建一个继承于EaseBaseMessageCell的cell<br>先重写EaseBaseMessageCell的initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier model:(id<imessagemodel>)model方法<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">instancetype</span>)initWithStyle:(<span class="built_in">UITableViewCellStyle</span>)style reuseIdentifier:(<span class="built_in">NSString</span> *)reuseIdentifier model:(<span class="keyword">id</span>&lt;IMessageModel&gt;)model</span><br><span class="line">&#123;</span><br><span class="line">   <span class="keyword">self</span> =  [<span class="keyword">super</span> initWithStyle:style reuseIdentifier:reuseIdentifier model:model];</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>) &#123;</span><br><span class="line">        <span class="keyword">self</span>.avatarSize = <span class="number">35</span>;<span class="comment">//头像尺寸</span></span><br><span class="line">        <span class="keyword">self</span>.messageNameIsHidden = <span class="literal">YES</span>;<span class="comment">//是否显示发送者昵称</span></span><br><span class="line">        <span class="keyword">self</span>.avatarCornerRadius = <span class="number">3</span>;<span class="comment">//头像圆角大小</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </imessagemodel></li>
 </ol>
-<p>再重写setModel:(id<imessagemodel>)model方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">- (void)setModel:(id&lt;IMessageModel&gt;)model</span><br><span class="line">&#123;</span><br><span class="line">    [super setModel:model];</span><br><span class="line"></span><br><span class="line">    NSDictionary *dict = model.message.ext;   </span><br><span class="line">    LCChatExtModel *extModel = [LCChatExtModel mj_objectWithKeyValues:dict]; </span><br><span class="line">    if (extModel.type == 0]) &#123;//名片</span><br><span class="line">        self.bubbleView.textLabel.hidden = YES;</span><br><span class="line">        self.cardView.hidden = NO;</span><br><span class="line">        self.cardView.extInfo = extModel;</span><br><span class="line">        [self _updateStatusWithWidth:195 withHeight:70];</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        self.cardView.hidden = YES;</span><br><span class="line">        self.bubbleView.textLabel.hidden = NO;</span><br><span class="line">        [self removeConstraint:_bubbleViewH];</span><br><span class="line">        [self removeConstraint:_bubbleViewW];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></imessagemodel></p>
-<p>设置气泡，在这里说明一下，我最开始应该是直接修改气泡的frame没有成功，然后看环信是使用NSLayoutConstraint来UI适配，所以在这里我也使用了NSLayoutConstraint约束来调整气泡大小<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> 设置气泡</span><br><span class="line"> */</span><br><span class="line">- (void)_updateStatusWithWidth:(CGFloat)width withHeight:(CGFloat)height</span><br><span class="line">&#123;</span><br><span class="line">    [self removeConstraint:_bubbleViewH];</span><br><span class="line">    [self removeConstraint:_bubbleViewW];</span><br><span class="line">    _bubbleViewW = [NSLayoutConstraint constraintWithItem:self.bubbleView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:width];</span><br><span class="line">    [self addConstraint:_bubbleViewW];</span><br><span class="line">    </span><br><span class="line">    _bubbleViewH = [NSLayoutConstraint constraintWithItem:self.bubbleView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:height    ];</span><br><span class="line">    [self addConstraint:_bubbleViewH];</span><br><span class="line">    [self layoutIfNeeded];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>重写cellHeightWithModel方法，该方法是定义在tableView中获取Cell高度的方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">+ (CGFloat)cellHeightWithModel:(id&lt;IMessageModel&gt;)model</span><br><span class="line">&#123;</span><br><span class="line">    CGFloat surperHeight = [super cellHeightWithModel:model];</span><br><span class="line">    NSDictionary *dict = model.message.ext;</span><br><span class="line">    LCChatExtModel *extModel = [LCChatExtModel mj_objectWithKeyValues:dict];</span><br><span class="line">    if (extModel.type == 0) &#123;</span><br><span class="line">        return surperHeight +55;</span><br><span class="line">    &#125;</span><br><span class="line">    return surperHeight;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>再重写setModel:(id<imessagemodel>)model方法<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)setModel:(<span class="keyword">id</span>&lt;IMessageModel&gt;)model</span><br><span class="line">&#123;</span><br><span class="line">    [<span class="keyword">super</span> setModel:model];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSDictionary</span> *dict = model.message.ext;   </span><br><span class="line">    LCChatExtModel *extModel = [LCChatExtModel mj_objectWithKeyValues:dict]; </span><br><span class="line">    <span class="keyword">if</span> (extModel.type == <span class="number">0</span>]) &#123;<span class="comment">//名片</span></span><br><span class="line">        <span class="keyword">self</span>.bubbleView.textLabel.hidden = <span class="literal">YES</span>;</span><br><span class="line">        <span class="keyword">self</span>.cardView.hidden = <span class="literal">NO</span>;</span><br><span class="line">        <span class="keyword">self</span>.cardView.extInfo = extModel;</span><br><span class="line">        [<span class="keyword">self</span> _updateStatusWithWidth:<span class="number">195</span> withHeight:<span class="number">70</span>];</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">self</span>.cardView.hidden = <span class="literal">YES</span>;</span><br><span class="line">        <span class="keyword">self</span>.bubbleView.textLabel.hidden = <span class="literal">NO</span>;</span><br><span class="line">        [<span class="keyword">self</span> removeConstraint:_bubbleViewH];</span><br><span class="line">        [<span class="keyword">self</span> removeConstraint:_bubbleViewW];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></imessagemodel></p>
+<p>设置气泡，在这里说明一下，我最开始应该是直接修改气泡的frame没有成功，然后看环信是使用NSLayoutConstraint来UI适配，所以在这里我也使用了NSLayoutConstraint约束来调整气泡大小<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 设置气泡</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">- (<span class="keyword">void</span>)<span class="string">_updateStatusWithWidth:</span>(CGFloat)width <span class="string">withHeight:</span>(CGFloat)height</span><br><span class="line">&#123;</span><br><span class="line">    [self <span class="string">removeConstraint:</span>_bubbleViewH];</span><br><span class="line">    [self <span class="string">removeConstraint:</span>_bubbleViewW];</span><br><span class="line">    _bubbleViewW = [NSLayoutConstraint <span class="string">constraintWithItem:</span>self.bubbleView <span class="string">attribute:</span>NSLayoutAttributeWidth <span class="string">relatedBy:</span>NSLayoutRelationEqual <span class="string">toItem:</span>nil <span class="string">attribute:</span>NSLayoutAttributeNotAnAttribute <span class="string">multiplier:</span><span class="number">1.0</span> <span class="string">constant:</span>width];</span><br><span class="line">    [self <span class="string">addConstraint:</span>_bubbleViewW];</span><br><span class="line">    </span><br><span class="line">    _bubbleViewH = [NSLayoutConstraint <span class="string">constraintWithItem:</span>self.bubbleView <span class="string">attribute:</span>NSLayoutAttributeHeight <span class="string">relatedBy:</span>NSLayoutRelationEqual <span class="string">toItem:</span>nil <span class="string">attribute:</span>NSLayoutAttributeNotAnAttribute <span class="string">multiplier:</span><span class="number">1.0</span> <span class="string">constant:</span>height    ];</span><br><span class="line">    [self <span class="string">addConstraint:</span>_bubbleViewH];</span><br><span class="line">    [self layoutIfNeeded];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>重写cellHeightWithModel方法，该方法是定义在tableView中获取Cell高度的方法<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">+ (<span class="built_in">CGFloat</span>)cellHeightWithModel:(<span class="keyword">id</span>&lt;IMessageModel&gt;)model</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">CGFloat</span> surperHeight = [<span class="keyword">super</span> cellHeightWithModel:model];</span><br><span class="line">    <span class="built_in">NSDictionary</span> *dict = model.message.ext;</span><br><span class="line">    LCChatExtModel *extModel = [LCChatExtModel mj_objectWithKeyValues:dict];</span><br><span class="line">    <span class="keyword">if</span> (extModel.type == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> surperHeight +<span class="number">55</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> surperHeight;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <ol start="3">
 <li>加载Cell<br>定义一个继承EaseMessageViewController的类，以后跳转到聊天页面使用该类，那么如何将cell放到TableView上呢？环信已经开发这个接口，下面在类中实现EaseMessageViewControllerDelegate的方法就可以了</li>
 </ol>
 <p><img src="http://upload-images.jianshu.io/upload_images/2901013-f8980ba6493c30d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
-<p>遵守协议<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">self.delegate = self;//EaseMessageViewControllerDelegate</span><br></pre></td></tr></table></figure></p>
-<p>实现EaseMessageViewControllerDelegate方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> 设置自定义Cell</span><br><span class="line"> */</span><br><span class="line">- (UITableViewCell *)messageViewController:(UITableView *)tableView cellForMessageModel:(id&lt;IMessageModel&gt;)model&#123;</span><br><span class="line">    if (model.bodyType == EMMessageBodyTypeText ) &#123;</span><br><span class="line">        NSString *CellIdentifier = [LCChatXiaoYingCardCell cellIdentifierWithModel:model];</span><br><span class="line">        LCChatXiaoYingCardCell *cardCell = (LCChatXiaoYingCardCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];</span><br><span class="line">        if (cardCell == nil) &#123;</span><br><span class="line">            cardCell = [[LCChatXiaoYingCardCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier model:model];</span><br><span class="line">            cardCell.selectionStyle = UITableViewCellSelectionStyleNone;</span><br><span class="line">            cardCell.delegate = self;</span><br><span class="line">        &#125;</span><br><span class="line">        cardCell.model = model;</span><br><span class="line">        return cardCell;</span><br><span class="line">    &#125;</span><br><span class="line">    return nil;//如果不是自定义类型返回空</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> 设置聊天高度</span><br><span class="line"> */</span><br><span class="line">- (CGFloat)messageViewController:(EaseMessageViewController *)viewController</span><br><span class="line">        heightForMessageModel:(id&lt;IMessageModel&gt;)messageModel</span><br><span class="line">                   withCellWidth:(CGFloat)cellWidth</span><br><span class="line">&#123;</span><br><span class="line">    LCChatExtModel *extModel = [LCChatExtModel mj_objectWithKeyValues:messageModel.message.ext];</span><br><span class="line">    if ([extModel.type == 0]) &#123;</span><br><span class="line">        return [LCChatXiaoYingCardCell cellHeightWithModel:messageModel] ;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;//如果不是自定义类型返回0</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>遵守协议<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">self</span>.delegate = <span class="keyword">self</span>;<span class="regexp">//</span>EaseMessageViewControllerDelegate</span><br></pre></td></tr></table></figure></p>
+<p>实现EaseMessageViewControllerDelegate方法<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 设置自定义Cell</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">- (<span class="built_in">UITableViewCell</span> *)messageViewController:(<span class="built_in">UITableView</span> *)tableView cellForMessageModel:(<span class="keyword">id</span>&lt;IMessageModel&gt;)model&#123;</span><br><span class="line">    <span class="keyword">if</span> (model.bodyType == EMMessageBodyTypeText ) &#123;</span><br><span class="line">        <span class="built_in">NSString</span> *CellIdentifier = [LCChatXiaoYingCardCell cellIdentifierWithModel:model];</span><br><span class="line">        LCChatXiaoYingCardCell *cardCell = (LCChatXiaoYingCardCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];</span><br><span class="line">        <span class="keyword">if</span> (cardCell == <span class="literal">nil</span>) &#123;</span><br><span class="line">            cardCell = [[LCChatXiaoYingCardCell alloc] initWithStyle:<span class="built_in">UITableViewCellStyleDefault</span> reuseIdentifier:CellIdentifier model:model];</span><br><span class="line">            cardCell.selectionStyle = <span class="built_in">UITableViewCellSelectionStyleNone</span>;</span><br><span class="line">            cardCell.delegate = <span class="keyword">self</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        cardCell.model = model;</span><br><span class="line">        <span class="keyword">return</span> cardCell;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span>;<span class="comment">//如果不是自定义类型返回空</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 设置聊天高度</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">- (<span class="built_in">CGFloat</span>)messageViewController:(EaseMessageViewController *)viewController</span><br><span class="line">        heightForMessageModel:(<span class="keyword">id</span>&lt;IMessageModel&gt;)messageModel</span><br><span class="line">                   withCellWidth:(<span class="built_in">CGFloat</span>)cellWidth</span><br><span class="line">&#123;</span><br><span class="line">    LCChatExtModel *extModel = [LCChatExtModel mj_objectWithKeyValues:messageModel.message.ext];</span><br><span class="line">    <span class="keyword">if</span> ([extModel.type == <span class="number">0</span>]) &#123;</span><br><span class="line">        <span class="keyword">return</span> [LCChatXiaoYingCardCell cellHeightWithModel:messageModel] ;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;<span class="comment">//如果不是自定义类型返回0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>到这里呢，整个自定义就结束了</p>
 <p>本文出自codeaword的博客 <a href="https://codeaword.github.io/2017/10/10/环信SDK-自定义扩展消息/">https://codeaword.github.io/2017/10/10/环信SDK-自定义扩展消息/</a> 欢迎转载，转载请注明出处！</p>
 
@@ -395,8 +458,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/05/11/Hexo使用/" rel="next" title="Hexo使用">
-                <i class="fa fa-chevron-left"></i> Hexo使用
+              <a href="/2017/10/10/iOS11-iPhone-X-适配之路/" rel="next" title="iOS11-iPhone-X-适配之路">
+                <i class="fa fa-chevron-left"></i> iOS11-iPhone-X-适配之路
               </a>
             
           </div>
@@ -405,8 +468,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/10/10/iOS11-iPhone-X-适配之路/" rel="prev" title="iOS11-iPhone-X-适配之路">
-                iOS11-iPhone-X-适配之路 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/10/10/iOS-计算文本的高度/" rel="prev" title="iOS-计算文本的高度">
+                iOS-计算文本的高度 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -470,7 +533,7 @@
               <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Li Cong">
             
               <p class="site-author-name" itemprop="name">Li Cong</p>
-              <p class="site-description motion-element" itemprop="description">没有人因为学习而变得贫困，活到老学到老！</p>
+              <p class="site-description motion-element" itemprop="description"></p>
           </div>
 
           <nav class="site-state motion-element">
@@ -530,12 +593,21 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Li Cong</span>
 
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">5.8k</span>
   
 </div>
 
@@ -548,7 +620,7 @@
 
 
 
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
 
 
 
@@ -648,6 +720,13 @@
   
   
 
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
   
   <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
@@ -717,6 +796,323 @@
 
 
   
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
 
 
 
