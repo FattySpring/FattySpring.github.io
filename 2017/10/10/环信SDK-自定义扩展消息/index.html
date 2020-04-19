@@ -85,7 +85,7 @@
 <meta name="keywords" content="iOS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="环信SDK-自定义扩展消息">
-<meta property="og:url" content="https://FattySpring.github.io/2017/10/10/环信SDK-自定义扩展消息/index.html">
+<meta property="og:url" content="https://fattyspring.github.io/2017/10/10/环信SDK-自定义扩展消息/index.html">
 <meta property="og:site_name" content="Fatty spring">
 <meta property="og:description" content="项目中集成了环信即时通讯，但是项目需要自定义消息类型，看环信发送消息方法，在发送消息的时候可以附加自定义的内容。  下面我将拿微信中名片为例来介绍：  确定发送方式：首先需要与Android开发人员沟通发送什么类型消息的时候传递，环信sdk中封装的任何消息都是可以附加自定义内容的，在这里我们定义的是在发送文本消息的时候传递，也就是说发送自定义的名片等于发送的是文本消息。 确定字段：先看自定义消息中">
 <meta property="og:locale" content="zh-Hans">
@@ -127,7 +127,7 @@
 
 
 
-  <link rel="canonical" href="https://FattySpring.github.io/2017/10/10/环信SDK-自定义扩展消息/">
+  <link rel="canonical" href="https://fattyspring.github.io/2017/10/10/环信SDK-自定义扩展消息/">
 
 
 
@@ -282,7 +282,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://FattySpring.github.io/2017/10/10/环信SDK-自定义扩展消息/">
+    <link itemprop="mainEntityOfPage" href="https://fattyspring.github.io/2017/10/10/环信SDK-自定义扩展消息/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Li Cong">
@@ -429,7 +429,7 @@
 <p>实现EaseMessageViewControllerDelegate方法<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 设置自定义Cell</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">- (<span class="built_in">UITableViewCell</span> *)messageViewController:(<span class="built_in">UITableView</span> *)tableView cellForMessageModel:(<span class="keyword">id</span>&lt;IMessageModel&gt;)model&#123;</span><br><span class="line">    <span class="keyword">if</span> (model.bodyType == EMMessageBodyTypeText ) &#123;</span><br><span class="line">        <span class="built_in">NSString</span> *CellIdentifier = [LCChatXiaoYingCardCell cellIdentifierWithModel:model];</span><br><span class="line">        LCChatXiaoYingCardCell *cardCell = (LCChatXiaoYingCardCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];</span><br><span class="line">        <span class="keyword">if</span> (cardCell == <span class="literal">nil</span>) &#123;</span><br><span class="line">            cardCell = [[LCChatXiaoYingCardCell alloc] initWithStyle:<span class="built_in">UITableViewCellStyleDefault</span> reuseIdentifier:CellIdentifier model:model];</span><br><span class="line">            cardCell.selectionStyle = <span class="built_in">UITableViewCellSelectionStyleNone</span>;</span><br><span class="line">            cardCell.delegate = <span class="keyword">self</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        cardCell.model = model;</span><br><span class="line">        <span class="keyword">return</span> cardCell;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span>;<span class="comment">//如果不是自定义类型返回空</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 设置聊天高度</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">- (<span class="built_in">CGFloat</span>)messageViewController:(EaseMessageViewController *)viewController</span><br><span class="line">        heightForMessageModel:(<span class="keyword">id</span>&lt;IMessageModel&gt;)messageModel</span><br><span class="line">                   withCellWidth:(<span class="built_in">CGFloat</span>)cellWidth</span><br><span class="line">&#123;</span><br><span class="line">    LCChatExtModel *extModel = [LCChatExtModel mj_objectWithKeyValues:messageModel.message.ext];</span><br><span class="line">    <span class="keyword">if</span> ([extModel.type == <span class="number">0</span>]) &#123;</span><br><span class="line">        <span class="keyword">return</span> [LCChatXiaoYingCardCell cellHeightWithModel:messageModel] ;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;<span class="comment">//如果不是自定义类型返回0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>到这里呢，整个自定义就结束了</p>
-<p>本文出自FattySpring的博客 <a href="https://FattySpring.github.io/2017/10/10/环信SDK-自定义扩展消息/">https://FattySpring.github.io/2017/10/10/环信SDK-自定义扩展消息/</a> 欢迎转载，转载请注明出处！</p>
+<p>本文出自FattySpring的博客 <a href="https://fattyspring.github.io/2017/10/10/环信SDK-自定义扩展消息/">https://fattyspring.github.io/2017/10/10/环信SDK-自定义扩展消息/</a> 欢迎转载，转载请注明出处！</p>
 
       
     </div>

@@ -85,7 +85,7 @@
 <meta name="keywords" content="iOS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS-端简单的图片识别（比对像素点）">
-<meta property="og:url" content="https://FattySpring.github.io/2017/10/10/iOS-端简单的图片识别（比对像素点）/index.html">
+<meta property="og:url" content="https://fattyspring.github.io/2017/10/10/iOS-端简单的图片识别（比对像素点）/index.html">
 <meta property="og:site_name" content="Fatty spring">
 <meta property="og:description" content="大致原理和步骤为：  裁剪出需要识别图片的模板； 如果需要识别图片中的某一/几个区域，需要进行相对的尺寸修改、图片分割等操作步骤； 遍历待识别的图片的像素点，和模板图片的像素点进行比对作差，差值为0（或最小）则为相对的图片； 本代码只适用于简单的图片识别，或数字识别（需要加上灰度化、二值化，代码也很简单，只是测量出合适的阈值比较麻烦），不适合文字识别。   核心代码（只有像素比对作差，修改图片尺寸">
 <meta property="og:locale" content="zh-Hans">
@@ -122,7 +122,7 @@
 
 
 
-  <link rel="canonical" href="https://FattySpring.github.io/2017/10/10/iOS-端简单的图片识别（比对像素点）/">
+  <link rel="canonical" href="https://fattyspring.github.io/2017/10/10/iOS-端简单的图片识别（比对像素点）/">
 
 
 
@@ -277,7 +277,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://FattySpring.github.io/2017/10/10/iOS-端简单的图片识别（比对像素点）/">
+    <link itemprop="mainEntityOfPage" href="https://fattyspring.github.io/2017/10/10/iOS-端简单的图片识别（比对像素点）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Li Cong">
@@ -405,7 +405,7 @@
 </ul>
 <hr>
 <h3 id="核心代码（只有像素比对作差，修改图片尺寸、分割图片等方法比较简单就不写了）"><a href="#核心代码（只有像素比对作差，修改图片尺寸、分割图片等方法比较简单就不写了）" class="headerlink" title="核心代码（只有像素比对作差，修改图片尺寸、分割图片等方法比较简单就不写了）"></a>核心代码（只有像素比对作差，修改图片尺寸、分割图片等方法比较简单就不写了）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> *  待识别的卡牌</span><br><span class="line"> *</span><br><span class="line"> *  @param image 待识别卡牌</span><br><span class="line"> */</span><br><span class="line">- (void)checkCardsWithCardImage:(UIImage *)image</span><br><span class="line">&#123;</span><br><span class="line">    CGImageRef imageRef =image.CGImage;</span><br><span class="line">    CGDataProviderRef imageDataRef = CGImageGetDataProvider(imageRef);</span><br><span class="line">    NSData *imageData = (id)CFBridgingRelease(CGDataProviderCopyData(imageDataRef));</span><br><span class="line">    const uint8_t *imageUintData = [imageData bytes];//数组：存放待识别卡牌像素点</span><br><span class="line">    //最小像素差之和</span><br><span class="line">    uint32_t minSum = 9999999;</span><br><span class="line">    //记录最下卡牌</span><br><span class="line">    int card = 0;</span><br><span class="line">    //遍历标准牌（我的模板图片有68张）</span><br><span class="line">    for (int i = 1; i &lt; 68; i ++) &#123;</span><br><span class="line">        UIImage *standardImage = [UIImage imageNamed:[NSString stringWithFormat:@&quot;%d&quot;,i]];</span><br><span class="line">        CGImageRef standardRef =standardImage.CGImage;</span><br><span class="line">        CGDataProviderRef standardDataRef = CGImageGetDataProvider(standardRef);</span><br><span class="line">        NSData *standardData = (id)CFBridgingRelease(CGDataProviderCopyData(standardDataRef));</span><br><span class="line">        const uint8_t *standardUintData = [standardData bytes];</span><br><span class="line">        uint32_t sum = 0;</span><br><span class="line">        //获取偏移数值 图片大小为58*70的</span><br><span class="line">        for (int i = 0; i &lt; 58 * 70; i++）</span><br><span class="line">        &#123;</span><br><span class="line">            if ((standardUintData[i] - imageUintData[i])&lt;0)</span><br><span class="line">            &#123;</span><br><span class="line">                sum -= standardUintData[i] - imageUintData[i];</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                sum += standardUintData[i] - imageUintData[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        //获取最小的偏移数值，更新最小偏移值和卡牌编号</span><br><span class="line">        if (minSum&gt;sum) &#123;</span><br><span class="line">            minSum = sum;</span><br><span class="line">            card = i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    // method — getNameWithCardNumber：根据识别结果返回图片名称</span><br><span class="line">    NSString *cardName = [self getNameWithCardNumber:card];</span><br><span class="line">    NSLog(@&quot;识别结果：%d + %@&quot;,card,cardName);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>本文出自FattySpring的博客 <a href="https://FattySpring.github.io/2017/10/10/iOS-端简单的图片识别（比对像素点）/">https://FattySpring.github.io/2017/10/10/iOS-端简单的图片识别（比对像素点）/</a> 欢迎转载，转载请注明出处！</p>
+<p>本文出自FattySpring的博客 <a href="https://fattyspring.github.io/2017/10/10/iOS-端简单的图片识别（比对像素点）/">https://fattyspring.github.io/2017/10/10/iOS-端简单的图片识别（比对像素点）/</a> 欢迎转载，转载请注明出处！</p>
 
       
     </div>
@@ -436,8 +436,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/10/10/iOS-计算文本的高度/" rel="next" title="iOS-计算文本的高度">
-                <i class="fa fa-chevron-left"></i> iOS-计算文本的高度
+              <a href="/2017/10/10/iOS11-iPhone-X-适配之路/" rel="next" title="iOS11-iPhone-X-适配之路">
+                <i class="fa fa-chevron-left"></i> iOS11-iPhone-X-适配之路
               </a>
             
           </div>
@@ -446,8 +446,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/10/10/iOS-枚举位移/" rel="prev" title="iOS-枚举位移">
-                iOS-枚举位移 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/10/10/iOS-计算文本的高度/" rel="prev" title="iOS-计算文本的高度">
+                iOS-计算文本的高度 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
