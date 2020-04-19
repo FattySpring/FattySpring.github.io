@@ -1861,11 +1861,11 @@
 <p><img src="http://upload-images.jianshu.io/upload_images/2901013-8b8b2131891bb3a2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
 <p>下面我将拿微信中名片为例来介绍：</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/2901013-e9a78c2d021b5749.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="名片"></p>
-<p>###确定发送方式：<br>首先需要与Android开发人员沟通发送什么类型消息的时候传递，环信sdk中封装的任何消息都是可以附加自定义内容的，在这里我们定义的是在发送文本消息的时候传递，也就是说发送自定义的名片等于发送的是文本消息。</p>
-<p>###确定字段：<br>先看自定义消息中所显示的内容：头像、昵称、效应号；我们定义的字典字段为：nickname、user_pic、num这三个，由于在点击这条消息的时候需要跳转到这个人的个人信息页面，所有又应该加上user_id，我们项目中所自定义的 消息不只一种还有其他的消息，这样我们又需要加上一个type来区分,最终附加字段为： nickname、user_pic、num、user_id、type</p>
-<p>###发送消息：<br>在选择完联系人后，回调信息到聊天页面发送消息</p>
+<h3 id="确定发送方式："><a href="#确定发送方式：" class="headerlink" title="确定发送方式："></a>确定发送方式：</h3><p>首先需要与Android开发人员沟通发送什么类型消息的时候传递，环信sdk中封装的任何消息都是可以附加自定义内容的，在这里我们定义的是在发送文本消息的时候传递，也就是说发送自定义的名片等于发送的是文本消息。</p>
+<h3 id="确定字段："><a href="#确定字段：" class="headerlink" title="确定字段："></a>确定字段：</h3><p>先看自定义消息中所显示的内容：头像、昵称、效应号；我们定义的字典字段为：nickname、user_pic、num这三个，由于在点击这条消息的时候需要跳转到这个人的个人信息页面，所有又应该加上user_id，我们项目中所自定义的 消息不只一种还有其他的消息，这样我们又需要加上一个type来区分,最终附加字段为： nickname、user_pic、num、user_id、type</p>
+<h3 id="发送消息："><a href="#发送消息：" class="headerlink" title="发送消息："></a>发送消息：</h3><p>在选择完联系人后，回调信息到聊天页面发送消息</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NSDictionary *dict = @&#123;@&quot;user_id&quot;:user_id,@&quot;nickname&quot;:nickname,@&quot;user_pic&quot;:user_pic,@&quot;num&quot;:number,@&quot;type&quot;:@&quot;0&quot;&#125;;</span><br><span class="line">[self sendTextMessage:@&quot;[效应名片]&quot; withExt:dict];</span><br></pre></td></tr></table></figure>
-<p>###定义UI<br>每条消息都是显示都是一个Cell，Cell要继承EaseBaseMessageCell，聊天的Cell都是有气泡的，显示的信息都是在气泡上，也就是说，我们只需要定义一个View然后放到气泡上，并且修改气泡的大小，就可以了。</p>
+<h3 id="定义UI"><a href="#定义UI" class="headerlink" title="定义UI"></a>定义UI</h3><p>每条消息都是显示都是一个Cell，Cell要继承EaseBaseMessageCell，聊天的Cell都是有气泡的，显示的信息都是在气泡上，也就是说，我们只需要定义一个View然后放到气泡上，并且修改气泡的大小，就可以了。</p>
 <ol>
 <li>定义UI页面<br>创建一个创建一个继承UIView的类，在这个类上定义自己需要的UI，也就是下图所显示的内容</li>
 </ol>
