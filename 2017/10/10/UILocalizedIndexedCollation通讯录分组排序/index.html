@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="UILocalizedIndexedCollation 可以对数组重建索引，按照首字母顺序进行排序。 IndexTool.h 12#define kToolsIndexAryKey @&amp;quot;LCIndexAryKey&amp;quot;     //索引#define kToolsGroupAryKey @&amp;quot;LCGroupAryKey&amp;quot;  //排序后的分组 123456789/*">
+<meta name="description" content="UILocalizedIndexedCollation 可以对数组重建索引，按照首字母顺序进行排序。  IndexTool.h 12#define kToolsIndexAryKey @&amp;quot;IndexAryKey&amp;quot;     //索引#define kToolsGroupAryKey @&amp;quot;GroupAryKey&amp;quot;  //排序后的分组 123456789/**">
 <meta name="keywords" content="iOS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="UILocalizedIndexedCollation通讯录分组排序">
 <meta property="og:url" content="https://FattySpring.github.io/2017/10/10/UILocalizedIndexedCollation通讯录分组排序/index.html">
 <meta property="og:site_name" content="Fatty spring">
-<meta property="og:description" content="UILocalizedIndexedCollation 可以对数组重建索引，按照首字母顺序进行排序。 IndexTool.h 12#define kToolsIndexAryKey @&amp;quot;LCIndexAryKey&amp;quot;     //索引#define kToolsGroupAryKey @&amp;quot;LCGroupAryKey&amp;quot;  //排序后的分组 123456789/*">
+<meta property="og:description" content="UILocalizedIndexedCollation 可以对数组重建索引，按照首字母顺序进行排序。  IndexTool.h 12#define kToolsIndexAryKey @&amp;quot;IndexAryKey&amp;quot;     //索引#define kToolsGroupAryKey @&amp;quot;GroupAryKey&amp;quot;  //排序后的分组 123456789/**">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-04-18T15:45:40.585Z">
+<meta property="og:updated_time" content="2020-04-19T06:07:07.028Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="UILocalizedIndexedCollation通讯录分组排序">
-<meta name="twitter:description" content="UILocalizedIndexedCollation 可以对数组重建索引，按照首字母顺序进行排序。 IndexTool.h 12#define kToolsIndexAryKey @&amp;quot;LCIndexAryKey&amp;quot;     //索引#define kToolsGroupAryKey @&amp;quot;LCGroupAryKey&amp;quot;  //排序后的分组 123456789/*">
+<meta name="twitter:description" content="UILocalizedIndexedCollation 可以对数组重建索引，按照首字母顺序进行排序。  IndexTool.h 12#define kToolsIndexAryKey @&amp;quot;IndexAryKey&amp;quot;     //索引#define kToolsGroupAryKey @&amp;quot;GroupAryKey&amp;quot;  //排序后的分组 123456789/**">
 
 
 
@@ -396,9 +396,11 @@
       
 
       
-        <p>UILocalizedIndexedCollation 可以对数组重建索引，按照首字母顺序进行排序。</p>
+        <blockquote>
+<p>UILocalizedIndexedCollation 可以对数组重建索引，按照首字母顺序进行排序。</p>
+</blockquote>
 <p>IndexTool.h</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#define kToolsIndexAryKey @&quot;LCIndexAryKey&quot;     //索引</span><br><span class="line">#define kToolsGroupAryKey @&quot;LCGroupAryKey&quot;  //排序后的分组</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#define kToolsIndexAryKey @&quot;IndexAryKey&quot;     //索引</span><br><span class="line">#define kToolsGroupAryKey @&quot;GroupAryKey&quot;  //排序后的分组</span><br></pre></td></tr></table></figure>
 <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 对数组排序</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"> <span class="doctag">@param</span> mArray      需要排序的数组</span></span><br><span class="line"><span class="comment"> <span class="doctag">@param</span> proretyName 数组中对象需要排序的属性</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"> <span class="doctag">@return</span> 排序后的索引及gourpAry 字典形式 kToolsIndexAryKey kToolsGroupAryKey</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">+ (NSDictionary *)<span class="string">sortedArrayWithChineseObject:</span>(NSMutableArray *)mArray  <span class="string">withPropertyNameSEL:</span>(SEL)nameSEL ;</span><br></pre></td></tr></table></figure>
 <p>proretyName为属性名称例如：<br>Person 类  属性 ：name age phoneNumber<br>我们需要根据name的首字母来排序分组 则传递@selector(name)</p>
 <p>IndexTool.m</p>

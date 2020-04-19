@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="该代码实现借助SDImageCache缓存机制实现三级缓存 创建一个UIImageView 的Category 导入 SDImageCache1#import &amp;lt;SDWebImage/SDImageCache.h&amp;gt; 123456789101112131415161718192021222324252627282930313233343536373839404142- (void)vid">
+<meta name="description" content="该代码实现借助SDImageCache缓存机制实现三级缓存  创建一个UIImageView 的Category 导入 SDImageCache1#import &amp;lt;SDWebImage/SDImageCache.h&amp;gt; 123456789101112131415161718192021222324252627282930313233343536373839404142- (void)v">
 <meta name="keywords" content="iOS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS-根据视频url获取某一帧图片并实现三级缓存">
 <meta property="og:url" content="https://FattySpring.github.io/2017/10/10/iOS-根据视频url获取某一帧图片并实现三级缓存/index.html">
 <meta property="og:site_name" content="Fatty spring">
-<meta property="og:description" content="该代码实现借助SDImageCache缓存机制实现三级缓存 创建一个UIImageView 的Category 导入 SDImageCache1#import &amp;lt;SDWebImage/SDImageCache.h&amp;gt; 123456789101112131415161718192021222324252627282930313233343536373839404142- (void)vid">
+<meta property="og:description" content="该代码实现借助SDImageCache缓存机制实现三级缓存  创建一个UIImageView 的Category 导入 SDImageCache1#import &amp;lt;SDWebImage/SDImageCache.h&amp;gt; 123456789101112131415161718192021222324252627282930313233343536373839404142- (void)v">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-04-18T15:44:59.521Z">
+<meta property="og:updated_time" content="2020-04-19T06:08:01.461Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS-根据视频url获取某一帧图片并实现三级缓存">
-<meta name="twitter:description" content="该代码实现借助SDImageCache缓存机制实现三级缓存 创建一个UIImageView 的Category 导入 SDImageCache1#import &amp;lt;SDWebImage/SDImageCache.h&amp;gt; 123456789101112131415161718192021222324252627282930313233343536373839404142- (void)vid">
+<meta name="twitter:description" content="该代码实现借助SDImageCache缓存机制实现三级缓存  创建一个UIImageView 的Category 导入 SDImageCache1#import &amp;lt;SDWebImage/SDImageCache.h&amp;gt; 123456789101112131415161718192021222324252627282930313233343536373839404142- (void)v">
 
 
 
@@ -396,8 +396,10 @@
       
 
       
-        <p>该代码实现借助SDImageCache缓存机制实现三级缓存</p>
-<p>创建一个UIImageView 的Category 导入 SDImageCache<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;SDWebImage/SDImageCache.h&gt;</span><br></pre></td></tr></table></figure></p>
+        <blockquote>
+<p>该代码实现借助SDImageCache缓存机制实现三级缓存</p>
+</blockquote>
+<h1 id="创建一个UIImageView-的Category-导入-SDImageCache"><a href="#创建一个UIImageView-的Category-导入-SDImageCache" class="headerlink" title="创建一个UIImageView 的Category 导入 SDImageCache"></a>创建一个UIImageView 的Category 导入 SDImageCache</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;SDWebImage/SDImageCache.h&gt;</span><br></pre></td></tr></table></figure>
 <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)videoImageWithvideoURL:(<span class="built_in">NSURL</span> *)videoURL atTime:(<span class="built_in">NSTimeInterval</span>)time &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//先从缓存中找是否有图片</span></span><br><span class="line">    SDImageCache *cache =  [SDImageCache sharedImageCache];</span><br><span class="line">    <span class="built_in">UIImage</span> *memoryImage =  [cache imageFromMemoryCacheForKey:videoURL.absoluteString];</span><br><span class="line">    <span class="keyword">if</span> (memoryImage) &#123;</span><br><span class="line">        <span class="keyword">self</span>.image = memoryImage;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="built_in">UIImage</span> *diskImage =  [cache imageFromDiskCacheForKey:videoURL.absoluteString];</span><br><span class="line">        <span class="keyword">if</span> (diskImage) &#123;</span><br><span class="line">            <span class="keyword">self</span>.image = diskImage;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (!time) &#123;</span><br><span class="line">        time = <span class="number">1</span>;</span><br><span class="line">    &#125;    </span><br><span class="line">    <span class="built_in">dispatch_async</span>(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="number">0</span>), ^&#123;</span><br><span class="line">        <span class="built_in">AVURLAsset</span> *asset = [[<span class="built_in">AVURLAsset</span> alloc] initWithURL:videoURL options:<span class="literal">nil</span>];</span><br><span class="line">        <span class="built_in">NSParameterAssert</span>(asset);</span><br><span class="line">        <span class="built_in">AVAssetImageGenerator</span> *assetImageGenerator =[[<span class="built_in">AVAssetImageGenerator</span> alloc] initWithAsset:asset];</span><br><span class="line">        assetImageGenerator.appliesPreferredTrackTransform = <span class="literal">YES</span>;</span><br><span class="line">        assetImageGenerator.apertureMode = <span class="built_in">AVAssetImageGeneratorApertureModeEncodedPixels</span>;</span><br><span class="line">        <span class="built_in">CGImageRef</span> thumbnailImageRef = <span class="literal">NULL</span>;</span><br><span class="line">        <span class="built_in">CFTimeInterval</span> thumbnailImageTime = time;</span><br><span class="line">        <span class="built_in">NSError</span> *thumbnailImageGenerationError = <span class="literal">nil</span>;</span><br><span class="line">        thumbnailImageRef = [assetImageGenerator copyCGImageAtTime:<span class="built_in">CMTimeMake</span>(thumbnailImageTime, <span class="number">60</span>)actualTime:<span class="literal">NULL</span> error:&amp;thumbnailImageGenerationError];</span><br><span class="line">        <span class="keyword">if</span>(!thumbnailImageRef)</span><br><span class="line">            <span class="built_in">NSLog</span>(<span class="string">@"thumbnailImageGenerationError %@"</span>,thumbnailImageGenerationError);</span><br><span class="line">        <span class="built_in">UIImage</span>*thumbnailImage = thumbnailImageRef ? [[<span class="built_in">UIImage</span> alloc]initWithCGImage: thumbnailImageRef] : <span class="literal">nil</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">dispatch_async</span>(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">            SDImageCache *cache =  [SDImageCache sharedImageCache];</span><br><span class="line">            [cache storeImage:thumbnailImage forKey:videoURL.absoluteString toDisk:<span class="literal">YES</span>];</span><br><span class="line">            <span class="keyword">self</span>.image = thumbnailImage;</span><br><span class="line">        &#125;);</span><br><span class="line">        </span><br><span class="line">    &#125;);</span><br><span class="line">   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>本文出自FattySpring的博客 <a href="https://FattySpring.github.io/2017/10/10/iOS-根据视频url获取某一帧图片并实现三级缓存/">https://FattySpring.github.io/2017/10/10/iOS-根据视频url获取某一帧图片并实现三级缓存/</a> 欢迎转载，转载请注明出处！</p>
 
@@ -523,8 +525,17 @@ var jiathis_config={
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -577,6 +588,22 @@ var jiathis_config={
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#创建一个UIImageView-的Category-导入-SDImageCache"><span class="nav-number">1.</span> <span class="nav-text">创建一个UIImageView 的Category 导入 SDImageCache</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
